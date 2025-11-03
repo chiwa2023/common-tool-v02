@@ -72,6 +72,14 @@
 +      fileName: 'index',
 +      formats: ['es', 'umd']
 +    },
++    rollupOptions: { // この部分を追加
++      external: ['vue'],
++      output: {
++        globals: {
++          vue: 'Vue'
++        }
++      }
++    },
 +  },
 +  plugins: [vue(), dts({tsconfigPath: resolve(__dirname, "tsconfig.app.json")})],
 

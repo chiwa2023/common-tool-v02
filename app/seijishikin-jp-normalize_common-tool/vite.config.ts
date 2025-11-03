@@ -5,6 +5,7 @@ import dts from 'vite-plugin-dts'
 
 // https://vite.dev/config/
 export default defineConfig({
+  //plugins: [vue()],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
@@ -12,6 +13,14 @@ export default defineConfig({
       fileName: 'index',
       formats: ['es', 'umd']
     },
+    rollupOptions: { // この部分を追加
+      external: ['vue'],
+      output: {
+        globals: {
+          vue: 'Vue'
+        }
+      }
+    }
   },
   plugins: [vue(), dts({tsconfigPath: resolve(__dirname, "tsconfig.app.json")})],
 })
