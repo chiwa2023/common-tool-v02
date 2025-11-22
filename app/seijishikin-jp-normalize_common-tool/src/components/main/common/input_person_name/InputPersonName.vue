@@ -43,9 +43,12 @@ function onCancel() {
                     <input type="text" v-model="allKana" class="max-input" disabled="true">
                 </div>
                 <div>
-                    姓<input type="text" v-model="inputPersonNameDto.lastNameKana" class="short-input" placeholder="せい">
-                    ミドルネーム<input type="text" v-model="inputPersonNameDto.middleNameKana" class="short-input" placeholder="みどるねーむ">
-                    名<input type="text" v-model="inputPersonNameDto.firstNameKana" class="short-input" placeholder="めい">
+                    姓<input type="text" v-model="inputPersonNameDto.lastNameKana" class="short-input" placeholder="せい"
+                        id="last-name-kana">
+                    ミドルネーム<input type="text" v-model="inputPersonNameDto.middleNameKana" class="short-input"
+                        placeholder="みどるねーむ" id="middle-name-kana">
+                    名<input type="text" v-model="inputPersonNameDto.firstNameKana" class="short-input" placeholder="めい"
+                        id="first-name-kana">
                 </div>
             </div>
         </div>
@@ -61,17 +64,20 @@ function onCancel() {
                     <input type="text" v-model="allKanji" class="max-input" disabled="true">
                 </div>
                 <div>
-                    姓<input type="text" v-model="inputPersonNameDto.lastName" class="short-input" placeholder="姓">
-                    ミドルネーム<input type="text" v-model="inputPersonNameDto.middleName" class="short-input" placeholder="ミドルネーム">
-                    名<input type="text" v-model="inputPersonNameDto.firstName" class="short-input" placeholder="名">
+                    姓<input type="text" v-model="inputPersonNameDto.lastName" class="short-input" placeholder="姓"
+                        id="last-name">
+                    ミドルネーム<input type="text" v-model="inputPersonNameDto.middleName" class="short-input"
+                        placeholder="ミドルネーム" id="middle-name">
+                    名<input type="text" v-model="inputPersonNameDto.firstName" class="short-input" placeholder="名"
+                        id="first-name">
                 </div>
             </div>
         </div>
     </div>
 
     <div class="footer">
-        <button @click="onCancel" class="footer-button">キャンセル</button>
-        <button @click="onSave" class="footer-button left-space">選択</button>
+        <button @click="onCancel" class="footer-button" id="on-cancel">キャンセル</button>
+        <button @click="onSave" class="footer-button left-space" id="on-save">選択</button>
     </div>
 
 </template>

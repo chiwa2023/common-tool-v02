@@ -24,7 +24,7 @@ function onCancel() {
             団体名かな
         </div>
         <div class="right-area">
-            <input type="text" v-model="inputOrgNameDto.orgNameKana" class="name-input">
+            <input type="text" v-model="inputOrgNameDto.orgNameKana" class="name-input" id="org-name-kana">
         </div>
     </div>
     <div class="one-line">
@@ -32,13 +32,13 @@ function onCancel() {
             団体名
         </div>
         <div class="right-area">
-            <input type="text" v-model="inputOrgNameDto.orgName" class="name-input">
+            <input type="text" v-model="inputOrgNameDto.orgName" class="name-input" id="org-name">
         </div>
     </div>
 
     <div class="footer">
-        <button @click="onCancel" class="footer-button">キャンセル</button>
-        <button @click="onSave" class="footer-button left-space">選択</button>
+        <button @click="onCancel" class="footer-button" id="on-cancel">キャンセル</button>
+        <button @click="onSave" class="footer-button left-space" id="on-save">選択</button>
     </div>
 
 </template>

@@ -39,7 +39,7 @@ function onSearchPro() {
 }
 
 function onSearchLast() {
-    onSearchPage(lastPage.value);
+    onSearchPage(lastPage.value-1);
 }
 
 /**
