@@ -23,8 +23,12 @@ interface InputAddressDtoInterface {
     machiazaId: string;
     /** 街区Id */
     blkId: string;
+    /** 地番Id */
+    prcId: string;
     /** 住居Id */
     rsdtId: string;
+    /** 住居Id */
+    rsdt2Id: string;
 
     /** 住所郵便番号まで編集有無1 */
     isPostalEdit: boolean;
@@ -70,8 +74,12 @@ class InputAddressDto implements InputAddressDtoInterface {
     machiazaId: string;
     /** 街区Id */
     blkId: string;
+    /** 地番Id */
+    prcId: string;
     /** 住居Id */
     rsdtId: string;
+    /** 住居2Id */
+    rsdt2Id: string;
 
     /** 住所郵便番号まで編集有無1 */
     isPostalEdit: boolean;
@@ -103,8 +111,10 @@ class InputAddressDto implements InputAddressDtoInterface {
 
         this.lgCode = INIT_STRING;
         this.machiazaId = INIT_STRING;
+        this.prcId = INIT_STRING;
         this.blkId = INIT_STRING;
         this.rsdtId = INIT_STRING;
+        this.rsdt2Id = INIT_STRING;
 
         this.isPostalEdit = INIT_BOOLEAN;
         this.isBlockEdit = INIT_BOOLEAN;

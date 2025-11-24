@@ -59,7 +59,7 @@ class SetTableDataHistoryUtilTest {
         assertEquals(userDto.getUserPersonCode(), entity00.getDeleteUserCode());
         assertEquals(userDto.getUserPersonName(), entity00.getDeleteUserName());
         assertEquals(SetTableDataHistoryUtil.DELETE_STATE, entity00.getIsLatest());
-
+        
         // すでに削除履歴をもう一度更新しようとすると、例外を返して処理中断(最後の排他確認)
         assertThrows(HeuristicCompletionException.class, () -> util.practiceDelete(userDto, entity00));
     }

@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.HeuristicCompletionException;
 
-import net.seijishikin.jp.normalize.common_tool.dto.DtoEntityInitialValueInterface;
 import net.seijishikin.jp.normalize.common_tool.dto.LeastUserDto;
 import net.seijishikin.jp.normalize.common_tool.entity.AllTabeDataHistoryInterface;
 
@@ -20,6 +19,9 @@ public class SetTableDataHistoryUtil {
 
     /** 履歴状態値 */
     public static final boolean DELETE_STATE = false;
+
+    /** 未削除判定比較値 */
+    LocalDateTime DELETE_LIMIT_TIMESTAMP = LocalDateTime.of(1948, 7, 29, 0, 0, 0); // SUPPRESS CHECKSTYLE MagicNumber
 
     /**
      * データ履歴カラムにデータを入力する
@@ -48,7 +50,7 @@ public class SetTableDataHistoryUtil {
     public void practiceDelete(final LeastUserDto userDto, final AllTabeDataHistoryInterface interfaceImple) {
 
         // 変更前にすでに履歴になっている場合は、排他の失敗として作業を中断する
-        if (!interfaceImple.getDeleteTimestamp().isEqual(DtoEntityInitialValueInterface.INIT_TIMESTAMP)) {
+        if (DELETE_LIMIT_TIMESTAMP.isBefore(interfaceImple.getDeleteTimestamp())) {
             throw new HeuristicCompletionException(HeuristicCompletionException.STATE_UNKNOWN,
                     new Exception("このデータを変更したユーザがいました。更新内容を確認した後、必要に応じて再度編集をしてください")); // NOPMD
         }

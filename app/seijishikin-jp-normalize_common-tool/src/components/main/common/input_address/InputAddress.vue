@@ -298,11 +298,12 @@ function onSave() {
                             class="short-input" disabled="true">
                     </div>
                     <div>
-                        街区Id<input type="text" v-model="inputAddressDto.blkId" class="code-input" disabled="true">
+                        <span></span>地番Id<input type="text" v-model="inputAddressDto.prcId" class="code-input" disabled="true">
+                        <span class="left-space">街区Id</span><input type="text" v-model="inputAddressDto.blkId" class="short-input" disabled="true">
                     </div>
                     <div>
-                        住居Id<input type="text" v-model="inputAddressDto.rsdtId" class="short-input" disabled="true">
-                        住居2Id<input type="text" v-model="inputAddressDto.rsdtId" class="short-input" disabled="true">
+                        <span></span>住居Id<input type="text" v-model="inputAddressDto.rsdtId" class="short-input" disabled="true">
+                        <span class="left-space">住居2Id</span><input type="text" v-model="inputAddressDto.rsdt2Id" class="short-input" disabled="true">
                     </div>
                 </div>
             </div>

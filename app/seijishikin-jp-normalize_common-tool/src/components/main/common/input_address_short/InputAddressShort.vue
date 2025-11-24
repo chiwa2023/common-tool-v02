@@ -292,17 +292,18 @@ function onSave() {
             <div class="right-area">
                 <div class="form-group-vertical">
                     <div>
-                        <span>地方公共団体コード</span><input type="text" v-model="inputAddressDto.lgCode" class="code-input"
+                        <span>地方公共団体コード</span><input type="text" v-model="inputAddressDto.lgCode" class="short-input"
                             disabled="true">
                         <span class="left-space">町字Id</span><input type="text" v-model="inputAddressDto.machiazaId"
-                            class="code-input" disabled="true">
+                            class="short-input" disabled="true">
                     </div>
                     <div>
-                        街区Id<input type="text" v-model="inputAddressDto.blkId" class="code-input" disabled="true">
+                        <span>地番Id</span><input type="text" v-model="inputAddressDto.prcId" class="code-input" disabled="true">
+                        <span class="left-space">街区Id</span><input type="text" v-model="inputAddressDto.blkId" class="short-input" disabled="true">
                     </div>
                     <div>
-                        住居Id<input type="text" v-model="inputAddressDto.rsdtId" class="code-input" disabled="true">
-                        住居2Id<input type="text" v-model="inputAddressDto.rsdtId" class="code-input" disabled="true">
+                        <span>住居Id</span><input type="text" v-model="inputAddressDto.rsdtId" class="short-input" disabled="true">
+                        <span class="left-space">住居2Id</span><input type="text" v-model="inputAddressDto.rsdt2Id" class="short-input" disabled="true">
                     </div>
                 </div>
             </div>

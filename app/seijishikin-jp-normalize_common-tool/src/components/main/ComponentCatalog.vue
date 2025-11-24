@@ -8,12 +8,12 @@ import { InputPersonNameDto, type InputPersonNameDtoInterface } from './dto/inpu
 import { InputAccessDto, type InputAccessDtoInterface } from './dto/input_access/inputAccessDto';
 import { InputAddressDto, type InputAddressDtoInterface } from './dto/Input_address/inputAddressDto';
 import { InputShokugyouDto, type InputShokugyouDtoInterface } from './dto/input_shokugyou/inputShokugyouDto';
-import MockViewInputAddress from '../test/common/input_address/MockViewInputAddress.vue';
-import MockViewInputAddressShort from '../test/common/input_address_short/MockViewInputAddressShort.vue';
 import ViewInputAccess from './common/input_access/ViewInputAccess.vue';
 import ViewInputShokugyou from './common/input_shokugyou/ViewInputShokugyou.vue';
 import ViewInputOrgName from './common/input_org_name/ViewInputOrgName.vue';
 import ViewInputPersonName from './common/input_person_name/ViewInputPersonName.vue';
+import ViewInputAddressShort from './common/input_address_short/ViewInputAddressShort.vue';
+import ViewInputAddress from './common/input_address/ViewInputAddress.vue';
 
 //仮
 // よく使う定数
@@ -115,10 +115,10 @@ const inputShokugyouDto: Ref<InputShokugyouDtoInterface> = ref(new InputShokugyo
         <ViewInputPersonName :edit-dto="inputPersonNameDto"></ViewInputPersonName>
 
         <!-- 住所 -->
-        <MockViewInputAddress :edit-dto="inputAddressDto"></MockViewInputAddress>
+        <ViewInputAddress :edit-dto="inputAddressDto"></ViewInputAddress>
 
         <!-- 住所短縮 -->
-        <MockViewInputAddressShort :edit-dto="inputAddressDtoShort"></MockViewInputAddressShort>
+        <ViewInputAddressShort :edit-dto="inputAddressDtoShort"></ViewInputAddressShort>
 
         <!-- 連絡先 -->
         <ViewInputAccess :edit-dto="inputAccessDto"></ViewInputAccess>

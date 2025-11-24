@@ -29,6 +29,6 @@ public interface DtoEntityInitialValueInterface extends Serializable { // SUPPRE
     LocalDate INIT_DATE = LocalDate.of(1948, 7, 28); // NOPMD ConstantsInterface
 
     /** 初期データ(Timestamp) */
-    LocalDateTime INIT_TIMESTAMP = LocalDateTime.of(INIT_DATE, LocalTime.MAX); // NOPMD ConstantsInterface
+    LocalDateTime INIT_TIMESTAMP = LocalDateTime.of(INIT_DATE, LocalTime.of(23,59,59)); // NOPMD ConstantsInterface
 
 }
