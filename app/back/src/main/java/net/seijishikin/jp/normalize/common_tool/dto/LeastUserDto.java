@@ -1,12 +1,13 @@
 package net.seijishikin.jp.normalize.common_tool.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * ユーザ最低限Dto
  */
-public class LeastUserDto implements DtoEntityInitialValueInterface { //NOPMD DataClass
+public class LeastUserDto implements DtoEntityInitialValueInterface, Serializable { // NOPMD DataClass
 
     /** Serialize id */
     private static final long serialVersionUID = 1L;

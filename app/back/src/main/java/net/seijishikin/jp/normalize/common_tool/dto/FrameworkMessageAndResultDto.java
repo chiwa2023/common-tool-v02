@@ -15,6 +15,18 @@ public class FrameworkMessageAndResultDto // NOPMD DataClass
     /** 処理失敗フラグ */
     private Boolean isFailure = INIT_BOOLEAN;
 
+    /** 一般例外メッセージ */
+    public static final String MESSAGE_INTERNAL_ERROR = "例外が発生しました。システム担当者にお問い合わせください";
+
+    /** 未取得メッセージ */
+    public static final String MESSAGE_NO_CONTENT = "取得しようとした値は存在しませんでした";
+
+    /** 未保存メッセージ */
+    public static final String MESSAGE_NO_RECORD = "正常に保存できませんでした";
+
+    /** 正常メッセージ */
+    public static final String MESSAGE_EXPECTED = "正常に処理できました";
+
     /**
      * メッセージを取得する
      */

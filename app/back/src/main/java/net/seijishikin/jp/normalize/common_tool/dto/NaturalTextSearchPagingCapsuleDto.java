@@ -18,24 +18,24 @@ public class NaturalTextSearchPagingCapsuleDto // NOPMD DataClass
     private static final Integer INIT_Integer = 0;
 
     /** 検索語自然検索 */
-    private String searchNaturaloWords = INIT_String;
+    private String searchNaturalWords = INIT_String;
 
     /**
      * 検索語自然検索を取得する
      *
      * @return 検索語自然検索
      */
-    public String getSearchNaturaloWords() {
-        return searchNaturaloWords;
+    public String getSearchNaturalWords() {
+        return searchNaturalWords;
     }
 
     /**
      * 検索語自然検索を設定する
      *
-     * @param searchNaturaloWords 検索語自然検索
+     * @param searchNaturalWords 検索語自然検索
      */
-    public void setSearchNaturaloWords(final String searchNaturaloWords) {
-        this.searchNaturaloWords = searchNaturaloWords;
+    public void setSearchNaturalWords(final String searchNaturalWords) {
+        this.searchNaturalWords = searchNaturalWords;
     }
 
     /** 全件数 */

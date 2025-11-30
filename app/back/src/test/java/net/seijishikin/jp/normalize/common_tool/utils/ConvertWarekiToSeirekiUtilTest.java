@@ -1,7 +1,7 @@
 package net.seijishikin.jp.normalize.common_tool.utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 
@@ -24,9 +24,8 @@ class ConvertWarekiToSeirekiUtilTest {
         assertThrows(NumberFormatException.class, () -> ConvertWarekiToSeirekiUtil.practice("03xx18"),
                 "正常に分割しても数字に変換できなければ例外");
         
-        assertThat(ConvertWarekiToSeirekiUtil.practice("030918")).isEqualTo(LocalDate.of(2021, 9, 18));
-        assertThat(ConvertWarekiToSeirekiUtil.practice("280918")).isEqualTo(LocalDate.of(2016, 9, 18));
-        
+        assertEquals(LocalDate.of(2021, 9, 18), ConvertWarekiToSeirekiUtil.practice("030918"));
+        assertEquals(LocalDate.of(2016, 9, 18),ConvertWarekiToSeirekiUtil.practice("280918") );
     }
 
 }
