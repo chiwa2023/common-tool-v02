@@ -17,7 +17,7 @@
 
 ### back側への導入
 
-- 導入先プロジェクト内に、任意のフォルダ(ex./lib)を作成し、このプロジェクトの/targetに存在する`published_document-x.x.x-SNAPSHOT.jar`をコピーする
+- 導入先プロジェクト内に、任意のフォルダ(ex./lib)を作成し、このプロジェクトの/targetに存在する`published_document-x.y.z-SNAPSHOT.jar`をコピーする
 
 - 導入先プロジェクトの`pom.xml`に下記を追加する
 

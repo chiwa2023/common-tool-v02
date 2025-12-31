@@ -1,4 +1,12 @@
 // コンポーネントカタログに入っているimportを素通しでexport
+
+/** framework */
+import { FrameworkCapsuleDto,type FrameworkCapsuleDtoInterface } from './main/dto/frameworkCapsuleDto';
+export { FrameworkCapsuleDto,type FrameworkCapsuleDtoInterface }
+import { FrameworkMessageAndResultDto,type FrameworkMessageAndResultDtoInterface } from './main/dto/frameworkMessageAndResultDto';
+export { FrameworkMessageAndResultDto,type FrameworkMessageAndResultDtoInterface }
+
+/** メッセージ表示 */
 import { MessageConstants } from './main/dto/message/messageConstants';
 export { MessageConstants }
 
@@ -6,18 +14,25 @@ import MessageView from './main/common/message/MessageView.vue';
 import ToastMessage from './main/common/message/ToastMessage.vue';
 export { MessageView, ToastMessage }
 
+/** ページング */
 import PagingControl from './main/common/paging/PagingControl.vue';
 export { PagingControl }
+import { type FrameworkPagingDtoInterface, FrameworkPagingDto } from './main/dto/paging/frameworkPagingDto';
+export { type FrameworkPagingDtoInterface, FrameworkPagingDto }
 
+/** 団体名称入力 */
 import { InputOrgNameDto, type InputOrgNameDtoInterface } from './main/dto/input_org_name/inputOrgNameDto';
 export { InputOrgNameDto, type InputOrgNameDtoInterface }
 
+/** 個人姓名入力 */
 import { InputPersonNameDto, type InputPersonNameDtoInterface } from './main/dto/input_person_name/inputPersonNameDto';
 export { InputPersonNameDto, type InputPersonNameDtoInterface }
 
+/** 連絡先入力 */
 import { InputAccessDto, type InputAccessDtoInterface } from './main/dto/input_access/inputAccessDto';
 export { InputAccessDto, type InputAccessDtoInterface }
 
+/** 住所入力 */
 import { InputAddressDto, type InputAddressDtoInterface } from './main/dto/Input_address/inputAddressDto';
 export { InputAddressDto, type InputAddressDtoInterface }
 
@@ -34,6 +49,7 @@ import ViewInputAccess from './main/common/input_access/ViewInputAccess.vue';
 import InputAccess from './main/common/input_access/InputAccess.vue';
 export { ViewInputAccess, InputAccess }
 
+/** 職業入力 */
 import ViewInputShokugyou from './main/common/input_shokugyou/ViewInputShokugyou.vue';
 import InputShokugyou from './main/common/input_shokugyou/InputShokugyou.vue';
 export { ViewInputShokugyou, InputShokugyou }

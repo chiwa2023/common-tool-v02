@@ -1,5 +1,11 @@
 export * from './components'
 
+/** framework */
+import { FrameworkCapsuleDto, type FrameworkCapsuleDtoInterface } from './components/main/dto/frameworkCapsuleDto';
+export { FrameworkCapsuleDto, type FrameworkCapsuleDtoInterface }
+import { FrameworkMessageAndResultDto, type FrameworkMessageAndResultDtoInterface } from './components/main/dto/frameworkMessageAndResultDto';
+export { FrameworkMessageAndResultDto, type FrameworkMessageAndResultDtoInterface }
+
 /** メッセージ表示 */
 import { MessageConstants } from './components/main/dto/message/messageConstants';
 export { MessageConstants }
@@ -10,6 +16,9 @@ export { MessageView, ToastMessage }
 /** ページング */
 import PagingControl from './components/main/common/paging/PagingControl.vue';
 export { PagingControl }
+import { type FrameworkPagingDtoInterface, FrameworkPagingDto } from './components/main/dto/paging/frameworkPagingDto';
+export { type FrameworkPagingDtoInterface, FrameworkPagingDto }
+
 
 /** 団体名称入力 */
 import { InputOrgNameDto, type InputOrgNameDtoInterface } from './components/main/dto/input_org_name/inputOrgNameDto';
