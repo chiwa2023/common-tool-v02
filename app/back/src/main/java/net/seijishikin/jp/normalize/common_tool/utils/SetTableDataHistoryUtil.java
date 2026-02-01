@@ -21,7 +21,7 @@ public class SetTableDataHistoryUtil {
     public static final boolean DELETE_STATE = false;
 
     /** 未削除判定比較値 */
-    LocalDateTime DELETE_LIMIT_TIMESTAMP = LocalDateTime.of(1948, 7, 29, 0, 0, 0); // SUPPRESS CHECKSTYLE MagicNumber
+    public LocalDateTime DELETE_LIMIT_TIMESTAMP = LocalDateTime.of(1948, 7, 29, 0, 0, 0); // SUPPRESS CHECKSTYLE MagicNumber
 
     /**
      * データ履歴カラムにデータを入力する

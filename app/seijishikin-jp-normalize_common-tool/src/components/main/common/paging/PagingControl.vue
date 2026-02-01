@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { onBeforeMount, ref, watch, type Ref } from 'vue';
+import { computed, onBeforeMount, ref, watch, type ComputedRef, type Ref } from 'vue';
 import type { PagingDto } from '../../dto/paging/pagingDto';
 import { createPagingData } from '../../util/createPagingData';
 
@@ -39,7 +39,7 @@ function onSearchPro() {
 }
 
 function onSearchLast() {
-    onSearchPage(lastPage.value-1);
+    onSearchPage(lastPage.value - 1);
 }
 
 /**
@@ -52,6 +52,8 @@ function onSearchPage(pageNumber: number) {
     }
 }
 
+const isAnableSkipButton: ComputedRef<boolean> = computed(() => props.allCount < props.limit);
+
 </script>
 <template>
     <div class="one-line" v-if="0 !== allCount">
@@ -59,13 +61,13 @@ function onSearchPage(pageNumber: number) {
             <span class="pagination-info">全 {{ props.allCount }} 件中 {{ props.limit * props.pageNumber + 1 }} - {{
                 props.limit * (props.pageNumber + 1) }} 件を表示</span>
             <div class="pagination-controls">
-                <button @click="onSearchFirst">&lt;&lt;</button>
-                <button @click="onSearchPre">&lt;</button>
+                <button @click="onSearchFirst" :disabled="isAnableSkipButton">&lt;&lt;</button>
+                <button @click="onSearchPre" :disabled="isAnableSkipButton">&lt;</button>
                 <button v-for="dto of listPaging" :class="dto.viewClass" @click="onSearchPage(dto.pageNumber)"
                     :disabled="dto.disabled">{{
                         dto.pageText }}</button>
-                <button @click="onSearchPro">&gt;</button>
-                <button @click="onSearchLast">&gt;&gt;</button>
+                <button @click="onSearchPro" :disabled="isAnableSkipButton">&gt;</button>
+                <button @click="onSearchLast" :disabled="isAnableSkipButton">&gt;&gt;</button>
             </div>
         </div>
     </div>

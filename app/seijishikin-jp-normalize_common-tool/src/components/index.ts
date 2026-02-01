@@ -1,10 +1,10 @@
 // コンポーネントカタログに入っているimportを素通しでexport
 
 /** framework */
-import { FrameworkCapsuleDto,type FrameworkCapsuleDtoInterface } from './main/dto/frameworkCapsuleDto';
-export { FrameworkCapsuleDto,type FrameworkCapsuleDtoInterface }
-import { FrameworkMessageAndResultDto,type FrameworkMessageAndResultDtoInterface } from './main/dto/frameworkMessageAndResultDto';
-export { FrameworkMessageAndResultDto,type FrameworkMessageAndResultDtoInterface }
+import { FrameworkCapsuleDto, type FrameworkCapsuleDtoInterface } from './main/dto/frameworkCapsuleDto';
+export { FrameworkCapsuleDto, type FrameworkCapsuleDtoInterface }
+import { FrameworkMessageAndResultDto, type FrameworkMessageAndResultDtoInterface } from './main/dto/frameworkMessageAndResultDto';
+export { FrameworkMessageAndResultDto, type FrameworkMessageAndResultDtoInterface }
 
 /** メッセージ表示 */
 import { MessageConstants } from './main/dto/message/messageConstants';
@@ -62,6 +62,16 @@ import ViewInputPersonName from './main/common/input_person_name/ViewInputPerson
 import InputPersonName from './main/common/input_person_name/InputPersonName.vue';
 export { ViewInputPersonName, InputPersonName }
 
+/** ユーザ */
+import { type LeastUserDtoInterface, LeastUserDto } from './main/dto/user/leastUserDto';
+export { type LeastUserDtoInterface, LeastUserDto }
 
+/** 日付 */
+import InputDate from './main/common/date/InputDate.vue';
+import InputDatetime from './main/common/date/InputDatetime.vue';
+import convertDateText from './main/common/date/convertDateText';
+import convertDatetimeText from './main/common/date/convertDatetimeText';
+export { InputDate, InputDatetime }
+export { convertDateText, convertDatetimeText }
 
 

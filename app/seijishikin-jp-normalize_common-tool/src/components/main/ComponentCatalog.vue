@@ -14,6 +14,8 @@ import ViewInputOrgName from './common/input_org_name/ViewInputOrgName.vue';
 import ViewInputPersonName from './common/input_person_name/ViewInputPersonName.vue';
 import ViewInputAddressShort from './common/input_address_short/ViewInputAddressShort.vue';
 import ViewInputAddress from './common/input_address/ViewInputAddress.vue';
+import InputDatetime from './common/date/InputDatetime.vue';
+import InputDate from './common/date/InputDate.vue';
 
 //仮
 // よく使う定数
@@ -23,8 +25,8 @@ const BLANK: string = "";
 // const SERVER_STATUS_ERROR: number = 400;
 
 // Paging
-const pageNumber: Ref<number> = ref(6); // Mock data
-const allCount: Ref<number> = ref(123); // Mock data
+const pageNumber: Ref<number> = ref(0); // Mock data
+const allCount: Ref<number> = ref(25); // Mock data
 const limit: Ref<number> = ref(10); // Mock data
 /** ページング受信 */
 function recievePagingNumber(selecteddNumber: number) {
@@ -82,6 +84,23 @@ const inputAddressDto: Ref<InputAddressDtoInterface> = ref(new InputAddressDto()
 const inputAddressDtoShort: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
 const inputShokugyouDto: Ref<InputShokugyouDtoInterface> = ref(new InputShokugyouDto());
 
+const datetime: Ref<Date> = ref(new Date());
+
+function recieveDateTime(date: Date, index: number) {
+    if (1 == index) {
+        datetime.value = date;
+    }
+}
+
+function onShowISO() {
+    alert(datetime.value.toISOString());
+}
+
+function onShowLocal() {
+
+    alert(datetime.value.toLocaleString('sv-SE'));
+}
+
 </script>
 <template>
     <div class="container">
@@ -125,6 +144,31 @@ const inputShokugyouDto: Ref<InputShokugyouDtoInterface> = ref(new InputShokugyo
 
         <!-- 職業 -->
         <ViewInputShokugyou :edit-dto="inputShokugyouDto"></ViewInputShokugyou>
+
+        <!-- 日付 -->
+        <h3>日付</h3>
+        <div class="one-line">
+            <div class="left-area">
+                日時
+            </div>
+            <div class="right-area">
+                <InputDatetime :datetime="datetime" :is-edit="true" :index="1" @send-date-time="recieveDateTime">
+                </InputDatetime><button @click="onShowISO" class="left-spacce">ISO</button> <button @click="onShowLocal"
+                    class="left-spacce">ローカル</button>
+            </div>
+        </div>
+
+        <div class="one-line">
+            <div class="left-area">
+                日付
+            </div>
+            <div class="right-area">
+                <InputDate :date="datetime" :is-edit="true" :index="1" @send-date-time="recieveDateTime">
+                </InputDate><button @click="onShowISO" class="left-spacce">ISO</button> <button @click="onShowLocal"
+                    class="left-spacce">ローカル</button>
+            </div>
+        </div>
+
 
         <!-- メッセージ表示 -->
         <!-- ダイアログ用のコンテナ -->

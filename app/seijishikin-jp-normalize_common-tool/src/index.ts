@@ -62,3 +62,15 @@ import HoujinShoriKbnConstants from './components/main/dto/houjin_no/houjinShori
 import HoujinSbtsConstants from './components/main/dto/houjin_no/houjinSbtsConstants';
 import { HoujinNoDto, type HoujinNoDtoInterface } from './components/main/dto/houjin_no/houjinNoDto';
 export { SearchHoujinNo, HoujinNoDto, type HoujinNoDtoInterface, HoujinShoriKbnConstants, HoujinSbtsConstants }
+
+/** ユーザ */
+import { type LeastUserDtoInterface, LeastUserDto } from './components/main/dto/user/leastUserDto';
+export { type LeastUserDtoInterface, LeastUserDto }
+
+/** 日付 */
+import InputDate from './components/main/common/date/InputDate.vue';
+import InputDatetime from './components/main/common/date/InputDatetime.vue';
+import convertDateText from './components/main/common/date/convertDateText';
+import convertDatetimeText from './components/main/common/date/convertDatetimeText';
+export { InputDate, InputDatetime }
+export { convertDateText, convertDatetimeText }
