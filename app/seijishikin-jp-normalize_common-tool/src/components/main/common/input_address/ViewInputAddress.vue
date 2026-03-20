@@ -1,20 +1,30 @@
 ﻿<script setup lang="ts">
-import { computed, ref, toRaw, type ComputedRef, type Ref } from "vue";
+import { computed, onMounted, ref, toRaw, type ComputedRef, type Ref } from "vue";
 import InputAddress from "./InputAddress.vue";
-import type { InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
+import { InputAddressDto, type InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
 
 // props,emit
-const props = defineProps<{ editDto: InputAddressDtoInterface }>();
+const props = defineProps<{ editDto: InputAddressDtoInterface,longToken:string }>();
 
 // 入力用Dto
-const inputAddressDto: Ref<InputAddressDtoInterface> = ref(structuredClone(toRaw(props.editDto)));
+const inputAddressDto: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
+const inputAddressDtoBack: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
+
+const token: ComputedRef<string> = computed(() => { return props.longToken });
 const isInput: Ref<boolean> = ref(false);
 const allPostalCode: ComputedRef<string> = computed(() => inputAddressDto.value.postalcode1 + inputAddressDto.value.postalcode2);
+
+
+onMounted(() => {
+    inputAddressDto.value = structuredClone(toRaw(props.editDto));
+    inputAddressDtoBack.value = structuredClone(toRaw(inputAddressDto.value));
+});
 
 /**
 * 関連者検索コンポーネント表示
 */
 function onInputAddress() {
+    inputAddressDtoBack.value = structuredClone(toRaw(inputAddressDto.value));
     isInput.value = true;
 }
 
@@ -22,6 +32,11 @@ function onInputAddress() {
  * 関連者検索キャンセル
  */
 function recieveCancelInputAddress() {
+
+    
+    inputAddressDto.value = structuredClone(toRaw(inputAddressDtoBack.value));
+
+
     //非表示
     isInput.value = false;
 }
@@ -78,7 +93,7 @@ function recieveInputAddressInterface(sendDto: InputAddressDtoInterface) {
     <!-- 住所入力 -->
     <div v-if="isInput" class="overBackground"></div>
     <div class="overComponent" v-if="isInput">
-        <InputAddress v-if="isInput" :edit-dto="inputAddressDto" @send-cancel-input-address="recieveCancelInputAddress"
+        <InputAddress v-if="isInput" :edit-dto="inputAddressDto" :long-token="token" @send-cancel-input-address="recieveCancelInputAddress"
             @send-input-address-interface="recieveInputAddressInterface">
             ></InputAddress>
     </div>

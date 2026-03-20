@@ -18,8 +18,8 @@ interface PostalCodeCapsuleDtoInterface {
     /** 地方自治体コード */
     lgCode: string;
 
-    /** 郵便番号 */
-    postalCode: string;
+    /** 住居テーブルId */
+    selectedRsdtId:number;
 
 }
 
@@ -43,8 +43,8 @@ class PostalCodeCapsuleDto implements PostalCodeCapsuleDtoInterface {
     /** 地方自治体コード */
     lgCode: string;
 
-    /** 郵便番号 */
-    postalCode: string;
+    /** 住居テーブルId */
+    selectedRsdtId:number;
 
     constructor() {
 
@@ -59,7 +59,7 @@ class PostalCodeCapsuleDto implements PostalCodeCapsuleDtoInterface {
         this.selectedPostal = INIT_NUMBER;
         this.selectedBlock = INIT_STRING;
         this.lgCode = INIT_STRING;
-        this.postalCode = INIT_STRING;
+        this.selectedRsdtId = INIT_NUMBER;
 
     }
 

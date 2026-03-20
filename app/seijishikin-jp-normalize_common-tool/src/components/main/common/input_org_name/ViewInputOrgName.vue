@@ -9,7 +9,6 @@ const props = defineProps<{ editDto: InputOrgNameDtoInterface }>();
 // 編集Dto
 const inputOrgNameDto: ComputedRef<InputOrgNameDtoInterface> = computed(() => { return props.editDto });
 
-
 // コンポーネント表示
 const isInput: Ref<boolean> = ref(false);
 function onInputOrgnName() {
@@ -43,10 +42,10 @@ function recieveInputOrgNameInterface(sendDto: InputOrgNameDtoInterface) {
         <div class="right-area">
             <div class="form-group-vertical">
                 <div>
-                    <input type="text" v-model="inputOrgNameDto.orgNameKana" class="name-input"><button class="left-space"
-                        @click="onInputOrgnName">編集</button>
+                    <input type="text" v-model="inputOrgNameDto.orgNameKana" class="name-input" disabled="true">
+                    <button class="left-space" @click="onInputOrgnName">編集</button>
                 </div>
-                <input type="text" v-model="inputOrgNameDto.orgName" class="name-input">
+                <input type="text" v-model="inputOrgNameDto.orgName" class="name-input" disabled="true">
             </div>
         </div>
     </div>

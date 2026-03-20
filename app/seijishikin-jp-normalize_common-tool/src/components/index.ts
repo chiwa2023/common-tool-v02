@@ -35,29 +35,42 @@ export { InputAccessDto, type InputAccessDtoInterface }
 /** 住所入力 */
 import { InputAddressDto, type InputAddressDtoInterface } from './main/dto/Input_address/inputAddressDto';
 export { InputAddressDto, type InputAddressDtoInterface }
-
-import { InputShokugyouDto, type InputShokugyouDtoInterface } from './main/dto/input_shokugyou/inputShokugyouDto';
-export { InputShokugyouDto, type InputShokugyouDtoInterface }
-
+import { AddressRsdtTemplateDto,type AddressRsdtTemplateDtoInterface } from './main/dto/Input_address/addressRsdtTemplateDto';
+export { AddressRsdtTemplateDto,type AddressRsdtTemplateDtoInterface }
+import InputAddress from './main/common/input_address/InputAddress.vue';
+import ViewInputAddress from './main/common/input_address/ViewInputAddress.vue';
+import MockInputAddress from './test/common/input_address/MockInputAddress.vue';
 import MockViewInputAddress from './test/common/input_address/MockViewInputAddress.vue';
-export { MockViewInputAddress }
-
+export { InputAddress,ViewInputAddress,MockInputAddress,MockViewInputAddress }
+import InputAddressShort from './main/common/input_address_short/InputAddressShort.vue';
+import ViewInputAddressShort from './main/common/input_address_short/ViewInputAddressShort.vue';
+import MockInputAddressShort from './test/common/input_address_short/MockInputAddressShort.vue';
 import MockViewInputAddressShort from './test/common/input_address_short/MockViewInputAddressShort.vue';
-export { MockViewInputAddressShort }
+export { InputAddressShort,ViewInputAddressShort,MockInputAddressShort,MockViewInputAddressShort }
+import EditAddress from './main/common/input_address/EditAddress.vue';
+import InputBuildingAddress from './main/common/input_address/InputBuildingAddress.vue';
+import InputCompareAddress from './main/common/input_address/InputCompareAddress.vue';
+export { EditAddress,InputBuildingAddress, InputCompareAddress}
 
+/** 連絡先入力 */
 import ViewInputAccess from './main/common/input_access/ViewInputAccess.vue';
 import InputAccess from './main/common/input_access/InputAccess.vue';
 export { ViewInputAccess, InputAccess }
 
 /** 職業入力 */
+import { InputShokugyouDto, type InputShokugyouDtoInterface } from './main/dto/input_shokugyou/inputShokugyouDto';
+export { InputShokugyouDto, type InputShokugyouDtoInterface }
 import ViewInputShokugyou from './main/common/input_shokugyou/ViewInputShokugyou.vue';
 import InputShokugyou from './main/common/input_shokugyou/InputShokugyou.vue';
-export { ViewInputShokugyou, InputShokugyou }
+import InputCompareShokugyou from './main/common/input_shokugyou/InputCompareShokugyou.vue';
+export { ViewInputShokugyou, InputShokugyou, InputCompareShokugyou }
 
+/** 組織名称入力 */
 import ViewInputOrgName from './main/common/input_org_name/ViewInputOrgName.vue';
 import InputOrgName from './main/common/input_org_name/InputOrgName.vue';
 export { ViewInputOrgName, InputOrgName }
 
+/** 個人氏名入力 */
 import ViewInputPersonName from './main/common/input_person_name/ViewInputPersonName.vue';
 import InputPersonName from './main/common/input_person_name/InputPersonName.vue';
 export { ViewInputPersonName, InputPersonName }
@@ -68,10 +81,11 @@ export { type LeastUserDtoInterface, LeastUserDto }
 
 /** 日付 */
 import InputDate from './main/common/date/InputDate.vue';
+import InputDateAndNull from './main/common/date/InputDateAndNull.vue';
 import InputDatetime from './main/common/date/InputDatetime.vue';
 import convertDateText from './main/common/date/convertDateText';
 import convertDatetimeText from './main/common/date/convertDatetimeText';
-export { InputDate, InputDatetime }
+export { InputDate, InputDatetime, InputDateAndNull }
 export { convertDateText, convertDatetimeText }
 
 

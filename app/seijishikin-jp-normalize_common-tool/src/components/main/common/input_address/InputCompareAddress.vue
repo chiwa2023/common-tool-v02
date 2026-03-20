@@ -1,14 +1,15 @@
 ﻿<script setup lang="ts">
 import { computed, type ComputedRef, type Ref, ref, toRaw } from "vue";
 import { type InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
-import mockMakeSuggestPostalList from "./mock/mockMakeSuggestPostalList";
 import type { PostalCodePostalResultDtoInterface } from "../../../main/dto/postal/postalCodePostalResultDto";
-import mockMakeSuggestBlockList from "./mock/mockMakeSuggestBlockList";
 import type { SelectOptionNumberDtoInterface } from "../../../main/dto/select_options/selectOptionNumberDto";
 import type { SelectOptionStringDtoInterface } from "../../../main/dto/select_options/selectOptionStringDto";
 import type { PostalCodeBlockResultDtoInterface } from "../../../main/dto/postal/postalCodeBlockResultDto";
-import mockMakeSuggestBuildingList from "./mock/mockMakeSuggestBuildingList";
 import type { PostalCodeBuildingResultDtoInterface } from "../../../main/dto/postal/postalCodeBuildingResultDto";
+import mockMakeSuggestPostalList from "../../../test/common/input_address/mock/mockMakeSuggestPostalList";
+import mockMakeSuggestBlockList from "../../../test/common/input_address/mock/mockMakeSuggestBlockList";
+import mockMakeSuggestBuildingList from "../../../test/common/input_address/mock/mockMakeSuggestBuildingList";
+
 
 // よく使う定数
 const BLANK: string = "";
@@ -21,7 +22,7 @@ const props = defineProps<{ editDto: InputAddressDtoInterface }>();
 const emits = defineEmits(["sendCancelInputAddress", "sendInputAddressInterface"]);
 
 /** 入力用Dto */
-const inputAddressDto: Ref<InputAddressDtoInterface> = ref(props.editDto);
+const inputAddressDto: Ref<InputAddressDtoInterface> = ref(structuredClone(toRaw(props.editDto)));
 const addressAll: ComputedRef<string> = computed(() =>
     inputAddressDto.value.addressPostal + inputAddressDto.value.addressBlock + "　" + inputAddressDto.value.addressBuilding);
 
@@ -36,7 +37,7 @@ const listBlockSuggest: Ref<SelectOptionStringDtoInterface[]> = ref([]);
 const listBackupBlockSuggest: Ref<SelectOptionStringDtoInterface[]> = ref([]);
 
 /** 住所郵便建物 */
-const selectedAddressBuilding: Ref<number> = ref(0);
+const selectedAddressBuilding: Ref<string> = ref("");
 const listBuildingSuggest: Ref<SelectOptionNumberDtoInterface[]> = ref([]);
 const listBackupBuildingSuggest: Ref<SelectOptionNumberDtoInterface[]> = ref([]);
 
@@ -55,13 +56,6 @@ function getAddressPostal() {
         isGyouseiku.value = resultDto.isGyouseikuData;
 
         // TODO 1件だったときは選択して番地住所検索をする
-    } else {
-        inputAddressDto.value.addressPostal = "";
-        inputAddressDto.value.addressBlock = "";
-        inputAddressDto.value.addressBuilding = "";
-        selectedAddressPostal.value = 0;
-        selectedAddressBlock.value = "";
-        selectedAddressBuilding.value = 0;
     }
 }
 
@@ -140,12 +134,8 @@ function filterSuggestBuilding() {
 /** 住所建物候補選択時 */
 function selectSuggestBuilding() {
     // コード値の設定
-    const selectedDto: SelectOptionNumberDtoInterface | undefined
-        = listBuildingSuggest.value.filter(e => selectedAddressBuilding.value === e.value)[0];
-    if (undefined !== selectedDto) {
-        inputAddressDto.value.addressBuilding = selectedDto.text;
-        inputAddressDto.value.rsdtAddressBuilding = selectedDto.text;
-    }
+    inputAddressDto.value.addressBuilding = selectedAddressBuilding.value;
+    inputAddressDto.value.rsdtAddressBuilding = selectedAddressBuilding.value;
 }
 
 /** 編集offにした場合は選択値に戻す */
@@ -175,7 +165,7 @@ function onBlockEdit() {
 /** 編集offにした場合は選択値に戻す */
 function onBuildingEdit() {
     if (false === inputAddressDto.value.isBuildingEdit) {
-        const selectedDto = listBuildingSuggest.value.filter(e => selectedAddressBuilding.value === e.value)[0];
+        const selectedDto = listBuildingSuggest.value.filter(e => parseInt(selectedAddressBuilding.value) === e.value)[0];
         if (undefined !== selectedDto) {
             inputAddressDto.value.addressBuilding = selectedDto.text;
         } else {
@@ -209,9 +199,12 @@ function onSave() {
                 郵便番号
             </div>
             <div class="right-area">
-                <input v-model="inputAddressDto.postalcode1" type="text" class="short-input"
-                    @input="getAddressPostal">&nbsp;-&nbsp;
-                <input v-model="inputAddressDto.postalcode2" type="text" class="short-input" @input="getAddressPostal">
+                <div>
+                    <input v-model="inputAddressDto.postalcode1" type="text" class="short-input"
+                        @input="getAddressPostal">&nbsp;-&nbsp;
+                    <input v-model="inputAddressDto.postalcode2" type="text" class="short-input"
+                        @input="getAddressPostal">
+                </div>
             </div>
         </div>
 
@@ -221,10 +214,16 @@ function onSave() {
                 住所(全)
             </div>
             <div class="right-area">
-                <textarea v-model="addressAll" disabled="true" class="max-input"></textarea>
+                <div class="form-group-vertical">
+                    <div>
+                        <textarea v-model="addressAll" disabled="true" class="max-input"></textarea>
+                    </div>
+                    <div>
+                        <textarea v-model="props.editDto.addressAll" disabled="true" class="max-input"></textarea>
+                    </div>
+                </div>
             </div>
         </div>
-
 
         <div class="one-line">
             <div class="left-area">
@@ -243,6 +242,9 @@ function onSave() {
                     <div>
                         <textarea v-model="inputAddressDto.addressPostal" :disabled="!inputAddressDto.isPostalEdit"
                             class="max-input"></textarea>
+                    </div>
+                    <div>
+                        <textarea v-model="props.editDto.addressPostal" disabled="true" class="max-input"></textarea>
                     </div>
                 </div>
             </div>
@@ -268,6 +270,9 @@ function onSave() {
                         <textarea v-model="inputAddressDto.addressBlock" :disabled="!inputAddressDto.isBlockEdit"
                             class="max-input"></textarea>
                     </div>
+                    <div>
+                        <textarea v-model="props.editDto.addressBlock" disabled="true" class="max-input"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
@@ -291,6 +296,9 @@ function onSave() {
                         <textarea v-model="inputAddressDto.addressBuilding" :disabled="!inputAddressDto.isBuildingEdit"
                             class="max-input"></textarea>
                     </div>
+                    <div>
+                        <textarea v-model="props.editDto.addressBuilding" disabled="true" class="max-input"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
@@ -308,11 +316,16 @@ function onSave() {
                             class="short-input" disabled="true">
                     </div>
                     <div>
-                        街区Id<input type="text" v-model="inputAddressDto.blkId" class="code-input" disabled="true">
+                        <span></span>地番Id<input type="text" v-model="inputAddressDto.prcId" class="code-input"
+                            disabled="true">
+                        <span class="left-space">街区Id</span><input type="text" v-model="inputAddressDto.blkId"
+                            class="short-input" disabled="true">
                     </div>
                     <div>
-                        住居Id<input type="text" v-model="inputAddressDto.rsdtId" class="short-input" disabled="true">
-                        住居2Id<input type="text" v-model="inputAddressDto.rsdtId" class="short-input" disabled="true">
+                        <span></span>住居Id<input type="text" v-model="inputAddressDto.rsdtId" class="short-input"
+                            disabled="true">
+                        <span class="left-space">住居2Id</span><input type="text" v-model="inputAddressDto.rsdt2Id"
+                            class="short-input" disabled="true">
                     </div>
                 </div>
             </div>

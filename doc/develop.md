@@ -12,9 +12,13 @@
 
 4. vitest導入 `npm i -D vitest`
 
-5. ライブラリ化プラグインvite-plugin-dts導入 `npm install -D vite-plugin-dts`
+5. pinia導入 `npm install pinia`
 
-6. ライブラリ化をするために設定ファイルを追加・編集する
+6. pinia永続化プラグイン導入 `npm i pinia-plugin-persistedstate`
+
+7. ライブラリ化プラグインvite-plugin-dts導入 `npm install -D vite-plugin-dts`
+
+8. ライブラリ化をするために設定ファイルを追加・編集する
 
 - a. packaage.jsonを編集する
 

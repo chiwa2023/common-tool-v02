@@ -1,4 +1,4 @@
-import type { SelectOptionStringDtoInterface } from "../select_options/selectOptionStringDto";
+import type { SelectOptionNumberDtoInterface } from "../select_options/selectOptionNumberDto";
 
 interface PostalCodeBuildingResultDtoInterface {
 
@@ -6,7 +6,7 @@ interface PostalCodeBuildingResultDtoInterface {
     lgCode: string;
 
     /** 建物選択肢リスト */
-    listOptions: SelectOptionStringDtoInterface[];
+    listOptions: SelectOptionNumberDtoInterface[];
 
 }
 
@@ -16,7 +16,7 @@ class PostalCodeBuildingResultDto implements PostalCodeBuildingResultDtoInterfac
     lgCode: string;
 
     /** 建物選択肢リスト */
-    listOptions: SelectOptionStringDtoInterface[];
+    listOptions: SelectOptionNumberDtoInterface[];
 
     constructor() {
         this.lgCode = "";

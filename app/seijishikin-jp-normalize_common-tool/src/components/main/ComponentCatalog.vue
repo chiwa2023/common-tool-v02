@@ -12,10 +12,10 @@ import ViewInputAccess from './common/input_access/ViewInputAccess.vue';
 import ViewInputShokugyou from './common/input_shokugyou/ViewInputShokugyou.vue';
 import ViewInputOrgName from './common/input_org_name/ViewInputOrgName.vue';
 import ViewInputPersonName from './common/input_person_name/ViewInputPersonName.vue';
-import ViewInputAddressShort from './common/input_address_short/ViewInputAddressShort.vue';
-import ViewInputAddress from './common/input_address/ViewInputAddress.vue';
 import InputDatetime from './common/date/InputDatetime.vue';
 import InputDate from './common/date/InputDate.vue';
+import MockViewInputAddress from '../test/common/input_address/MockViewInputAddress.vue';
+import MockViewInputAddressShort from '../test/common/input_address_short/MockViewInputAddressShort.vue';
 
 //仮
 // よく使う定数
@@ -101,6 +101,24 @@ function onShowLocal() {
     alert(datetime.value.toLocaleString('sv-SE'));
 }
 
+function onRefreshInfo() {
+    inputOrgNameDto.value.orgNameKana = "ははは";
+    inputPersonNameDto.value.allName = "name"
+    inputAddressDto.value.addressAll = "all1";
+    inputAddressDtoShort.value.addressAll = "all2";
+    inputAccessDto.value.email = "12345@seijishikin.jp";
+    inputShokugyouDto.value.allShokugyou = "全職業";
+}
+
+function onInitialize() {
+    inputOrgNameDto.value = new InputOrgNameDto();
+    inputPersonNameDto.value = new InputPersonNameDto();
+    inputAddressDto.value = new InputAddressDto();
+    inputAddressDtoShort.value = new InputAddressDto();
+    inputAccessDto.value = new InputAccessDto();
+    inputShokugyouDto.value = new InputShokugyouDto();
+}
+
 </script>
 <template>
     <div class="container">
@@ -134,16 +152,25 @@ function onShowLocal() {
         <ViewInputPersonName :edit-dto="inputPersonNameDto"></ViewInputPersonName>
 
         <!-- 住所 -->
-        <ViewInputAddress :edit-dto="inputAddressDto"></ViewInputAddress>
+        <MockViewInputAddress :edit-dto="inputAddressDto"></MockViewInputAddress>
 
         <!-- 住所短縮 -->
-        <ViewInputAddressShort :edit-dto="inputAddressDtoShort"></ViewInputAddressShort>
+        <MockViewInputAddressShort :edit-dto="inputAddressDtoShort"></MockViewInputAddressShort>
 
         <!-- 連絡先 -->
         <ViewInputAccess :edit-dto="inputAccessDto"></ViewInputAccess>
 
         <!-- 職業 -->
         <ViewInputShokugyou :edit-dto="inputShokugyouDto"></ViewInputShokugyou>
+
+        <div class="one-line">
+            <div class="left-area">
+                共通情報更新
+            </div>
+            <div class="right-area">
+                <button @click="onRefreshInfo">更新</button> <button @click="onInitialize" class="left-space">初期化</button>
+            </div>
+        </div>
 
         <!-- 日付 -->
         <h3>日付</h3>
@@ -158,6 +185,7 @@ function onShowLocal() {
             </div>
         </div>
 
+
         <div class="one-line">
             <div class="left-area">
                 日付
@@ -169,6 +197,12 @@ function onShowLocal() {
             </div>
         </div>
 
+        <div class="one-line">
+            <RouterLink to="/net-access">back処理Net接続ありカタログ</RouterLink>
+        </div>
+        <div class="one-line">
+            <RouterLink to="/base-component">開発台紙</RouterLink><br>
+        </div>
 
         <!-- メッセージ表示 -->
         <!-- ダイアログ用のコンテナ -->

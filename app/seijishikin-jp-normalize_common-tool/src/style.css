@@ -170,6 +170,9 @@ input.short-input {
 input.name-input {
   width: 440px;
 }
+select.name-input {
+  width: 440px;
+}
 
 input.one-char-input {
   width: 50px;

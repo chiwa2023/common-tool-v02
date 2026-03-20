@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { ref, type Ref, toRaw } from 'vue';
+import { computed, type ComputedRef, ref, type Ref } from 'vue';
 import type { InputShokugyouDtoInterface } from '../../dto/input_shokugyou/inputShokugyouDto';
 import InputShokugyou from './InputShokugyou.vue';
 
@@ -7,7 +7,7 @@ import InputShokugyou from './InputShokugyou.vue';
 const props = defineProps<{ editDto: InputShokugyouDtoInterface }>();
 
 // 編集Dto
-const inputShokugyouDto: Ref<InputShokugyouDtoInterface> = ref(structuredClone(toRaw(props.editDto)));
+const inputShokugyouDto: ComputedRef<InputShokugyouDtoInterface> = computed(() => { return props.editDto });
 
 // コンポーネント表示
 const isInput: Ref<boolean> = ref(false);

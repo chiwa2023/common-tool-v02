@@ -3,7 +3,7 @@ import { onBeforeMount, ref, type Ref } from 'vue';
 
 
 // props,emmits
-const props = defineProps<{ date: Date, index: number, isEdit: boolean }>();
+const props = defineProps<{ date: Date | null, index: number, isEdit: boolean }>();
 const emits = defineEmits(["sendDate"]);
 
 //仮
@@ -18,7 +18,7 @@ const BLANK: string = "";
 //const title: Ref<string> = ref(BLANK);
 //const message: Ref<string> = ref(BLANK);
 
-const dateString: Ref<string> = ref(BLANK);
+const dateString: Ref<string | null> = ref(BLANK);
 onBeforeMount(() => {
     if (props.date !== null) {
         dateString.value = props.date.toLocaleDateString('sv-SE');
@@ -37,9 +37,8 @@ function onDataChange() {
             const sendData: Date = new Date(parseInt(dateCell[0]), parseInt(dateCell[1]) - 1, parseInt(dateCell[2]));
             emits("sendDate", sendData, props.index);
         } else {
-            // 変な値が来たらこのシステム固有の初期値を返す
-            dateString.value = "1948-07-28T23:59:59";
-            emits("sendDate", new Date(dateString.value), props.index);
+            dateString.value = null;
+            emits("sendDate", null, props.index);
         }
     }
 }

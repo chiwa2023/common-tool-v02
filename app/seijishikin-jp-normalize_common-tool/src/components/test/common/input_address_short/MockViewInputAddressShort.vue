@@ -1,13 +1,19 @@
 ﻿<script setup lang="ts">
-import { computed, ref, toRaw, type ComputedRef, type Ref } from "vue";
+import { computed, ref, type ComputedRef, type Ref } from "vue";
 import type { InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
 import InputAddressShort from "./MockInputAddressShort.vue";
 
 // props,emit
 const props = defineProps<{ editDto: InputAddressDtoInterface }>();
 
+// よく使う定数
+const BLANK: string = "";
+// const INIT_NUMBER: number = 0;
+// const SERVER_STATUS_OK: number = 200;
+// const SERVER_STATUS_ERROR: number = 400;
+
 // 入力用Dto
-const inputAddressDto: Ref<InputAddressDtoInterface> = ref(structuredClone(toRaw(props.editDto)));
+const inputAddressDto: ComputedRef<InputAddressDtoInterface> = computed(() => { return props.editDto });
 const isInput: Ref<boolean> = ref(false);
 const allPostalCode: ComputedRef<string> = computed(() => inputAddressDto.value.postalcode1 + inputAddressDto.value.postalcode2);
 
@@ -22,6 +28,9 @@ function onInputAddress() {
  * 関連者検索キャンセル
  */
 function recieveCancelInputAddress() {
+    inputAddressDto.value.postalcode1 = BLANK;
+    inputAddressDto.value.postalcode2 = BLANK;
+
     //非表示
     isInput.value = false;
 }
@@ -78,7 +87,8 @@ function recieveInputAddressInterface(sendDto: InputAddressDtoInterface) {
     <!-- 住所入力 -->
     <div v-if="isInput" class="overBackground"></div>
     <div class="overComponent" v-if="isInput">
-        <InputAddressShort v-if="isInput" :edit-dto="inputAddressDto" @send-cancel-input-address="recieveCancelInputAddress"
+        <InputAddressShort v-if="isInput" :edit-dto="inputAddressDto"
+            @send-cancel-input-address="recieveCancelInputAddress"
             @send-input-address-interface="recieveInputAddressInterface">
             ></InputAddressShort>
     </div>

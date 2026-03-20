@@ -1,14 +1,15 @@
 ﻿<script setup lang="ts">
 import { computed, type ComputedRef, type Ref, ref, toRaw } from "vue";
 import { type InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
-import mockMakeSuggestPostalList from "./mock/mockMakeSuggestPostalList";
 import type { PostalCodePostalResultDtoInterface } from "../../../main/dto/postal/postalCodePostalResultDto";
-import mockMakeSuggestBlockList from "./mock/mockMakeSuggestBlockList";
 import type { SelectOptionNumberDtoInterface } from "../../../main/dto/select_options/selectOptionNumberDto";
 import type { SelectOptionStringDtoInterface } from "../../../main/dto/select_options/selectOptionStringDto";
 import type { PostalCodeBlockResultDtoInterface } from "../../../main/dto/postal/postalCodeBlockResultDto";
-import mockMakeSuggestBuildingList from "./mock/mockMakeSuggestBuildingList";
 import type { PostalCodeBuildingResultDtoInterface } from "../../../main/dto/postal/postalCodeBuildingResultDto";
+import mockMakeSuggestPostalList from "../../../test/common/input_address/mock/mockMakeSuggestPostalList";
+import mockMakeSuggestBlockList from "../../../test/common/input_address/mock/mockMakeSuggestBlockList";
+import mockMakeSuggestBuildingList from "../../../test/common/input_address/mock/mockMakeSuggestBuildingList";
+
 
 // よく使う定数
 const BLANK: string = "";
@@ -36,7 +37,7 @@ const listBlockSuggest: Ref<SelectOptionStringDtoInterface[]> = ref([]);
 const listBackupBlockSuggest: Ref<SelectOptionStringDtoInterface[]> = ref([]);
 
 /** 住所郵便建物 */
-const selectedAddressBuilding: Ref<number> = ref(0);
+// const selectedAddressBuilding: Ref<string> = ref("");
 const listBuildingSuggest: Ref<SelectOptionNumberDtoInterface[]> = ref([]);
 const listBackupBuildingSuggest: Ref<SelectOptionNumberDtoInterface[]> = ref([]);
 
@@ -55,13 +56,6 @@ function getAddressPostal() {
         isGyouseiku.value = resultDto.isGyouseikuData;
 
         // TODO 1件だったときは選択して番地住所検索をする
-    } else {
-        inputAddressDto.value.addressPostal = "";
-        inputAddressDto.value.addressBlock = "";
-        inputAddressDto.value.addressBuilding = "";
-        selectedAddressPostal.value = 0;
-        selectedAddressBlock.value = "";
-        selectedAddressBuilding.value = 0;
     }
 }
 
@@ -131,22 +125,18 @@ function filterSuggestBlock() {
 }
 
 /** 住所建物フィルタ時 */
-const filterBuilding: Ref<string> = ref("");
-function filterSuggestBuilding() {
-    const tempList = structuredClone(toRaw(listBackupBuildingSuggest.value));
-    listBuildingSuggest.value = tempList.filter((dto) => { if (dto.text.includes(filterBuilding.value)) { return true; } });
-}
+// const filterBuilding: Ref<string> = ref("");
+// function filterSuggestBuilding() {
+//     const tempList = structuredClone(toRaw(listBackupBuildingSuggest.value));
+//     listBuildingSuggest.value = tempList.filter((dto) => { if (dto.text.includes(filterBuilding.value)) { return true; } });
+// }
 
 /** 住所建物候補選択時 */
-function selectSuggestBuilding() {
-    // コード値の設定
-    const selectedDto: SelectOptionNumberDtoInterface | undefined
-        = listBuildingSuggest.value.filter(e => selectedAddressBuilding.value === e.value)[0];
-    if (undefined !== selectedDto) {
-        inputAddressDto.value.addressBuilding = selectedDto.text;
-        inputAddressDto.value.rsdtAddressBuilding = selectedDto.text;
-    }
-}
+// function selectSuggestBuilding() {
+//     // コード値の設定
+//     inputAddressDto.value.addressBuilding = selectedAddressBuilding.value;
+//     inputAddressDto.value.rsdtAddressBuilding = selectedAddressBuilding.value;
+// }
 
 /** 編集offにした場合は選択値に戻す */
 function onPostalEdit() {
@@ -172,17 +162,17 @@ function onBlockEdit() {
     }
 }
 
-/** 編集offにした場合は選択値に戻す */
-function onBuildingEdit() {
-    if (false === inputAddressDto.value.isBuildingEdit) {
-        const selectedDto = listBuildingSuggest.value.filter(e => selectedAddressBuilding.value === e.value)[0];
-        if (undefined !== selectedDto) {
-            inputAddressDto.value.addressBuilding = selectedDto.text;
-        } else {
-            inputAddressDto.value.addressBuilding = BLANK;
-        }
-    }
-}
+// /** 編集offにした場合は選択値に戻す */
+// function onBuildingEdit() {
+//     if (false === inputAddressDto.value.isBuildingEdit) {
+//         const selectedDto = listBuildingSuggest.value.filter(e => selectedAddressBuilding.value === e.value)[0];
+//         if (undefined !== selectedDto) {
+//             inputAddressDto.value.addressBuilding = selectedDto.text;
+//         } else {
+//             inputAddressDto.value.addressBuilding = BLANK;
+//         }
+//     }
+// }
 
 /**  
  * 入力内容を破棄する
@@ -272,6 +262,7 @@ function onSave() {
             </div>
         </div>
 
+        <!-- 
         <div class="one-line">
             <div class="left-area">
                 住所建物
@@ -294,7 +285,9 @@ function onSave() {
                 </div>
             </div>
         </div>
+        -->
 
+        <!-- 
         <div class="one-line">
             <div class="left-area">
                 住所コード
@@ -308,15 +301,17 @@ function onSave() {
                             class="short-input" disabled="true">
                     </div>
                     <div>
-                        街区Id<input type="text" v-model="inputAddressDto.blkId" class="code-input" disabled="true">
+                        <span></span>地番Id<input type="text" v-model="inputAddressDto.prcId" class="code-input" disabled="true">
+                        <span class="left-space">街区Id</span><input type="text" v-model="inputAddressDto.blkId" class="short-input" disabled="true">
                     </div>
                     <div>
-                        住居Id<input type="text" v-model="inputAddressDto.rsdtId" class="short-input" disabled="true">
-                        住居2Id<input type="text" v-model="inputAddressDto.rsdtId" class="short-input" disabled="true">
+                        <span></span>住居Id<input type="text" v-model="inputAddressDto.rsdtId" class="short-input" disabled="true">
+                        <span class="left-space">住居2Id</span><input type="text" v-model="inputAddressDto.rsdt2Id" class="short-input" disabled="true">
                     </div>
                 </div>
             </div>
         </div>
+        -->
     </div>
 
     <div class="footer">

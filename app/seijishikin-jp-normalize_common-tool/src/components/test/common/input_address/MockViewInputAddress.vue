@@ -1,13 +1,15 @@
 ﻿<script setup lang="ts">
-import { computed, ref, toRaw, type ComputedRef, type Ref } from "vue";
+import { computed, ref, type ComputedRef, type Ref } from "vue";
 import InputAddress from "./MockInputAddress.vue";
 import type { InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
 
 // props,emit
 const props = defineProps<{ editDto: InputAddressDtoInterface }>();
 
+const BLANK: string = "";
+
 // 入力用Dto
-const inputAddressDto: Ref<InputAddressDtoInterface> = ref(structuredClone(toRaw(props.editDto)));
+const inputAddressDto: ComputedRef<InputAddressDtoInterface> = computed(() => { return props.editDto });
 const isInput: Ref<boolean> = ref(false);
 const allPostalCode: ComputedRef<string> = computed(() => inputAddressDto.value.postalcode1 + inputAddressDto.value.postalcode2);
 
@@ -24,6 +26,8 @@ function onInputAddress() {
 function recieveCancelInputAddress() {
     //非表示
     isInput.value = false;
+    inputAddressDto.value.postalcode1 = BLANK;
+    inputAddressDto.value.postalcode2 = BLANK;
 }
 
 /**

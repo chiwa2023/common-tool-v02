@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { computed, ref, type ComputedRef, type Ref } from 'vue';
+import { computed, ref,  type ComputedRef, type Ref } from 'vue';
 import InputPersonName from './InputPersonName.vue';
 import type { InputPersonNameDtoInterface } from '../../../main/dto/input_person_name/inputPersonNameDto';
 
@@ -18,7 +18,6 @@ function onInputPersonName() {
 function recieveCancelInputPersonName() {
     // 非表示
     isInput.value = false;
-    console.log("recieveCancelInputPersonName: isInput.value:", isInput.value); // 追加
 }
 
 function recieveInputPersonNameInterface(sendDto: InputPersonNameDtoInterface) {

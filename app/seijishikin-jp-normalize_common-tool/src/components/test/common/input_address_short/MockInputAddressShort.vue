@@ -10,15 +10,15 @@ import mockMakeSuggestPostalList from "../input_address/mock/mockMakeSuggestPost
 import mockMakeSuggestBlockList from "../input_address/mock/mockMakeSuggestBlockList";
 import mockMakeSuggestBuildingList from "../input_address/mock/mockMakeSuggestBuildingList";
 
+// props,emit
+const props = defineProps<{ editDto: InputAddressDtoInterface }>();
+const emits = defineEmits(["sendCancelInputAddress", "sendInputAddressInterface"]);
+
 // よく使う定数
 const BLANK: string = "";
 // const INIT_NUMBER: number = 0;
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
-
-// props,emit
-const props = defineProps<{ editDto: InputAddressDtoInterface }>();
-const emits = defineEmits(["sendCancelInputAddress", "sendInputAddressInterface"]);
 
 /** 入力用Dto */
 const inputAddressDto: Ref<InputAddressDtoInterface> = ref(props.editDto);
@@ -37,9 +37,9 @@ const listBlockSuggest: Ref<SelectOptionStringDtoInterface[]> = ref([]);
 const listBackupBlockSuggest: Ref<SelectOptionStringDtoInterface[]> = ref([]);
 
 /** 住所郵便建物 */
-const selectedAddressBuilding: Ref<string> = ref("");
-const listBuildingSuggest: Ref<SelectOptionStringDtoInterface[]> = ref([]);
-const listBackupBuildingSuggest: Ref<SelectOptionStringDtoInterface[]> = ref([]);
+const selectedAddressBuilding: Ref<number> = ref(0);
+const listBuildingSuggest: Ref<SelectOptionNumberDtoInterface[]> = ref([]);
+const listBackupBuildingSuggest: Ref<SelectOptionNumberDtoInterface[]> = ref([]);
 
 /** 地方自治体住居検索 */
 const isGyouseiku: Ref<boolean> = ref(false);
@@ -56,6 +56,13 @@ function getAddressPostal() {
         isGyouseiku.value = resultDto.isGyouseikuData;
 
         // TODO 1件だったときは選択して番地住所検索をする
+    } else {
+        inputAddressDto.value.addressPostal = "";
+        inputAddressDto.value.addressBlock = "";
+        inputAddressDto.value.addressBuilding = "";
+        selectedAddressPostal.value = 0;
+        selectedAddressBlock.value = "";
+        selectedAddressBuilding.value = 0;
     }
 }
 
@@ -134,8 +141,12 @@ function filterSuggestBuilding() {
 /** 住所建物候補選択時 */
 function selectSuggestBuilding() {
     // コード値の設定
-    inputAddressDto.value.addressBuilding = selectedAddressBuilding.value;
-    inputAddressDto.value.rsdtAddressBuilding = selectedAddressBuilding.value;
+    const selectedDto: SelectOptionNumberDtoInterface | undefined
+        = listBuildingSuggest.value.filter(e => selectedAddressBuilding.value === e.value)[0];
+    if (undefined !== selectedDto) {
+        inputAddressDto.value.addressBuilding = selectedDto.text;
+        inputAddressDto.value.rsdtAddressBuilding = selectedDto.text;
+    }
 }
 
 /** 編集offにした場合は選択値に戻す */

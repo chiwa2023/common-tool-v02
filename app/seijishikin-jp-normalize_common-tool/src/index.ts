@@ -44,17 +44,30 @@ export { ViewInputAccess, InputAccess }
 /** 住所入力 */
 import { InputAddressDto, type InputAddressDtoInterface } from './components/main/dto/Input_address/inputAddressDto';
 export { InputAddressDto, type InputAddressDtoInterface }
+import { AddressRsdtTemplateDto,type AddressRsdtTemplateDtoInterface } from './components/main/dto/Input_address/addressRsdtTemplateDto';
+export { AddressRsdtTemplateDto,type AddressRsdtTemplateDtoInterface }
+import InputAddress from './components/main/common/input_address/InputAddress.vue';
+import ViewInputAddress from './components/main/common/input_address/ViewInputAddress.vue';
+import MockInputAddress from './components/test/common/input_address/MockInputAddress.vue';
 import MockViewInputAddress from './components/test/common/input_address/MockViewInputAddress.vue';
-export { MockViewInputAddress }
+export { InputAddress,ViewInputAddress,MockInputAddress,MockViewInputAddress }
+import InputAddressShort from './components/main/common/input_address_short/InputAddressShort.vue';
+import ViewInputAddressShort from './components/main/common/input_address_short/ViewInputAddressShort.vue';
+import MockInputAddressShort from './components/test/common/input_address_short/MockInputAddressShort.vue';
 import MockViewInputAddressShort from './components/test/common/input_address_short/MockViewInputAddressShort.vue';
-export { MockViewInputAddressShort }
+export { InputAddressShort,ViewInputAddressShort,MockInputAddressShort,MockViewInputAddressShort }
+import EditAddress from './components/main/common/input_address/EditAddress.vue';
+import InputBuildingAddress from './components/main/common/input_address/InputBuildingAddress.vue';
+import InputCompareAddress from './components/main/common/input_address/InputCompareAddress.vue';
+export { EditAddress,InputBuildingAddress, InputCompareAddress}
 
 /** 職業入力 */
 import { InputShokugyouDto, type InputShokugyouDtoInterface } from './components/main/dto/input_shokugyou/inputShokugyouDto';
 export { InputShokugyouDto, type InputShokugyouDtoInterface }
 import ViewInputShokugyou from './components/main/common/input_shokugyou/ViewInputShokugyou.vue';
 import InputShokugyou from './components/main/common/input_shokugyou/InputShokugyou.vue';
-export { ViewInputShokugyou, InputShokugyou }
+import InputCompareShokugyou from './components/main/common/input_shokugyou/InputCompareShokugyou.vue';
+export { ViewInputShokugyou, InputShokugyou, InputCompareShokugyou }
 
 /** 法人番号検索 */
 import SearchHoujinNo from './components/main/common/search_houjin_no/SearchHoujinNo.vue';
@@ -69,8 +82,9 @@ export { type LeastUserDtoInterface, LeastUserDto }
 
 /** 日付 */
 import InputDate from './components/main/common/date/InputDate.vue';
+import InputDateAndNull from './components/main/common/date/InputDateAndNull.vue';
 import InputDatetime from './components/main/common/date/InputDatetime.vue';
 import convertDateText from './components/main/common/date/convertDateText';
 import convertDatetimeText from './components/main/common/date/convertDatetimeText';
-export { InputDate, InputDatetime }
+export { InputDate, InputDatetime, InputDateAndNull }
 export { convertDateText, convertDatetimeText }

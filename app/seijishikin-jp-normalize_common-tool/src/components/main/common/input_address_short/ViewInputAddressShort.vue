@@ -1,15 +1,23 @@
 ﻿<script setup lang="ts">
-import { computed, ref, toRaw, type ComputedRef, type Ref } from "vue";
-import type { InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
+import { computed, onMounted, ref, toRaw, type ComputedRef, type Ref } from "vue";
+import { InputAddressDto, type InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
 import InputAddressShort from "./InputAddressShort.vue";
 
 // props,emit
-const props = defineProps<{ editDto: InputAddressDtoInterface }>();
+const props = defineProps<{ editDto: InputAddressDtoInterface, longToken: string }>();
 
 // 入力用Dto
-const inputAddressDto: Ref<InputAddressDtoInterface> = ref(structuredClone(toRaw(props.editDto)));
+const inputAddressDto: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
+const inputAddressDtoBack: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
+
 const isInput: Ref<boolean> = ref(false);
 const allPostalCode: ComputedRef<string> = computed(() => inputAddressDto.value.postalcode1 + inputAddressDto.value.postalcode2);
+const token: ComputedRef<string> = computed(() => { return props.longToken });
+
+onMounted(() => {
+    inputAddressDto.value = structuredClone(toRaw(props.editDto));
+    inputAddressDtoBack.value = structuredClone(toRaw(inputAddressDto.value));
+});
 
 /**
 * 関連者検索コンポーネント表示
@@ -78,7 +86,8 @@ function recieveInputAddressInterface(sendDto: InputAddressDtoInterface) {
     <!-- 住所入力 -->
     <div v-if="isInput" class="overBackground"></div>
     <div class="overComponent" v-if="isInput">
-        <InputAddressShort v-if="isInput" :edit-dto="inputAddressDto" @send-cancel-input-address="recieveCancelInputAddress"
+        <InputAddressShort v-if="isInput" :edit-dto="inputAddressDto" :long-token="token"
+            @send-cancel-input-address="recieveCancelInputAddress"
             @send-input-address-interface="recieveInputAddressInterface">
             ></InputAddressShort>
     </div>

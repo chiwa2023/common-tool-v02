@@ -16,6 +16,18 @@ public class SelectOptionStringDto implements Serializable { // NOPMD DataClass
     /** 初期データ(String) */
     private static final String INIT_String = "";
 
+    /**
+     * コンストラクタ
+     *
+     * @param value 選択肢の値
+     * @param text  選択肢表示テキスト
+     */
+    public SelectOptionStringDto(final String value, final String text) {
+        super();
+        this.value = value;
+        this.text = text;
+    }
+
     /** 選択肢値 */
     @Id
     @Column(name = "value")
