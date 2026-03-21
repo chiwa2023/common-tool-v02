@@ -45,10 +45,13 @@ const inputAddressDto: Ref<InputAddressDtoInterface> = ref(props.editDto);
 const addressAll: ComputedRef<string> = computed(() =>
     inputAddressDto.value.addressPostal + inputAddressDto.value.addressBlock + "　" + inputAddressDto.value.addressBuilding);
 
+// TODO 最終的なチェックは関連者でdevelopブランチにsecurityとbackをマージしたときに行う
 onMounted(() => {
-    userInfo.jwtDto.refreshToken = props.longToken;
-    userInfo.jwtDto.accessToken = props.longToken;
-    userInfo.jwtDto.expiresAt = new Date(2000, 1, 1);
+    if (BLANK !== props.longToken) {
+        userInfo.jwtDto.refreshToken = props.longToken;
+        userInfo.jwtDto.accessToken = props.longToken;
+        userInfo.jwtDto.expiresAt = new Date(2000, 1, 1);
+    }
 });
 
 
@@ -638,7 +641,6 @@ function recieveSubmit() {
     </div>
 
     <!-- メッセージ表示 -->
-    <!-- ダイアログ用のコンテナ -->
     <div class="overMessage" v-if="messageType !== MessageConstants.VIEW_NONE">
         <MessageView :info-level="infoLevel" :message-type="messageType" :title="title" :message="message"
             @send-submit="recieveSubmit">

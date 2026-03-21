@@ -40,6 +40,9 @@ export { InputAccessDto, type InputAccessDtoInterface }
 import ViewInputAccess from './components/main/common/input_access/ViewInputAccess.vue';
 import InputAccess from './components/main/common/input_access/InputAccess.vue';
 export { ViewInputAccess, InputAccess }
+import MockViewInputAccess from './components/test/common/input_access/MockViewInputAccess.vue';
+import MockInputAccess from './components/test/common/input_access/MockInputAccess.vue';
+export { MockViewInputAccess, MockInputAccess }
 
 /** 住所入力 */
 import { InputAddressDto, type InputAddressDtoInterface } from './components/main/dto/Input_address/inputAddressDto';

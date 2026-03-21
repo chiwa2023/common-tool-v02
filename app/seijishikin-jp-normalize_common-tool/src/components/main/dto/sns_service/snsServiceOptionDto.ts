@@ -2,33 +2,25 @@ import { SelectOptionNumberDto, type SelectOptionNumberDtoInterface } from "../s
 
 interface SnsServiceOptionDtoInterface extends SelectOptionNumberDtoInterface {
 
-    /** SNSサービスId */
-    snsServiceId: number;
 
     /** SNSサービスコード */
-    snsServiceCode: number;
+    serviceCode: number;
 
-    /** SNSサービス名称 */
-    snsServiceName: string;
 
     /** SNS玄関url */
-    snsPortalUrl: string;
+    portalUrl: string;
 
 }
 
 class SnsServiceOptionDto extends SelectOptionNumberDto implements SnsServiceOptionDtoInterface {
 
-    /** SNSサービスId */
-    snsServiceId: number;
 
     /** SNSサービスコード */
-    snsServiceCode: number;
+    serviceCode: number;
 
-    /** SNSサービス名称 */
-    snsServiceName: string;
 
     /** SNS玄関url */
-    snsPortalUrl: string;
+    portalUrl: string;
 
     constructor() {
         super();
@@ -36,10 +28,8 @@ class SnsServiceOptionDto extends SelectOptionNumberDto implements SnsServiceOpt
         const INIT_STRING: string = "";
         const INIT_NUMBER: number = 0;
 
-        this.snsServiceId = INIT_NUMBER;
-        this.snsServiceCode = INIT_NUMBER;
-        this.snsServiceName = INIT_STRING;
-        this.snsPortalUrl = INIT_STRING;
+        this.serviceCode = INIT_NUMBER;
+        this.portalUrl = INIT_STRING;
     }
 }
 

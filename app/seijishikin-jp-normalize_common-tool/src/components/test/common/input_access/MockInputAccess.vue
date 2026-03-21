@@ -1,37 +1,12 @@
 ﻿<script setup lang="ts">
-import { onMounted, ref, toRaw, type Ref } from 'vue';
-import type { InputAccessDtoInterface } from '../../dto/input_access/inputAccessDto';
-import { type SnsServiceOptionDtoInterface } from '../../dto/sns_service/snsServiceOptionDto';
-import { mockGetSnsServiceOptions } from '../../../test/dto/sns_service/mockGetSnsServiceOptions';
-import { useUserInfoStore } from '../../stores/storeUserInfo';
-import getAuthorizedPromiseArea from '../../dto/login/getAuthorizedPromiseArea';
-import { MessageConstants } from '../../dto/message/messageConstants';
-import MessageView from '../message/MessageView.vue';
-import { AccessTokenNotFoundError, TokenRefreshError } from '../../dto/login/errors';
-import RoutePathConstants from '../../../../routePathConstants';
+import { ref, toRaw, type Ref } from 'vue';
+import { mockGetSnsServiceOptions } from '../../dto/sns_service/mockGetSnsServiceOptions';
+import type { InputAccessDtoInterface } from '../../../main/dto/input_access/inputAccessDto';
+import type { SnsServiceOptionDtoInterface } from '../../../main/dto/sns_service/snsServiceOptionDto';
 
 // props,emmits
-const props = defineProps<{ editDto: InputAccessDtoInterface, longToken: string }>();
+const props = defineProps<{ editDto: InputAccessDtoInterface }>();
 const emits = defineEmits(["sendCancelInputAccess", "sendInputAccessInterface"]);
-
-// back側アクセス
-const urlBack: string = RoutePathConstants.DOMAIN + RoutePathConstants.BASE_PATH;
-
-// よく使う定数
-const BLANK: string = "";
-// const INIT_NUMBER: number = 0;
-// const SERVER_STATUS_OK: number = 200;
-// const SERVER_STATUS_ACCEPTED: number = 202;
-// const SERVER_STATUS_ERROR: number = 400;
-
-// pinia
-const userInfo = useUserInfoStore();
-
-// メッセージボックス表示定数
-const infoLevel: Ref<number> = ref(MessageConstants.LEVEL_NONE);
-const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
-const title: Ref<string> = ref(BLANK);
-const message: Ref<string> = ref(BLANK);
 
 // 編集Dto
 const inputAccessDto: Ref<InputAccessDtoInterface> = ref(structuredClone(toRaw(props.editDto)));
@@ -40,58 +15,6 @@ const inputAccessDto: Ref<InputAccessDtoInterface> = ref(structuredClone(toRaw(p
 const listSnsService: Ref<SnsServiceOptionDtoInterface[]> = ref(mockGetSnsServiceOptions());
 const selectedSnsService: Ref<number> = ref(0);
 const isDisabled: Ref<boolean> = ref(false);
-
-// TODO 最終的なチェックは関連者でdevelopブランチにsecurityとbackをマージしたときに行う
-onMounted(() => {
-    // トークンが設定されていない場合は保存
-    if (BLANK !== props.longToken) {
-        userInfo.jwtDto.refreshToken = props.longToken;
-        userInfo.jwtDto.accessToken = props.longToken;
-        userInfo.jwtDto.expiresAt = new Date(2000, 1, 1);
-    }
-    // SNSリストを取得
-    getAuthorizedPromiseArea().then(token => {
-
-        const url = urlBack + "/sns-service/get-options";
-        const method = "POST";
-        const body = "{}";
-        const headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-AUTH-TOKEN': 'Bearer ' + token
-        };
-        fetch(url, { method, headers, body })
-            .then(async (response) => {
-                listSnsService.value = await response.json();
-            })
-            .catch(() => {
-                // 実処理側エラー
-                infoLevel.value = MessageConstants.LEVEL_ERROR;
-                messageType.value = MessageConstants.VIEW_OK;
-                title.value = "システムエラーが発生しました";
-                message.value = "システム管理者にお問い合わせください";
-            });
-    }).catch((e) => {
-        // トークン関数側エラー
-        infoLevel.value = MessageConstants.LEVEL_ERROR;
-        messageType.value = MessageConstants.VIEW_OK;
-        if (e instanceof AccessTokenNotFoundError) {
-            title.value = "現在トークンが存在しません";
-            message.value = e.message;
-            return;
-        }
-        if (e instanceof TokenRefreshError) {
-            // 取得に失敗している場合
-            title.value = "有効期限まじかのトークンを再取得できませんでした";
-            message.value = e.message;
-            return;
-        }
-        title.value = "システムエラーが発生しました";
-        message.value = "システム管理者にお問い合わせください";
-    });
-
-
-});
 
 
 /**
@@ -131,13 +54,6 @@ function onSave() {
  */
 function onCancel() {
     emits("sendCancelInputAccess");
-}
-
-function recieveSubmit() {
-    // ボタンの挙動を変える必要はない
-    // 非表示
-    infoLevel.value = 0;
-    messageType.value = 0;
 }
 </script>
 
@@ -208,13 +124,6 @@ function recieveSubmit() {
     <div class="footer">
         <button @click="onCancel" class="footer-button">キャンセル</button>
         <button @click="onSave" class="footer-button left-space">選択</button>
-    </div>
-
-    <!-- メッセージ表示 -->
-    <div class="overMessage" v-if="messageType !== MessageConstants.VIEW_NONE">
-        <MessageView :info-level="infoLevel" :message-type="messageType" :title="title" :message="message"
-            @send-submit="recieveSubmit">
-        </MessageView>
     </div>
 
 </template>

@@ -62,10 +62,13 @@ const listBackupBuildingSuggest: Ref<SelectOptionNumberDtoInterface[]> = ref([])
 /** 地方自治体住居検索 */
 const isGyouseiku: Ref<boolean> = ref(false);
 
+// TODO 最終的なチェックは関連者でdevelopブランチにsecurityとbackをマージしたときに行う
 onMounted(() => {
-    userInfo.jwtDto.refreshToken = props.longToken;
-    userInfo.jwtDto.accessToken = props.longToken;
-    userInfo.jwtDto.expiresAt = new Date(2000, 1, 1);
+    if (BLANK !== props.longToken) {
+        userInfo.jwtDto.refreshToken = props.longToken;
+        userInfo.jwtDto.accessToken = props.longToken;
+        userInfo.jwtDto.expiresAt = new Date(2000, 1, 1);
+    }
 });
 
 // /** 郵便番号取得 */

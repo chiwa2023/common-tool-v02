@@ -14,13 +14,11 @@ function mockGetSnsServiceOptions(): SnsServiceOptionDtoInterface[] {
 function createDto(index: number) {
 
     const dto: SnsServiceOptionDtoInterface = new SnsServiceOptionDto();
-    dto.snsServiceId = index;
-    dto.snsServiceCode = index;
-    dto.snsServiceName = "SNSサービス" + index;
-    dto.snsPortalUrl = "https://example.com/" + index;
+    dto.value = index;
+    dto.serviceCode = index;
+    dto.text = "SNSサービス" + index;
+    dto.portalUrl = "https://example.com/" + index;
 
-    dto.value = dto.snsServiceId;
-    dto.text =  dto.snsServiceName;
     return dto;
 }
 
@@ -28,13 +26,10 @@ function createNotSet() {
 
     const dto: SnsServiceOptionDtoInterface = new SnsServiceOptionDto();
 
-    dto.snsServiceId = 0;
-    dto.snsServiceCode = 0;
-    dto.snsServiceName = "";
-    dto.snsPortalUrl = "";
-
-    dto.value = dto.snsServiceId;
-    dto.text =  dto.snsServiceName;
+    dto.value = 0;
+    dto.serviceCode = 0;
+    dto.text = "";
+    dto.portalUrl = "";
     return dto;
 }
 

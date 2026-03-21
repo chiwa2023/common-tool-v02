@@ -4,7 +4,7 @@ import InputAddress from "./InputAddress.vue";
 import { InputAddressDto, type InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
 
 // props,emit
-const props = defineProps<{ editDto: InputAddressDtoInterface,longToken:string }>();
+const props = defineProps<{ editDto: InputAddressDtoInterface, longToken: string }>();
 
 // 入力用Dto
 const inputAddressDto: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
@@ -33,7 +33,7 @@ function onInputAddress() {
  */
 function recieveCancelInputAddress() {
 
-    
+
     inputAddressDto.value = structuredClone(toRaw(inputAddressDtoBack.value));
 
 
@@ -93,7 +93,8 @@ function recieveInputAddressInterface(sendDto: InputAddressDtoInterface) {
     <!-- 住所入力 -->
     <div v-if="isInput" class="overBackground"></div>
     <div class="overComponent" v-if="isInput">
-        <InputAddress v-if="isInput" :edit-dto="inputAddressDto" :long-token="token" @send-cancel-input-address="recieveCancelInputAddress"
+        <InputAddress v-if="isInput" :edit-dto="inputAddressDto" :long-token="token"
+            @send-cancel-input-address="recieveCancelInputAddress"
             @send-input-address-interface="recieveInputAddressInterface">
             ></InputAddress>
     </div>

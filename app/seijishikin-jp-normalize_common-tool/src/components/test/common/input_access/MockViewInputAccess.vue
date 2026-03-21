@@ -1,13 +1,12 @@
 ﻿<script setup lang="ts">
 import { computed, ref, type ComputedRef, type Ref } from 'vue';
-import type { InputAccessDtoInterface } from '../../dto/input_access/inputAccessDto';
-import InputAccess from './InputAccess.vue';
+import InputAccess from './MockInputAccess.vue';
+import type { InputAccessDtoInterface } from '../../../main/dto/input_access/inputAccessDto';
 
 // props,emits
-const props = defineProps<{ editDto: InputAccessDtoInterface, longToken: string }>();
+const props = defineProps<{ editDto: InputAccessDtoInterface }>();
 
 // 編集Dto
-const token: ComputedRef<string> = computed(() => { return props.longToken });
 const inputAccessDto: ComputedRef<InputAccessDtoInterface> = computed(() => { return props.editDto });
 
 const allPhon: ComputedRef<string> =
@@ -97,7 +96,7 @@ function recieveInputAccessInterface(sendDto: InputAccessDtoInterface) {
     <!-- 連絡先詳細入力 -->
     <div v-if="isInput" class="overBackground"></div>
     <div class="overComponent" v-if="isInput">
-        <InputAccess :edit-dto="inputAccessDto" :long-token="token" @send-cancel-input-access="recieveCancelInputAccess"
+        <InputAccess :edit-dto="inputAccessDto" @send-cancel-input-access="recieveCancelInputAccess"
             @send-input-access-interface="recieveInputAccessInterface"></InputAccess>
     </div>
 

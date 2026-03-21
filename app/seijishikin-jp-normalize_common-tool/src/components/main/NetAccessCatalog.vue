@@ -22,10 +22,8 @@ const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
 const title: Ref<string> = ref(BLANK);
 const message: Ref<string> = ref(BLANK);
 
-
 // token
 const longToken: Ref<string> = ref(BLANK);
-
 
 function recieveSubmit(button: string) {
     alert(button);
@@ -41,6 +39,9 @@ const inputAccessDto: Ref<InputAccessDtoInterface> = ref(new InputAccessDto());
 const inputAddressDto: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
 const inputAddressDtoShort: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
 
+function onCancel() {
+    history.back();
+}
 
 </script>
 <template>
@@ -54,7 +55,7 @@ const inputAddressDtoShort: Ref<InputAddressDtoInterface> = ref(new InputAddress
                 長期トークン
             </div>
             <div class="right-area">
-                <textarea type="text" class="max-input"  v-model="longToken"></textarea>
+                <textarea type="text" class="max-input" v-model="longToken"></textarea>
             </div>
         </div>
 
@@ -67,7 +68,11 @@ const inputAddressDtoShort: Ref<InputAddressDtoInterface> = ref(new InputAddress
         <ViewInputAddressShort :edit-dto="inputAddressDtoShort" :long-token="longToken"></ViewInputAddressShort>
 
         <!-- 連絡先 -->
-        <ViewInputAccess :edit-dto="inputAccessDto"></ViewInputAccess>
+        <ViewInputAccess :edit-dto="inputAccessDto" :long-token="longToken"></ViewInputAccess>
+
+        <div class="footer">
+            <button @click="onCancel" class="footer-button">キャンセル</button>
+        </div>
 
         <!-- メッセージ表示 -->
         <!-- ダイアログ用のコンテナ -->

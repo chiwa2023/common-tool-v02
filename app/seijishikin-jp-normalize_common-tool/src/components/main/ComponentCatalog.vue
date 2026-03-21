@@ -8,7 +8,6 @@ import { InputPersonNameDto, type InputPersonNameDtoInterface } from './dto/inpu
 import { InputAccessDto, type InputAccessDtoInterface } from './dto/input_access/inputAccessDto';
 import { InputAddressDto, type InputAddressDtoInterface } from './dto/Input_address/inputAddressDto';
 import { InputShokugyouDto, type InputShokugyouDtoInterface } from './dto/input_shokugyou/inputShokugyouDto';
-import ViewInputAccess from './common/input_access/ViewInputAccess.vue';
 import ViewInputShokugyou from './common/input_shokugyou/ViewInputShokugyou.vue';
 import ViewInputOrgName from './common/input_org_name/ViewInputOrgName.vue';
 import ViewInputPersonName from './common/input_person_name/ViewInputPersonName.vue';
@@ -16,6 +15,7 @@ import InputDatetime from './common/date/InputDatetime.vue';
 import InputDate from './common/date/InputDate.vue';
 import MockViewInputAddress from '../test/common/input_address/MockViewInputAddress.vue';
 import MockViewInputAddressShort from '../test/common/input_address_short/MockViewInputAddressShort.vue';
+import MockViewInputAccess from '../test/common/input_access/MockViewInputAccess.vue';
 
 //仮
 // よく使う定数
@@ -118,7 +118,6 @@ function onInitialize() {
     inputAccessDto.value = new InputAccessDto();
     inputShokugyouDto.value = new InputShokugyouDto();
 }
-
 </script>
 <template>
     <div class="container">
@@ -158,7 +157,7 @@ function onInitialize() {
         <MockViewInputAddressShort :edit-dto="inputAddressDtoShort"></MockViewInputAddressShort>
 
         <!-- 連絡先 -->
-        <ViewInputAccess :edit-dto="inputAccessDto"></ViewInputAccess>
+        <MockViewInputAccess :edit-dto="inputAccessDto"></MockViewInputAccess>
 
         <!-- 職業 -->
         <ViewInputShokugyou :edit-dto="inputShokugyouDto"></ViewInputShokugyou>

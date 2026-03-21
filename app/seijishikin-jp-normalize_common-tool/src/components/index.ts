@@ -28,9 +28,6 @@ export { InputOrgNameDto, type InputOrgNameDtoInterface }
 import { InputPersonNameDto, type InputPersonNameDtoInterface } from './main/dto/input_person_name/inputPersonNameDto';
 export { InputPersonNameDto, type InputPersonNameDtoInterface }
 
-/** 連絡先入力 */
-import { InputAccessDto, type InputAccessDtoInterface } from './main/dto/input_access/inputAccessDto';
-export { InputAccessDto, type InputAccessDtoInterface }
 
 /** 住所入力 */
 import { InputAddressDto, type InputAddressDtoInterface } from './main/dto/Input_address/inputAddressDto';
@@ -53,9 +50,14 @@ import InputCompareAddress from './main/common/input_address/InputCompareAddress
 export { EditAddress,InputBuildingAddress, InputCompareAddress}
 
 /** 連絡先入力 */
+import { InputAccessDto, type InputAccessDtoInterface } from './main/dto/input_access/inputAccessDto';
+export { InputAccessDto, type InputAccessDtoInterface }
 import ViewInputAccess from './main/common/input_access/ViewInputAccess.vue';
 import InputAccess from './main/common/input_access/InputAccess.vue';
 export { ViewInputAccess, InputAccess }
+import MockViewInputAccess from './test/common/input_access/MockViewInputAccess.vue';
+import MockInputAccess from './test/common/input_access/MockInputAccess.vue';
+export { MockViewInputAccess, MockInputAccess }
 
 /** 職業入力 */
 import { InputShokugyouDto, type InputShokugyouDtoInterface } from './main/dto/input_shokugyou/inputShokugyouDto';
