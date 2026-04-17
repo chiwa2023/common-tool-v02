@@ -25,10 +25,14 @@ class SetTableDataHistoryUtilTest {
         util.practiceInsert(userDto, entity00);
 
         // insertにUserが最新で登録されていること
+        assertEquals(SetTableDataHistoryUtil.INSERT_STATE, entity00.getIsLatest());
+
         assertEquals(userDto.getUserPersonId(), entity00.getInsertUserId());
         assertEquals(userDto.getUserPersonCode(), entity00.getInsertUserCode());
         assertEquals(userDto.getUserPersonName(), entity00.getInsertUserName());
-        assertEquals(SetTableDataHistoryUtil.INSERT_STATE, entity00.getIsLatest());
+        assertEquals(0, entity00.getDeleteUserId());
+        assertEquals(0, entity00.getDeleteUserCode());
+        assertEquals("", entity00.getDeleteUserName());
     }
 
     @Test
@@ -59,7 +63,7 @@ class SetTableDataHistoryUtilTest {
         assertEquals(userDto.getUserPersonCode(), entity00.getDeleteUserCode());
         assertEquals(userDto.getUserPersonName(), entity00.getDeleteUserName());
         assertEquals(SetTableDataHistoryUtil.DELETE_STATE, entity00.getIsLatest());
-        
+
         // すでに削除履歴をもう一度更新しようとすると、例外を返して処理中断(最後の排他確認)
         assertThrows(HeuristicCompletionException.class, () -> util.practiceDelete(userDto, entity00));
     }

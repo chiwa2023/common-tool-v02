@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.HeuristicCompletionException;
 
+import net.seijishikin.jp.normalize.common_tool.dto.DtoEntityInitialValueInterface;
 import net.seijishikin.jp.normalize.common_tool.dto.LeastUserDto;
 import net.seijishikin.jp.normalize.common_tool.entity.AllTabeDataHistoryInterface;
 
@@ -21,7 +22,8 @@ public class SetTableDataHistoryUtil {
     public static final boolean DELETE_STATE = false;
 
     /** 未削除判定比較値 */
-    public LocalDateTime DELETE_LIMIT_TIMESTAMP = LocalDateTime.of(1948, 7, 29, 0, 0, 0); // SUPPRESS CHECKSTYLE MagicNumber
+    public static final LocalDateTime DELETE_LIMIT_TIMESTAMP = //
+            LocalDateTime.of(1948, 7, 29, 0, 0, 0); // SUPPRESS CHECKSTYLE // MagicNumber
 
     /**
      * データ履歴カラムにデータを入力する
@@ -39,6 +41,12 @@ public class SetTableDataHistoryUtil {
         interfaceImple.setInsertUserCode(userDto.getUserPersonCode());
         interfaceImple.setInsertUserName(userDto.getUserPersonName());
         interfaceImple.setInsertTimestamp(timestamp);
+
+        // すでに履歴となったデータから最新を起こす可能性があるので削除側は常に初期化
+        interfaceImple.setDeleteUserId(DtoEntityInitialValueInterface.INIT_INTEGER);
+        interfaceImple.setDeleteUserCode(DtoEntityInitialValueInterface.INIT_INTEGER);
+        interfaceImple.setDeleteUserName(DtoEntityInitialValueInterface.INIT_STRING);
+        interfaceImple.setDeleteTimestamp(DtoEntityInitialValueInterface.INIT_TIMESTAMP);
     }
 
     /**
