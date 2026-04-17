@@ -11,11 +11,11 @@ import { InputShokugyouDto, type InputShokugyouDtoInterface } from './dto/input_
 import ViewInputShokugyou from './common/input_shokugyou/ViewInputShokugyou.vue';
 import ViewInputOrgName from './common/input_org_name/ViewInputOrgName.vue';
 import ViewInputPersonName from './common/input_person_name/ViewInputPersonName.vue';
-import InputDatetime from './common/date/InputDatetime.vue';
 import InputDate from './common/date/InputDate.vue';
 import MockViewInputAddress from '../test/common/input_address/MockViewInputAddress.vue';
 import MockViewInputAddressShort from '../test/common/input_address_short/MockViewInputAddressShort.vue';
 import MockViewInputAccess from '../test/common/input_access/MockViewInputAccess.vue';
+import InputDatetimeAndNull from './common/date/InputDatetimeAndNull.vue';
 
 //仮
 // よく使う定数
@@ -84,21 +84,40 @@ const inputAddressDto: Ref<InputAddressDtoInterface> = ref(new InputAddressDto()
 const inputAddressDtoShort: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
 const inputShokugyouDto: Ref<InputShokugyouDtoInterface> = ref(new InputShokugyouDto());
 
-const datetime: Ref<Date> = ref(new Date());
+const datetime0: Ref<Date> = ref(new Date());
+const datetime1: Ref<Date> = ref(new Date());
 
 function recieveDateTime(date: Date, index: number) {
+    if (0 == index) {
+        datetime0.value = date;
+    }
     if (1 == index) {
-        datetime.value = date;
+        datetime1.value = date;
     }
 }
 
-function onShowISO() {
-    alert(datetime.value.toISOString());
+function onShowISO(index: number) {
+    let datetime: Date = new Date();
+    if (0 == index) {
+        datetime = datetime0.value;
+    }
+    if (1 == index) {
+        datetime = datetime1.value;
+    }
+
+    alert(datetime.toISOString());
 }
 
-function onShowLocal() {
+function onShowLocal(index: number) {
+    let datetime: Date = new Date();
+    if (0 == index) {
+        datetime = datetime0.value;
+    }
+    if (1 == index) {
+        datetime = datetime1.value;
+    }
 
-    alert(datetime.value.toLocaleString('sv-SE'));
+    alert(datetime.toLocaleString('sv-SE'));
 }
 
 function onRefreshInfo() {
@@ -178,9 +197,9 @@ function onInitialize() {
                 日時
             </div>
             <div class="right-area">
-                <InputDatetime :datetime="datetime" :is-edit="true" :index="1" @send-date-time="recieveDateTime">
-                </InputDatetime><button @click="onShowISO" class="left-spacce">ISO</button> <button @click="onShowLocal"
-                    class="left-spacce">ローカル</button>
+                <InputDatetimeAndNull :datetime="datetime0" :is-edit="true" :index="0" @send-date-time="recieveDateTime">
+                </InputDatetimeAndNull><button @click="onShowISO(0)" class="left-spacce">ISO</button> <button
+                    @click="onShowLocal(0)" class="left-spacce">ローカル</button>
             </div>
         </div>
 
@@ -190,9 +209,9 @@ function onInitialize() {
                 日付
             </div>
             <div class="right-area">
-                <InputDate :date="datetime" :is-edit="true" :index="1" @send-date-time="recieveDateTime">
-                </InputDate><button @click="onShowISO" class="left-spacce">ISO</button> <button @click="onShowLocal"
-                    class="left-spacce">ローカル</button>
+                <InputDate :date="datetime1" :is-edit="true" :index="1" @send-date-time="recieveDateTime">
+                </InputDate><button @click="onShowISO(1)" class="left-spacce">ISO</button> <button
+                    @click="onShowLocal(1)" class="left-spacce">ローカル</button>
             </div>
         </div>
 

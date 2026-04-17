@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, ref, type Ref } from 'vue';
+import { computed, type ComputedRef } from 'vue';
 
 
 // props,emmits
@@ -18,12 +18,11 @@ const BLANK: string = "";
 //const title: Ref<string> = ref(BLANK);
 //const message: Ref<string> = ref(BLANK);
 
-const dateString: Ref<string | null> = ref(BLANK);
-onBeforeMount(() => {
-    if (props.date !== null) {
-        dateString.value = props.date.toLocaleDateString('sv-SE');
+const dateString: ComputedRef<string | null> = computed(() => {
+    if (null === props.date) {
+        return BLANK;
     } else {
-        dateString.value = BLANK;
+        return props.date.toLocaleDateString('sv-SE');
     }
 });
 
@@ -37,7 +36,6 @@ function onDataChange() {
             const sendData: Date = new Date(parseInt(dateCell[0]), parseInt(dateCell[1]) - 1, parseInt(dateCell[2]));
             emits("sendDate", sendData, props.index);
         } else {
-            dateString.value = null;
             emits("sendDate", null, props.index);
         }
     }

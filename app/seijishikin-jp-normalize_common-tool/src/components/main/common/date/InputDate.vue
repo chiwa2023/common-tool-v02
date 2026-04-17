@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, ref, type Ref } from 'vue';
+import { computed, type ComputedRef } from 'vue';
 
 
 // props,emmits
@@ -8,7 +8,7 @@ const emits = defineEmits(["sendDate"]);
 
 //仮
 // よく使う定数
-const BLANK: string = "";
+// const BLANK: string = "";
 // const INIT_NUMBER: number = 0;
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
@@ -18,17 +18,11 @@ const BLANK: string = "";
 //const title: Ref<string> = ref(BLANK);
 //const message: Ref<string> = ref(BLANK);
 
-const dateString: Ref<string> = ref(BLANK);
-onBeforeMount(() => {
-    if (props.date !== null) {
-        dateString.value = props.date.toLocaleDateString('sv-SE');
-    } else {
-        dateString.value = BLANK;
-    }
+const dateString: ComputedRef<string> = computed(() => {
+    return props.date.toLocaleDateString('sv-SE');
 });
 
 function onDataChange() {
-
     if (null === dateString.value) {
         emits("sendDate", null, props.index);
     } else {
@@ -37,8 +31,6 @@ function onDataChange() {
             const sendData: Date = new Date(parseInt(dateCell[0]), parseInt(dateCell[1]) - 1, parseInt(dateCell[2]));
             emits("sendDate", sendData, props.index);
         } else {
-            // 変な値が来たらこのシステム固有の初期値を返す
-            dateString.value = "1948-07-28T23:59:59";
             emits("sendDate", new Date(dateString.value), props.index);
         }
     }
