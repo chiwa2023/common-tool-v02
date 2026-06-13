@@ -13,9 +13,6 @@ public class SelectOptionStringDto implements Serializable { // NOPMD DataClass
     /** Serialize id */
     private static final long serialVersionUID = 1L;
 
-    /** 初期データ(String) */
-    private static final String INIT_String = "";
-
     /**
      * コンストラクタ
      *
@@ -31,11 +28,11 @@ public class SelectOptionStringDto implements Serializable { // NOPMD DataClass
     /** 選択肢値 */
     @Id
     @Column(name = "value")
-    private String value = INIT_String;
+    private String value;
 
     /** 選択肢表示テキスト */
     @Column(name = "text")
-    private String text = INIT_String;
+    private String text;
 
     /**
      * 値を取得する

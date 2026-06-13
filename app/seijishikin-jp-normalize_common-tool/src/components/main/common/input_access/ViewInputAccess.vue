@@ -4,10 +4,9 @@ import type { InputAccessDtoInterface } from '../../dto/input_access/inputAccess
 import InputAccess from './InputAccess.vue';
 
 // props,emits
-const props = defineProps<{ editDto: InputAccessDtoInterface, longToken: string }>();
+const props = defineProps<{ editDto: InputAccessDtoInterface }>();
 
 // 編集Dto
-const token: ComputedRef<string> = computed(() => { return props.longToken });
 const inputAccessDto: ComputedRef<InputAccessDtoInterface> = computed(() => { return props.editDto });
 
 const allPhon: ComputedRef<string> =
@@ -16,32 +15,33 @@ const allPhon: ComputedRef<string> =
     });
 
 
-const isInput: Ref<boolean> = ref(false);
+const isInputAccess: Ref<boolean> = ref(false);
 
 function onInputAccess() {
     // 表示
-    isInput.value = true;
+    isInputAccess.value = true;
 }
 
 function recieveCancelInputAccess() {
     // 非表示
-    isInput.value = false;
+    isInputAccess.value = false;
 }
 
 function recieveInputAccessInterface(sendDto: InputAccessDtoInterface) {
-
     // 変数の複写(propsなのでdtoコピーができない)
     inputAccessDto.value.phon1 = sendDto.phon1;
     inputAccessDto.value.phon2 = sendDto.phon2;
     inputAccessDto.value.phon3 = sendDto.phon3;
     inputAccessDto.value.email = sendDto.email;
     inputAccessDto.value.myPortalUrl = sendDto.myPortalUrl;
+    inputAccessDto.value.snsServiceCode = sendDto.snsServiceCode;
+    inputAccessDto.value.snsServiceId = sendDto.snsServiceId;
     inputAccessDto.value.snsServiceName = sendDto.snsServiceName;
     inputAccessDto.value.snsPortalUrl = sendDto.snsPortalUrl;
     inputAccessDto.value.snsAccount = sendDto.snsAccount;
 
     // 非表示
-    isInput.value = false;
+    isInputAccess.value = false;
 }
 
 </script>
@@ -82,7 +82,8 @@ function recieveInputAccessInterface(sendDto: InputAccessDtoInterface) {
         <div class="right-area">
             <div class="form-group-vertical">
                 <div>
-                    <input type="text" v-model="inputAccessDto.snsServiceName" class="max-input" disabled="true">
+                    <input type="text" v-model="inputAccessDto.snsServiceName" class="name-input" disabled="true">({{
+                        inputAccessDto.snsServiceCode }})
                 </div>
                 <div>
                     <input type="url" v-model="inputAccessDto.snsPortalUrl" class="max-input" disabled="true">
@@ -95,9 +96,9 @@ function recieveInputAccessInterface(sendDto: InputAccessDtoInterface) {
     </div>
 
     <!-- 連絡先詳細入力 -->
-    <div v-if="isInput" class="overBackground"></div>
-    <div class="overComponent" v-if="isInput">
-        <InputAccess :edit-dto="inputAccessDto" :long-token="token" @send-cancel-input-access="recieveCancelInputAccess"
+    <div v-if="isInputAccess" class="overBackground"></div>
+    <div class="overComponent" v-if="isInputAccess">
+        <InputAccess :edit-dto="inputAccessDto" @send-cancel-input-access="recieveCancelInputAccess"
             @send-input-access-interface="recieveInputAccessInterface"></InputAccess>
     </div>
 

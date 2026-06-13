@@ -3,7 +3,7 @@ import { ref, type Ref } from 'vue';
 import { JwtTokenDto, type JwtTokenDtoInterface } from '../dto/login/jwtTokenDto';
 import { LeastUserDto, type LeastUserDtoInterface } from '../dto/user/leastUserDto';
 
-export const useUserInfoStore = defineStore('userInfo', () => {
+export default defineStore('useUserInfoStoreCommon', () => {
     // state（リアクティブな状態）
     const userDto: Ref<LeastUserDtoInterface> = ref(new LeastUserDto);
     const jwtDto: Ref<JwtTokenDtoInterface> = ref(new JwtTokenDto());

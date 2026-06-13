@@ -80,6 +80,29 @@ export { ViewInputPersonName, InputPersonName }
 /** ユーザ */
 import { type LeastUserDtoInterface, LeastUserDto } from './main/dto/user/leastUserDto';
 export { type LeastUserDtoInterface, LeastUserDto }
+import useUserInfoStoreCommon from './main/stores/storeUserInfo';
+export { useUserInfoStoreCommon }
+
+/** 関連者最小限 */
+import ViewInputKanrenshaLeast from './main/common/input_person_name/ViewInputKanrenshaLeast.vue';
+import SearchKanrenshaPerson from './main/common/search_kanrensha/SearchKanrenshaPerson.vue';
+export { ViewInputKanrenshaLeast, SearchKanrenshaPerson }
+import { type InputKanrenshaPersonLeastDtoInterface, InputKanrenshaPersonLeastDto } from './main/dto/input_person_name/inputKanrenshaPersonLeastDto';
+export { type InputKanrenshaPersonLeastDtoInterface, InputKanrenshaPersonLeastDto }
+import { type KanrenshaPersonMasterEntityInterface, KanrenshaPersonMasterEntity } from './main/entity/kanrenshaPersonMasterEntity';
+export { type KanrenshaPersonMasterEntityInterface, KanrenshaPersonMasterEntity }
+
+/** 企業団体検索 */
+import SearchKanrenshaKigyouDt from './main/common/search_kanrensha/SearchKanrenshaKigyouDt.vue';
+export { SearchKanrenshaKigyouDt }
+import { type KanrenshaKigyouDtMasterEntityInterface, KanrenshaKigyouDtMasterEntity } from './main/entity/kanrenshaKigyouDtMasterEntity';
+export { type KanrenshaKigyouDtMasterEntityInterface, KanrenshaKigyouDtMasterEntity }
+
+/** 政治団体検索 */
+import SearchKanrenshaSeijidantai from './main/common/search_kanrensha/SearchKanrenshaSeijidantai.vue';
+export { SearchKanrenshaSeijidantai }
+import { type KanrenshaSeijidantaiMasterEntityInterface, KanrenshaSeijidantaiMasterEntity } from './main/entity/kanrenshaSeijidantaiMasterEntity';
+export { type KanrenshaSeijidantaiMasterEntityInterface, KanrenshaSeijidantaiMasterEntity }
 
 /** 日付 */
 import InputDate from './main/common/date/InputDate.vue';

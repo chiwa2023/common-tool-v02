@@ -1,9 +1,9 @@
 ﻿<script setup lang="ts">
-import { computed, type ComputedRef, onMounted, type Ref, ref, toRaw } from "vue";
+import { computed, type ComputedRef, type Ref, ref, toRaw } from "vue";
 import { type InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
 import type { PostalCodePostalResultDtoInterface } from "../../../main/dto/postal/postalCodePostalResultDto";
 import type { SelectOptionNumberDtoInterface } from "../../../main/dto/select_options/selectOptionNumberDto";
-import type { SelectOptionStringDtoInterface } from "../../../main/dto/select_options/selectOptionStringDto";
+import { SelectOptionStringDto, type SelectOptionStringDtoInterface } from "../../../main/dto/select_options/selectOptionStringDto";
 import type { PostalCodeBlockResultDtoInterface } from "../../../main/dto/postal/postalCodeBlockResultDto";
 import type { PostalCodeBuildingResultDtoInterface } from "../../../main/dto/postal/postalCodeBuildingResultDto";
 import getAuthorizedPromiseArea from "../../dto/login/getAuthorizedPromiseArea";
@@ -11,7 +11,6 @@ import RoutePathConstants from "../../../../routePathConstants";
 import { AccessTokenNotFoundError, TokenRefreshError } from "../../dto/login/errors";
 import { MessageConstants } from "../../dto/message/messageConstants";
 import { PostalCodeCapsuleDto, type PostalCodeCapsuleDtoInterface } from "../../dto/postal/postalCodeCapsuleDto";
-import { useUserInfoStore } from '../../stores/storeUserInfo';
 import MessageView from "../message/MessageView.vue";
 import type { AddressRsdtResultDtoInterface } from "../../dto/postal/AddressRsdtResultDto";
 import type { AddressRsdtTemplateEntityInterface } from "../../entity/addressRsdtTemplateEntity";
@@ -25,7 +24,7 @@ const BLANK: string = "";
 // const SERVER_STATUS_ERROR: number = 400;
 
 // props,emit
-const props = defineProps<{ editDto: InputAddressDtoInterface, longToken: string }>();
+const props = defineProps<{ editDto: InputAddressDtoInterface }>();
 const emits = defineEmits(["sendCancelInputAddress", "sendInputAddressInterface"]);
 
 // back側アクセス
@@ -37,23 +36,11 @@ const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
 const title: Ref<string> = ref(BLANK);
 const message: Ref<string> = ref(BLANK);
 
-// pinia
-const userInfo = useUserInfoStore();
 
 /** 入力用Dto */
 const inputAddressDto: Ref<InputAddressDtoInterface> = ref(props.editDto);
 const addressAll: ComputedRef<string> = computed(() =>
     inputAddressDto.value.addressPostal + inputAddressDto.value.addressBlock + "　" + inputAddressDto.value.addressBuilding);
-
-// TODO 最終的なチェックは関連者でdevelopブランチにsecurityとbackをマージしたときに行う
-onMounted(() => {
-    if (BLANK !== props.longToken) {
-        userInfo.jwtDto.refreshToken = props.longToken;
-        userInfo.jwtDto.accessToken = props.longToken;
-        userInfo.jwtDto.expiresAt = new Date(2000, 1, 1);
-    }
-});
-
 
 /** 住所郵便番号まで */
 const selectedAddressPostal: Ref<number> = ref(-1);
@@ -152,7 +139,7 @@ function selectSuggestPostal() {
     const selectedDto: SelectOptionNumberDtoInterface | undefined
         = listPostalSuggest.value.filter(e => selectedAddressPostal.value === e.value)[0];
     if (undefined !== selectedDto && 0 !== selectedAddressPostal.value) {
-        inputAddressDto.value.addressPostal = selectedDto.text;
+        inputAddressDto.value.addressPostal = selectedDto.text.replace("以下に掲載がない場合","");
         searchBlock();
     } else {
         // 未選択の時は番地も初期化
@@ -184,12 +171,40 @@ function searchBlock() {
                 listBlockSuggest.value = resultDto.listOptions;
                 listBackupBlockSuggest.value = structuredClone(toRaw(listBlockSuggest.value));
                 inputAddressDto.value.lgCode = resultDto.lgCode;
-                listBlockSuggest.value;
 
                 // 1件だけの時は値を決定して建物までデータを検索
                 if (listBlockSuggest.value !== undefined) {
-                    if (listBlockSuggest.value.length === 1 && undefined !== listBackupBlockSuggest.value[0]) {
-                        selectedAddressBlock.value = listBackupBlockSuggest.value[0].value;
+
+                    if (listBlockSuggest.value.length === 1 && undefined !== listBlockSuggest.value[0]) {
+
+                        // 1件だけの場合範囲展開の特殊例の場合、
+                        // 1件だけの値と差し引いた値を郵便番号まで住所に差し戻す
+                        const spliter: string = "★";
+                        const pos: number = listBlockSuggest.value[0].text.indexOf(spliter);
+                        if (-1 !== pos) {
+                            const cell: string[] = listBlockSuggest.value[0].text.split(spliter);
+                            const newText: string | undefined = cell[1];
+                            const newKey: string | undefined = cell[0];
+                            const newValue: string = listBlockSuggest.value[0].value;
+
+                            // リスト作り直し
+                            listBlockSuggest.value.splice(0);
+
+                            const oneDto: SelectOptionStringDtoInterface = new SelectOptionStringDto();
+                            oneDto.value = newValue;
+                            if (undefined !== newText) {
+                                oneDto.text = newText;
+                            }
+                            if (undefined !== newKey) {
+                                const posPostal: number = inputAddressDto.value.addressPostal.indexOf(newKey);
+                                if (-1 !== posPostal) {
+                                    inputAddressDto.value.addressPostal = inputAddressDto.value.addressPostal.substring(0, posPostal + newKey.length);
+                                }
+                            }
+                            listBlockSuggest.value.push(oneDto);
+                        }
+
+                        selectedAddressBlock.value = listBlockSuggest.value[0].value;
                         selectSuggestBlock();
                     }
                 }

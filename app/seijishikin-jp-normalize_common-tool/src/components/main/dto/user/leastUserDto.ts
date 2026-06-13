@@ -15,6 +15,17 @@ interface LeastUserDtoInterface {
     /** 権限リスト */
     listRoles: string[];
 
+    /** 利用者コード */
+    riyoushaCode: number;
+
+    /** 利用者権限 */
+    riyoushaRole: string;
+
+    /** 関連者権限 */
+    kanrenshaRole: string;
+
+    /** 関連者コード */
+    kanrenshaCode: string;
 }
 
 /**
@@ -34,6 +45,18 @@ class LeastUserDto implements LeastUserDtoInterface {
     /** 権限リスト */
     listRoles: string[];
 
+    /** 利用者コード */
+    riyoushaCode: number;
+
+    /** 利用者権限 */
+    riyoushaRole: string;
+
+    /** 関連者権限 */
+    kanrenshaRole: string;
+
+    /** 関連者コード */
+    kanrenshaCode: string;
+
     constructor() {
 
         const INIT_NUMBER: number = 0;
@@ -43,6 +66,11 @@ class LeastUserDto implements LeastUserDtoInterface {
         this.userPersonCode = INIT_NUMBER;
         this.userPersonName = INIT_STRING;
         this.listRoles = [];
+        this.riyoushaCode = INIT_NUMBER;
+        this.riyoushaRole = INIT_STRING;
+        this.kanrenshaRole = INIT_STRING;
+        this.kanrenshaCode = INIT_STRING;
+
     }
 
 }

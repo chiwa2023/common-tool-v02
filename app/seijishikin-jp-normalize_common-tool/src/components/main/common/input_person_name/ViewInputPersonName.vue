@@ -34,7 +34,6 @@ function recieveInputPersonNameInterface(sendDto: InputPersonNameDtoInterface) {
 
     // 非表示
     isInput.value = false;
-    console.log("recieveInputPersonNameInterface: isInput.value:", isInput.value); // 追加
 }
 
 </script>

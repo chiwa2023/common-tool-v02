@@ -2,8 +2,6 @@
 import { onMounted, ref, toRaw, type Ref } from 'vue';
 import type { InputAccessDtoInterface } from '../../dto/input_access/inputAccessDto';
 import { type SnsServiceOptionDtoInterface } from '../../dto/sns_service/snsServiceOptionDto';
-import { mockGetSnsServiceOptions } from '../../../test/dto/sns_service/mockGetSnsServiceOptions';
-import { useUserInfoStore } from '../../stores/storeUserInfo';
 import getAuthorizedPromiseArea from '../../dto/login/getAuthorizedPromiseArea';
 import { MessageConstants } from '../../dto/message/messageConstants';
 import MessageView from '../message/MessageView.vue';
@@ -11,7 +9,7 @@ import { AccessTokenNotFoundError, TokenRefreshError } from '../../dto/login/err
 import RoutePathConstants from '../../../../routePathConstants';
 
 // props,emmits
-const props = defineProps<{ editDto: InputAccessDtoInterface, longToken: string }>();
+const props = defineProps<{ editDto: InputAccessDtoInterface }>();
 const emits = defineEmits(["sendCancelInputAccess", "sendInputAccessInterface"]);
 
 // back側アクセス
@@ -24,8 +22,6 @@ const BLANK: string = "";
 // const SERVER_STATUS_ACCEPTED: number = 202;
 // const SERVER_STATUS_ERROR: number = 400;
 
-// pinia
-const userInfo = useUserInfoStore();
 
 // メッセージボックス表示定数
 const infoLevel: Ref<number> = ref(MessageConstants.LEVEL_NONE);
@@ -37,18 +33,12 @@ const message: Ref<string> = ref(BLANK);
 const inputAccessDto: Ref<InputAccessDtoInterface> = ref(structuredClone(toRaw(props.editDto)));
 
 // SNSサービス
-const listSnsService: Ref<SnsServiceOptionDtoInterface[]> = ref(mockGetSnsServiceOptions());
+const listSnsService: Ref<SnsServiceOptionDtoInterface[]> = ref([]);
 const selectedSnsService: Ref<number> = ref(0);
 const isDisabled: Ref<boolean> = ref(false);
 
-// TODO 最終的なチェックは関連者でdevelopブランチにsecurityとbackをマージしたときに行う
 onMounted(() => {
-    // トークンが設定されていない場合は保存
-    if (BLANK !== props.longToken) {
-        userInfo.jwtDto.refreshToken = props.longToken;
-        userInfo.jwtDto.accessToken = props.longToken;
-        userInfo.jwtDto.expiresAt = new Date(2000, 1, 1);
-    }
+    title.value = "SNS選択肢取得";
     // SNSリストを取得
     getAuthorizedPromiseArea().then(token => {
 
@@ -68,7 +58,6 @@ onMounted(() => {
                 // 実処理側エラー
                 infoLevel.value = MessageConstants.LEVEL_ERROR;
                 messageType.value = MessageConstants.VIEW_OK;
-                title.value = "システムエラーが発生しました";
                 message.value = "システム管理者にお問い合わせください";
             });
     }).catch((e) => {
@@ -90,9 +79,7 @@ onMounted(() => {
         message.value = "システム管理者にお問い合わせください";
     });
 
-
 });
-
 
 /**
  * SNS選択
@@ -116,8 +103,6 @@ function onSelectSns(event: Event) {
         }
     }
 }
-
-
 
 /**
  * 保存処理

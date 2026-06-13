@@ -1,5 +1,5 @@
 import RoutePathConstants from "../../../../routePathConstants";
-import { useUserInfoStore } from "../../stores/storeUserInfo";
+import  useUserInfoStoreCommon  from "../../stores/storeUserInfo";
 import { type JwtTokenDtoInterface } from "./jwtTokenDto";
 import { AccessTokenNotFoundError, TokenRefreshError } from "./errors";
 
@@ -11,7 +11,7 @@ export default async function getAuthorizedPromiseArea(): Promise<string> {
     const SERVER_STATUS_OK: number = 200;
 
     // 保存していたアクセストークンと有効期限を取得
-    const userInfo = useUserInfoStore();
+    const userInfo = useUserInfoStoreCommon();
 
     // jwtを取り出し、万が一空文字未入力の場合はAPIアクセスさせない
     const jwtDto: JwtTokenDtoInterface = userInfo.jwtDto;

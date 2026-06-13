@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-import { computed, type ComputedRef, onMounted, type Ref, ref, toRaw } from "vue";
+import { computed, type ComputedRef, type Ref, ref, toRaw } from "vue";
 import { type InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
 import type { PostalCodePostalResultDtoInterface } from "../../../main/dto/postal/postalCodePostalResultDto";
 import type { SelectOptionNumberDtoInterface } from "../../../main/dto/select_options/selectOptionNumberDto";
@@ -7,7 +7,6 @@ import type { SelectOptionStringDtoInterface } from "../../../main/dto/select_op
 import type { PostalCodeBlockResultDtoInterface } from "../../../main/dto/postal/postalCodeBlockResultDto";
 import type { PostalCodeBuildingResultDtoInterface } from "../../../main/dto/postal/postalCodeBuildingResultDto";
 import RoutePathConstants from "../../../../routePathConstants";
-import { useUserInfoStore } from '../../stores/storeUserInfo';
 import getAuthorizedPromiseArea from "../../dto/login/getAuthorizedPromiseArea";
 import { PostalCodeCapsuleDto, type PostalCodeCapsuleDtoInterface } from "../../dto/postal/postalCodeCapsuleDto";
 import { MessageConstants } from "../../dto/message/messageConstants";
@@ -23,7 +22,7 @@ const BLANK: string = "";
 // const SERVER_STATUS_ERROR: number = 400;
 
 // props,emit
-const props = defineProps<{ editDto: InputAddressDtoInterface, longToken: string }>();
+const props = defineProps<{ editDto: InputAddressDtoInterface }>();
 const emits = defineEmits(["sendCancelInputAddress", "sendInputAddressInterface"]);
 
 // メッセージボックス表示定数
@@ -35,8 +34,6 @@ const message: Ref<string> = ref(BLANK);
 // back側アクセス
 const urlBack: string = RoutePathConstants.DOMAIN + RoutePathConstants.BASE_PATH;
 
-// pinia
-const userInfo = useUserInfoStore();
 
 /** 入力用Dto */
 const inputAddressDto: Ref<InputAddressDtoInterface> = ref(props.editDto);
@@ -61,15 +58,6 @@ const listBackupBuildingSuggest: Ref<SelectOptionNumberDtoInterface[]> = ref([])
 
 /** 地方自治体住居検索 */
 const isGyouseiku: Ref<boolean> = ref(false);
-
-// TODO 最終的なチェックは関連者でdevelopブランチにsecurityとbackをマージしたときに行う
-onMounted(() => {
-    if (BLANK !== props.longToken) {
-        userInfo.jwtDto.refreshToken = props.longToken;
-        userInfo.jwtDto.accessToken = props.longToken;
-        userInfo.jwtDto.expiresAt = new Date(2000, 1, 1);
-    }
-});
 
 // /** 郵便番号取得 */
 function getAddressPostal() {

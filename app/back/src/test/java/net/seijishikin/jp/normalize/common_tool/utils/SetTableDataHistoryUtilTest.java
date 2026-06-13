@@ -39,16 +39,17 @@ class SetTableDataHistoryUtilTest {
     @Tag("TableTruncate")
     void testDelete() {
 
-        SetTableDataHistoryUtilTestEntity entity00 = new SetTableDataHistoryUtilTestEntity();
-
         final int insertId = 246;
         final int insertCode = 231;
         final String insertName = "管理者　次郎";
-        entity00.setInsertUserId(insertId);
-        entity00.setInsertUserCode(insertCode);
-        entity00.setInsertUserName(insertName);
+        LeastUserDto userDtoPre = new LeastUserDto();
+        userDtoPre.setUserPersonId(insertId);
+        userDtoPre.setUserPersonCode(insertCode);
+        userDtoPre.setUserPersonName(insertName);
 
+        SetTableDataHistoryUtilTestEntity entity00 = new SetTableDataHistoryUtilTestEntity();
         SetTableDataHistoryUtil util = new SetTableDataHistoryUtil();
+        util.practiceInsert(userDtoPre, entity00);
 
         LeastUserDto userDto = CreateUserForTestUtil.practice();
         util.practiceDelete(userDto, entity00);

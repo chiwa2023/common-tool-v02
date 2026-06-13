@@ -197,7 +197,8 @@ function onInitialize() {
                 日時
             </div>
             <div class="right-area">
-                <InputDatetimeAndNull :datetime="datetime0" :is-edit="true" :index="0" @send-date-time="recieveDateTime">
+                <InputDatetimeAndNull :datetime="datetime0" :is-edit="true" :index="0"
+                    @send-date-time="recieveDateTime">
                 </InputDatetimeAndNull><button @click="onShowISO(0)" class="left-spacce">ISO</button> <button
                     @click="onShowLocal(0)" class="left-spacce">ローカル</button>
             </div>
@@ -209,7 +210,7 @@ function onInitialize() {
                 日付
             </div>
             <div class="right-area">
-                <InputDate :date="datetime1" :is-edit="true" :index="1" @send-date-time="recieveDateTime">
+                <InputDate :date="datetime1" :is-edit="true" :index="1" @send-date="recieveDateTime">
                 </InputDate><button @click="onShowISO(1)" class="left-spacce">ISO</button> <button
                     @click="onShowLocal(1)" class="left-spacce">ローカル</button>
             </div>

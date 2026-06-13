@@ -1,24 +1,4 @@
 ﻿<script setup lang="ts">
-// import { computed, ref, type ComputedRef, type Ref } from 'vue';
-// import router from '../../../router';
-// import type SelectOptionStringInterface from '../../../dto/selectOptionStringDto';
-// import mockGetRoleMenuOpions from '../../../dto/user/mock/mockGetRoleMenuOpions';
-
-// 常にどのメニューにも移行できるMock
-// const listRouter: Ref<SelectOptionStringInterface[]> = ref(mockGetRoleMenuOpions());
-
-// function onInfo() {
-//     alert("押した");
-//     // TODO 簡易ユーザ情報を表示する
-// }
-
-// // 役割異動メニュー
-// const moveRole: Ref<string> = ref("");
-// function onMoveRole() {
-//     const route: string = listRouter.value.filter((e) => { return e.text === moveRole.value })[0].value;
-//     router.push(route);
-// }
-// const isMoveMenu:ComputedRef<boolean> = computed(() => listRouter.value.length>0);
 
 </script>
 <template>

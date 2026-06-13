@@ -96,4 +96,88 @@ public class LeastUserDto implements DtoEntityInitialValueInterface, Serializabl
         this.listRoles = listRoles;
     }
 
+    /** 利用者コード */
+    private Integer riyoushaCode = INIT_INTEGER;
+
+    /** 利用者権限 */
+    private String riyoushaRole = INIT_STRING;
+
+    /** 関連者権限 */
+    private String kanrenshaRole = INIT_STRING;
+
+    /** 関連者コード */
+    private String kanrenshaCode = INIT_STRING;
+
+    /**
+     * 利用者コードを取得する
+     * 
+     * @return 利用者コード
+     */
+    public Integer getRiyoushaCode() {
+        return riyoushaCode;
+    }
+
+    /**
+     * 利用者コードを設定する
+     * 
+     * @param riyoushaCode 利用者コード
+     */
+    public void setRiyoushaCode(final Integer riyoushaCode) {
+        this.riyoushaCode = riyoushaCode;
+    }
+
+    /**
+     * 利用者権限を取得する
+     * 
+     * @return 利用者権限
+     */
+    public String getRiyoushaRole() {
+        return riyoushaRole;
+    }
+
+    /**
+     * 利用者権限を設定する
+     * 
+     * @param riyoushaRole 利用者権限
+     */
+    public void setRiyoushaRole(final String riyoushaRole) {
+        this.riyoushaRole = riyoushaRole;
+    }
+
+    /**
+     * 関連者権限を取得する
+     * 
+     * @return 関連者権限
+     */
+    public String getKanrenshaRole() {
+        return kanrenshaRole;
+    }
+
+    /**
+     * 関連者権限を設定する
+     * 
+     * @param kanrenshaRole 関連者権限
+     */
+    public void setKanrenshaRole(final String kanrenshaRole) {
+        this.kanrenshaRole = kanrenshaRole;
+    }
+
+    /**
+     * 関連者コードを取得する
+     * 
+     * @return 関連者コード
+     */
+    public String getKanrenshaCode() {
+        return kanrenshaCode;
+    }
+
+    /**
+     * 関連者コードを設定する
+     * 
+     * @param kanrenshaCode 関連者コード
+     */
+    public void setKanrenshaCode(final String kanrenshaCode) {
+        this.kanrenshaCode = kanrenshaCode;
+    }
+
 }

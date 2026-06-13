@@ -47,9 +47,7 @@ function onSave() {
         <div class="right-area">
             <input type="text" class="name-input">
         </div>
-
     </div>
-
 
     <div class="one-line">
         <div class="left-area">
@@ -58,10 +56,7 @@ function onSave() {
         <div class="right-area">
             <input type="text" class="name-input">
         </div>
-
     </div>
-
-
 
     <div class="one-line">
         <div class="left-area">
@@ -71,12 +66,7 @@ function onSave() {
             <input type="text" class="short-input">&nbsp;-&nbsp;
             <input type="text" class="short-input">
         </div>
-
     </div>
-
-
-
-
 
     <div class="one-line">
         <div class="left-area">
@@ -85,10 +75,7 @@ function onSave() {
         <div class="right-area">
             <input type="text" class="max-input">
         </div>
-
     </div>
-
-
 
     <div class="one-line">
         <div class="left-area">
@@ -98,13 +85,6 @@ function onSave() {
             <button @click="onSearch">検索</button>
         </div>
     </div>
-
-
-
-
-
-
-
 
     <h3 class="indent-h3">検索結果</h3>
 

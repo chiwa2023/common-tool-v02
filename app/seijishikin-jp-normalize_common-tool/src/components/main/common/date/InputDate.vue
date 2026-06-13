@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type ComputedRef } from 'vue';
+import {  onBeforeMount, ref, watch,  type Ref } from 'vue';
 
 
 // props,emmits
@@ -18,9 +18,16 @@ const emits = defineEmits(["sendDate"]);
 //const title: Ref<string> = ref(BLANK);
 //const message: Ref<string> = ref(BLANK);
 
-const dateString: ComputedRef<string> = computed(() => {
-    return props.date.toLocaleDateString('sv-SE');
+const dateString: Ref<string> = ref("");
+
+onBeforeMount(() => {
+    dateString.value = props.date.toLocaleDateString('sv-SE');
 });
+
+watch(props, () => {
+    dateString.value = props.date.toLocaleDateString('sv-SE');
+});
+
 
 function onDataChange() {
     if (null === dateString.value) {

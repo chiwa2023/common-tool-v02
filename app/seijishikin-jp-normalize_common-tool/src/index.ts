@@ -82,6 +82,29 @@ export { SearchHoujinNo, HoujinNoDto, type HoujinNoDtoInterface, HoujinShoriKbnC
 /** ユーザ */
 import { type LeastUserDtoInterface, LeastUserDto } from './components/main/dto/user/leastUserDto';
 export { type LeastUserDtoInterface, LeastUserDto }
+import useUserInfoStoreCommon from './components/main/stores/storeUserInfo';
+export { useUserInfoStoreCommon }
+
+/** 関連者最小限 */
+import ViewInputKanrenshaLeast from './components/main/common/input_person_name/ViewInputKanrenshaLeast.vue';
+import SearchKanrenshaPerson from './components/main/common/search_kanrensha/SearchKanrenshaPerson.vue';
+export { ViewInputKanrenshaLeast, SearchKanrenshaPerson }
+import { type InputKanrenshaPersonLeastDtoInterface, InputKanrenshaPersonLeastDto } from './components/main/dto/input_person_name/inputKanrenshaPersonLeastDto';
+export { type InputKanrenshaPersonLeastDtoInterface, InputKanrenshaPersonLeastDto }
+import { type KanrenshaPersonMasterEntityInterface, KanrenshaPersonMasterEntity } from './components/main/entity/kanrenshaPersonMasterEntity';
+export { type KanrenshaPersonMasterEntityInterface, KanrenshaPersonMasterEntity }
+
+/** 企業団体検索 */
+import SearchKanrenshaKigyouDt from './components/main/common/search_kanrensha/SearchKanrenshaKigyouDt.vue';
+export { SearchKanrenshaKigyouDt }
+import { type KanrenshaKigyouDtMasterEntityInterface, KanrenshaKigyouDtMasterEntity } from './components/main/entity/kanrenshaKigyouDtMasterEntity';
+export { type KanrenshaKigyouDtMasterEntityInterface, KanrenshaKigyouDtMasterEntity }
+
+/** 政治団体検索 */
+import SearchKanrenshaSeijidantai from './components/main/common/search_kanrensha/SearchKanrenshaSeijidantai.vue';
+export { SearchKanrenshaSeijidantai }
+import { type KanrenshaSeijidantaiMasterEntityInterface, KanrenshaSeijidantaiMasterEntity } from './components/main/entity/kanrenshaSeijidantaiMasterEntity';
+export { type KanrenshaSeijidantaiMasterEntityInterface, KanrenshaSeijidantaiMasterEntity }
 
 /** 日付 */
 import InputDate from './components/main/common/date/InputDate.vue';
