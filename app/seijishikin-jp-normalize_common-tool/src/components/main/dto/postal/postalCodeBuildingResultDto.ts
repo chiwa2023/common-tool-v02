@@ -1,3 +1,4 @@
+import DtoEntityConstants from "../dtoEntityConstants";
 import type { SelectOptionNumberDtoInterface } from "../select_options/selectOptionNumberDto";
 
 interface PostalCodeBuildingResultDtoInterface {
@@ -19,7 +20,9 @@ class PostalCodeBuildingResultDto implements PostalCodeBuildingResultDtoInterfac
     listOptions: SelectOptionNumberDtoInterface[];
 
     constructor() {
-        this.lgCode = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
+
+        this.lgCode = INIT_STRING;
         this.listOptions = [];
     }
 

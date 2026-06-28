@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dto/dtoEntityConstants";
+
 interface KanrenshaPersonMasterEntityInterface {
 
     /** テーブルId */
@@ -42,9 +44,10 @@ class KanrenshaPersonMasterEntity implements KanrenshaPersonMasterEntityInterfac
 
     constructor() {
 
-        const INIT_STRING: string = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
+        const INIT_NUMBER: number = DtoEntityConstants.INIT_NUMBER;
 
-        this.kanrenshaPersonMasterId = 0;
+        this.kanrenshaPersonMasterId = INIT_NUMBER;
         this.personKanrenshaCode = INIT_STRING;
         this.kanrenshaName = INIT_STRING;
         this.allAddress = INIT_STRING;

@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dtoEntityConstants";
+
 interface FrameworkPagingDtoInterface {
 
     /** 全件数  */
@@ -26,7 +28,8 @@ class FrameworkPagingDto implements FrameworkPagingDtoInterface {
     pageNumber: number;
 
     constructor() {
-        const INIT_NUMBER = 0;
+        const INIT_NUMBER = DtoEntityConstants.INIT_NUMBER;
+        
         this.pageNumber = INIT_NUMBER;
         this.allCount = INIT_NUMBER;
         this.limit = INIT_NUMBER;

@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dtoEntityConstants";
+
 /** 姓名入力Interface */
 interface InputPersonNameDtoInterface {
 
@@ -55,7 +57,7 @@ class InputPersonNameDto implements InputPersonNameDtoInterface {
     allNameKana: string;
 
     constructor() {
-        const INIT_STRING = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
 
         this.lastName = INIT_STRING;
         this.firstName = INIT_STRING;

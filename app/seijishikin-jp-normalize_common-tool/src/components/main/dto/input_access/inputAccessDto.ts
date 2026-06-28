@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dtoEntityConstants";
+
 /** 連絡先Interface */
 interface InputAccessDtoInterface {
 
@@ -68,8 +70,8 @@ class InputAccessDto implements InputAccessDtoInterface {
 
     constructor() {
 
-        const INIT_STRING: string = "";
-        const INIT_NUMBER: number = 0;
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
+        const INIT_NUMBER: number = DtoEntityConstants.INIT_NUMBER;
 
         this.phon1 = INIT_STRING;
         this.phon2 = INIT_STRING;

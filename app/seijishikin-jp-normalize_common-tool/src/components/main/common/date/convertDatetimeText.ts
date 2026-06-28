@@ -1,4 +1,4 @@
-export default function convertDatetimeText(date:Date|null):string{
+export default function convertDatetimeText(date: Date | null): string {
     if (null === date || undefined === date) {
         return "";
     }

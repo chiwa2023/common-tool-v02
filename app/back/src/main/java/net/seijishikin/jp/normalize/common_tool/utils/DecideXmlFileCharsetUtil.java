@@ -3,6 +3,7 @@ package net.seijishikin.jp.normalize.common_tool.utils;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.MalformedInputException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -41,12 +42,12 @@ public class DecideXmlFileCharsetUtil {
 
         // XML標準文字コードUTF-8
         if (this.judge(path, CHARSET_UTF8, keyWord)) {
-            return Charset.forName(CHARSET_UTF8);
+            return StandardCharsets.UTF_8;
         }
 
         // XML標準文字コードUTF-16
         if (this.judge(path, CHARSET_UTF16, keyWord)) {
-            return Charset.forName(CHARSET_UTF16);
+            return StandardCharsets.UTF_16;
         }
 
         return null;

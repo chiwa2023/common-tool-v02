@@ -3,13 +3,20 @@ import { computed, type ComputedRef, type Ref, ref, toRaw } from "vue";
 import { type InputAddressDtoInterface } from "../../../main/dto/Input_address/inputAddressDto";
 import type { PostalCodePostalResultDtoInterface } from "../../../main/dto/postal/postalCodePostalResultDto";
 import type { SelectOptionNumberDtoInterface } from "../../../main/dto/select_options/selectOptionNumberDto";
-import type { SelectOptionStringDtoInterface } from "../../../main/dto/select_options/selectOptionStringDto";
+import { SelectOptionStringDto, type SelectOptionStringDtoInterface } from "../../../main/dto/select_options/selectOptionStringDto";
 import type { PostalCodeBlockResultDtoInterface } from "../../../main/dto/postal/postalCodeBlockResultDto";
 import type { PostalCodeBuildingResultDtoInterface } from "../../../main/dto/postal/postalCodeBuildingResultDto";
-import mockMakeSuggestPostalList from "../../../test/common/input_address/mock/mockMakeSuggestPostalList";
-import mockMakeSuggestBlockList from "../../../test/common/input_address/mock/mockMakeSuggestBlockList";
-import mockMakeSuggestBuildingList from "../../../test/common/input_address/mock/mockMakeSuggestBuildingList";
+import { MessageConstants } from "../../dto/message/messageConstants";
+import getAuthorizedPromiseArea from "../../dto/login/getAuthorizedPromiseArea";
+import RoutePathConstants from "../../../../routePathConstants";
+import { PostalCodeCapsuleDto, type PostalCodeCapsuleDtoInterface } from "../../dto/postal/postalCodeCapsuleDto";
+import { AccessTokenNotFoundError, TokenRefreshError } from "../../dto/login/errors";
+import type { AddressRsdtResultDtoInterface } from "../../dto/postal/addressRsdtResultDto";
+import type { AddressRsdtTemplateEntityInterface } from "../../entity/addressRsdtTemplateEntity";
 
+// props,emit
+const props = defineProps<{ editDto: InputAddressDtoInterface }>();
+const emits = defineEmits(["sendCancelInputAddress", "sendInputAddressInterface"]);
 
 // よく使う定数
 const BLANK: string = "";
@@ -17,9 +24,15 @@ const BLANK: string = "";
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
 
-// props,emit
-const props = defineProps<{ editDto: InputAddressDtoInterface }>();
-const emits = defineEmits(["sendCancelInputAddress", "sendInputAddressInterface"]);
+// メッセージボックス表示定数
+const infoLevel: Ref<number> = ref(MessageConstants.LEVEL_NONE);
+const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
+const title: Ref<string> = ref(BLANK);
+const message: Ref<string> = ref(BLANK);
+    
+// back側アクセス
+const urlBack: string = RoutePathConstants.DOMAIN + RoutePathConstants.BASE_PATH;
+
 
 /** 入力用Dto */
 const inputAddressDto: Ref<InputAddressDtoInterface> = ref(structuredClone(toRaw(props.editDto)));
@@ -37,25 +50,83 @@ const listBlockSuggest: Ref<SelectOptionStringDtoInterface[]> = ref([]);
 const listBackupBlockSuggest: Ref<SelectOptionStringDtoInterface[]> = ref([]);
 
 /** 住所郵便建物 */
-const selectedAddressBuilding: Ref<string> = ref("");
+const selectedAddressBuilding: Ref<number> = ref(0);
 const listBuildingSuggest: Ref<SelectOptionNumberDtoInterface[]> = ref([]);
 const listBackupBuildingSuggest: Ref<SelectOptionNumberDtoInterface[]> = ref([]);
 
 /** 地方自治体住居検索 */
 const isGyouseiku: Ref<boolean> = ref(false);
 
-// /** 郵便番号取得 */
+/** 郵便番号取得 */
 function getAddressPostal() {
 
     //  郵便番号の形式となったらリストを取得する
     if (3 === inputAddressDto.value.postalcode1.length && 4 === inputAddressDto.value.postalcode2.length) {
-        // 住所郵便番号までを取得
-        const resultDto: PostalCodePostalResultDtoInterface = mockMakeSuggestPostalList();
-        listPostalSuggest.value = structuredClone(resultDto.listOptions);
-        listBackupPostalSuggest.value = structuredClone(resultDto.listOptions);
-        isGyouseiku.value = resultDto.isGyouseikuData;
+        // 検索実行
+        getAuthorizedPromiseArea().then(token => {
+            const conditionDto: PostalCodeCapsuleDtoInterface = new PostalCodeCapsuleDto();
+            conditionDto.postal1 = inputAddressDto.value.postalcode1;
+            conditionDto.postal2 = inputAddressDto.value.postalcode2;
+            const url = urlBack + "/postal-search/postal";
+            const method = "POST";
+            const body = JSON.stringify(conditionDto);
+            const headers = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-AUTH-TOKEN': 'Bearer ' + token
+            };
+            fetch(url, { method, headers, body })
+                .then(async (response) => {
+                    const resultDto: PostalCodePostalResultDtoInterface = await response.json();
+                    listPostalSuggest.value = resultDto.listOptions;
+                    listBackupPostalSuggest.value = structuredClone(toRaw(listPostalSuggest.value));
+                    isGyouseiku.value = resultDto.isGyouseikuData;
 
-        // TODO 1件だったときは選択して番地住所検索をする
+                    // 1件だけの時は値を決定して番地までデータを検索
+                    if (listPostalSuggest.value !== null) {
+                        if (listPostalSuggest.value.length === 1 && undefined !== listBackupPostalSuggest.value[0]) {
+                            selectedAddressPostal.value = listBackupPostalSuggest.value[0].value;
+                            selectSuggestPostal();
+                        }
+                    }
+                })
+                .catch(() => {
+                    infoLevel.value = MessageConstants.LEVEL_ERROR;
+                    messageType.value = MessageConstants.VIEW_OK;
+                    title.value = "システムエラーが発生しました";
+                    message.value = "システム管理者にお問い合わせください";
+                });
+        }).catch((e) => {
+            // トークン関数側エラー
+            infoLevel.value = MessageConstants.LEVEL_ERROR;
+            messageType.value = MessageConstants.VIEW_OK;
+            if (e instanceof AccessTokenNotFoundError) {
+                title.value = "現在トークンが存在しません";
+                message.value = e.message;
+                return;
+            }
+            if (e instanceof TokenRefreshError) {
+                // 取得に失敗している場合
+                title.value = "有効期限まじかのトークンを再取得できませんでした";
+                message.value = e.message;
+                return;
+            }
+            title.value = "システムエラーが発生しました";
+            message.value = "システム管理者にお問い合わせください";
+        });
+    } else {
+        inputAddressDto.value.addressPostal = "";
+        inputAddressDto.value.addressBlock = "";
+        inputAddressDto.value.addressBuilding = "";
+        selectedAddressPostal.value = 0;
+        selectedAddressBlock.value = "";
+        selectedAddressBuilding.value = 0;
+        inputAddressDto.value.lgCode = "";
+        inputAddressDto.value.blkId = "";
+        inputAddressDto.value.machiazaId = "";
+        inputAddressDto.value.prcId = "";
+        inputAddressDto.value.rsdtId = "";
+        inputAddressDto.value.rsdt2Id = "";
     }
 }
 
@@ -78,12 +149,88 @@ function selectSuggestPostal() {
 /** 住所番地までを検索 */
 function searchBlock() {
     // 住所番地までを取得
-    const resultDto: PostalCodeBlockResultDtoInterface = mockMakeSuggestBlockList();
-    listBlockSuggest.value = resultDto.listOptions;
-    listBackupBlockSuggest.value = structuredClone(resultDto.listOptions);
-    inputAddressDto.value.lgCode = resultDto.lgCode;
+    getAuthorizedPromiseArea().then(token => {
+        const conditionDto: PostalCodeCapsuleDtoInterface = new PostalCodeCapsuleDto();
+        conditionDto.selectedPostal = selectedAddressPostal.value;
+        conditionDto.isGyouseikuData = isGyouseiku.value;
 
-    // TODO 1件だったときは選択して建物住所検索をする
+        const url = urlBack + "/postal-search/block";
+        const method = "POST";
+        const body = JSON.stringify(conditionDto);
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-AUTH-TOKEN': 'Bearer ' + token
+        };
+        fetch(url, { method, headers, body })
+            .then(async (response) => {
+                const resultDto: PostalCodeBlockResultDtoInterface = await response.json();
+                listBlockSuggest.value = resultDto.listOptions;
+                listBackupBlockSuggest.value = structuredClone(toRaw(listBlockSuggest.value));
+                inputAddressDto.value.lgCode = resultDto.lgCode;
+
+                // 1件だけの時は値を決定して建物までデータを検索
+                if (listBlockSuggest.value !== undefined) {
+
+                    if (listBlockSuggest.value.length === 1 && undefined !== listBlockSuggest.value[0]) {
+
+                        // 1件だけの場合範囲展開の特殊例の場合、
+                        // 1件だけの値と差し引いた値を郵便番号まで住所に差し戻す
+                        const spliter: string = "★";
+                        const pos: number = listBlockSuggest.value[0].text.indexOf(spliter);
+                        if (-1 !== pos) {
+                            const cell: string[] = listBlockSuggest.value[0].text.split(spliter);
+                            const newText: string | undefined = cell[1];
+                            const newKey: string | undefined = cell[0];
+                            const newValue: string = listBlockSuggest.value[0].value;
+
+                            // リスト作り直し
+                            listBlockSuggest.value.splice(0);
+
+                            const oneDto: SelectOptionStringDtoInterface = new SelectOptionStringDto();
+                            oneDto.value = newValue;
+                            if (undefined !== newText) {
+                                oneDto.text = newText;
+                            }
+                            if (undefined !== newKey) {
+                                const posPostal: number = inputAddressDto.value.addressPostal.indexOf(newKey);
+                                if (-1 !== posPostal) {
+                                    inputAddressDto.value.addressPostal = inputAddressDto.value.addressPostal.substring(0, posPostal + newKey.length);
+                                }
+                            }
+                            listBlockSuggest.value.push(oneDto);
+                        }
+
+                        selectedAddressBlock.value = listBlockSuggest.value[0].value;
+                        selectSuggestBlock();
+                    }
+                }
+            })
+            .catch(() => {
+                // 実処理側エラー
+                infoLevel.value = MessageConstants.LEVEL_ERROR;
+                messageType.value = MessageConstants.VIEW_OK;
+                title.value = "システムエラーが発生しました";
+                message.value = "システム管理者にお問い合わせください";
+            });
+    }).catch((e) => {
+        // トークン関数側エラー
+        infoLevel.value = MessageConstants.LEVEL_ERROR;
+        messageType.value = MessageConstants.VIEW_OK;
+        if (e instanceof AccessTokenNotFoundError) {
+            title.value = "現在トークンが存在しません";
+            message.value = e.message;
+            return;
+        }
+        if (e instanceof TokenRefreshError) {
+            // 取得に失敗している場合
+            title.value = "有効期限まじかのトークンを再取得できませんでした";
+            message.value = e.message;
+            return;
+        }
+        title.value = "システムエラーが発生しました";
+        message.value = "システム管理者にお問い合わせください";
+    });
 }
 
 /** 住所番地候補選択時 */
@@ -104,11 +251,54 @@ function selectSuggestBlock() {
 
 /** 住所建物までを検索 */
 function searchBuilding() {
-    const resultDto: PostalCodeBuildingResultDtoInterface = mockMakeSuggestBuildingList();
-    listBuildingSuggest.value = resultDto.listOptions;
-    listBackupBuildingSuggest.value = structuredClone(resultDto.listOptions);
-}
+    // 検索実行
+    getAuthorizedPromiseArea().then(token => {
+        const conditionDto: PostalCodeCapsuleDtoInterface = new PostalCodeCapsuleDto();
+        conditionDto.selectedBlock = selectedAddressBlock.value;
+        conditionDto.lgCode = inputAddressDto.value.lgCode;
+        conditionDto.isGyouseikuData = isGyouseiku.value;
 
+        const url = urlBack + "/postal-search/building";
+        const method = "POST";
+        const body = JSON.stringify(conditionDto);
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-AUTH-TOKEN': 'Bearer ' + token
+        };
+        fetch(url, { method, headers, body })
+            .then(async (response) => {
+                const resultDto: PostalCodeBuildingResultDtoInterface = await response.json();
+                listBuildingSuggest.value = resultDto.listOptions;
+                // 建物なしまたは、建物候補があっても未選択の可能性があるので常に住所のコードを取得
+                getRsdtCodeByBlock();
+            })
+            .catch(() => {
+                // 実処理側エラー
+                infoLevel.value = MessageConstants.LEVEL_ERROR;
+                messageType.value = MessageConstants.VIEW_OK;
+                title.value = "システムエラーが発生しました";
+                message.value = "システム管理者にお問い合わせください";
+            });
+    }).catch((e) => {
+        // トークン関数側エラー
+        infoLevel.value = MessageConstants.LEVEL_ERROR;
+        messageType.value = MessageConstants.VIEW_OK;
+        if (e instanceof AccessTokenNotFoundError) {
+            title.value = "現在トークンが存在しません";
+            message.value = e.message;
+            return;
+        }
+        if (e instanceof TokenRefreshError) {
+            // 取得に失敗している場合
+            title.value = "有効期限まじかのトークンを再取得できませんでした";
+            message.value = e.message;
+            return;
+        }
+        title.value = "システムエラーが発生しました";
+        message.value = "システム管理者にお問い合わせください";
+    });
+}
 
 /** 住所郵便番号フィルタ時 */
 const filterPostal: Ref<string> = ref("");
@@ -134,8 +324,143 @@ function filterSuggestBuilding() {
 /** 住所建物候補選択時 */
 function selectSuggestBuilding() {
     // コード値の設定
-    inputAddressDto.value.addressBuilding = selectedAddressBuilding.value;
-    inputAddressDto.value.rsdtAddressBuilding = selectedAddressBuilding.value;
+    const selectedDto: SelectOptionNumberDtoInterface | undefined
+        = listBuildingSuggest.value.filter(e => selectedAddressBuilding.value === e.value)[0];
+    if (undefined !== selectedDto) {
+        inputAddressDto.value.addressBuilding = selectedDto.text;
+        inputAddressDto.value.rsdtAddressBuilding = selectedDto.text;
+    }
+    getRsdtCodeById();
+}
+
+/** 決定した番地まで住所のコードを設定する */
+function getRsdtCodeByBlock() {
+
+    // コード値を呼び出す
+    getAuthorizedPromiseArea().then(token => {
+        const conditionDto: PostalCodeCapsuleDtoInterface = new PostalCodeCapsuleDto();
+        conditionDto.lgCode = inputAddressDto.value.lgCode;
+        conditionDto.selectedBlock = selectedAddressBlock.value;
+
+        const url = urlBack + "/postal-search/rsdt-detail-block";
+        const method = "POST";
+        const body = JSON.stringify(conditionDto);
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-AUTH-TOKEN': 'Bearer ' + token
+        };
+        fetch(url, { method, headers, body })
+            .then(async (response) => {
+                const resultDto: AddressRsdtResultDtoInterface = await response.json();
+                if (resultDto.isFailure) {
+                    infoLevel.value = MessageConstants.LEVEL_WARNING;
+                    messageType.value = MessageConstants.VIEW_OK;
+                    title.value = "住所コードが取得できません";
+                    message.value = resultDto.message;
+                    inputAddressDto.value.blkId = "";
+                    inputAddressDto.value.machiazaId = "";
+                    inputAddressDto.value.prcId = "";
+                    inputAddressDto.value.rsdtId = "";
+                    inputAddressDto.value.rsdt2Id = "";
+                } else {
+                    const rsdtEntity: AddressRsdtTemplateEntityInterface = resultDto.addressRsdtEntity;
+                    inputAddressDto.value.blkId = rsdtEntity.blkId;
+                    inputAddressDto.value.machiazaId = rsdtEntity.machiazaId;
+                    inputAddressDto.value.prcId = rsdtEntity.prcId;
+                    inputAddressDto.value.rsdtId = rsdtEntity.rsdtId;
+                    inputAddressDto.value.rsdt2Id = rsdtEntity.rsdt2Id;
+                }
+            })
+            .catch(() => {
+                infoLevel.value = MessageConstants.LEVEL_ERROR;
+                messageType.value = MessageConstants.VIEW_OK;
+                title.value = "システムエラーが発生しました";
+                message.value = "システム管理者にお問い合わせください";
+            });
+    }).catch((e) => {
+        // トークン関数側エラー
+        infoLevel.value = MessageConstants.LEVEL_ERROR;
+        messageType.value = MessageConstants.VIEW_OK;
+        if (e instanceof AccessTokenNotFoundError) {
+            title.value = "現在トークンが存在しません";
+            message.value = e.message;
+            return;
+        }
+        if (e instanceof TokenRefreshError) {
+            // 取得に失敗している場合
+            title.value = "有効期限まじかのトークンを再取得できませんでした";
+            message.value = e.message;
+            return;
+        }
+        title.value = "システムエラーが発生しました";
+        message.value = "システム管理者にお問い合わせください";
+    });
+
+}
+
+/** 決定した建物住所のコードを設定する */
+function getRsdtCodeById() {
+    // コード値を呼び出す
+    getAuthorizedPromiseArea().then(token => {
+        const conditionDto: PostalCodeCapsuleDtoInterface = new PostalCodeCapsuleDto();
+        conditionDto.lgCode = inputAddressDto.value.lgCode;
+        conditionDto.selectedRsdtId = selectedAddressBuilding.value;
+
+        const url = urlBack + "/postal-search/rsdt-detail-id";
+        const method = "POST";
+        const body = JSON.stringify(conditionDto);
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-AUTH-TOKEN': 'Bearer ' + token
+        };
+        fetch(url, { method, headers, body })
+            .then(async (response) => {
+                const resultDto: AddressRsdtResultDtoInterface = await response.json();
+                if (resultDto.isFailure) {
+                    infoLevel.value = MessageConstants.LEVEL_WARNING;
+                    messageType.value = MessageConstants.VIEW_OK;
+                    title.value = "住所コードが取得できません";
+                    message.value = resultDto.message;
+                    inputAddressDto.value.blkId = "";
+                    inputAddressDto.value.machiazaId = "";
+                    inputAddressDto.value.prcId = "";
+                    inputAddressDto.value.rsdtId = "";
+                    inputAddressDto.value.rsdt2Id = "";
+                } else {
+                    const rsdtEntity: AddressRsdtTemplateEntityInterface = resultDto.addressRsdtEntity;
+                    inputAddressDto.value.blkId = rsdtEntity.blkId;
+                    inputAddressDto.value.machiazaId = rsdtEntity.machiazaId;
+                    inputAddressDto.value.prcId = rsdtEntity.prcId;
+                    inputAddressDto.value.rsdtId = rsdtEntity.rsdtId;
+                    inputAddressDto.value.rsdt2Id = rsdtEntity.rsdt2Id;
+                }
+            })
+            .catch(() => {
+                infoLevel.value = MessageConstants.LEVEL_ERROR;
+                messageType.value = MessageConstants.VIEW_OK;
+                title.value = "システムエラーが発生しました";
+                message.value = "システム管理者にお問い合わせください";
+            });
+    }).catch((e) => {
+        // トークン関数側エラー
+        infoLevel.value = MessageConstants.LEVEL_ERROR;
+        messageType.value = MessageConstants.VIEW_OK;
+        if (e instanceof AccessTokenNotFoundError) {
+            title.value = "現在トークンが存在しません";
+            message.value = e.message;
+            return;
+        }
+        if (e instanceof TokenRefreshError) {
+            // 取得に失敗している場合
+            title.value = "有効期限まじかのトークンを再取得できませんでした";
+            message.value = e.message;
+            return;
+        }
+        title.value = "システムエラーが発生しました";
+        message.value = "システム管理者にお問い合わせください";
+    });
 }
 
 /** 編集offにした場合は選択値に戻す */
@@ -165,7 +490,7 @@ function onBlockEdit() {
 /** 編集offにした場合は選択値に戻す */
 function onBuildingEdit() {
     if (false === inputAddressDto.value.isBuildingEdit) {
-        const selectedDto = listBuildingSuggest.value.filter(e => parseInt(selectedAddressBuilding.value) === e.value)[0];
+        const selectedDto = listBuildingSuggest.value.filter(e => selectedAddressBuilding.value === e.value)[0];
         if (undefined !== selectedDto) {
             inputAddressDto.value.addressBuilding = selectedDto.text;
         } else {

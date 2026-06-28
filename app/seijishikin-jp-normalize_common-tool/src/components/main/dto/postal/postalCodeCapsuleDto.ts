@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dtoEntityConstants";
+
 interface PostalCodeCapsuleDtoInterface {
 
     /** 郵便番号1 */
@@ -19,7 +21,7 @@ interface PostalCodeCapsuleDtoInterface {
     lgCode: string;
 
     /** 住居テーブルId */
-    selectedRsdtId:number;
+    selectedRsdtId: number;
 
 }
 
@@ -44,14 +46,14 @@ class PostalCodeCapsuleDto implements PostalCodeCapsuleDtoInterface {
     lgCode: string;
 
     /** 住居テーブルId */
-    selectedRsdtId:number;
+    selectedRsdtId: number;
 
     constructor() {
 
         //  初期データ
-        const INIT_STRING: string = "";
-        const INIT_NUMBER: number = 0;
-        const INIT_BOOLEAN: boolean = false;
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
+        const INIT_NUMBER: number = DtoEntityConstants.INIT_NUMBER;
+        const INIT_BOOLEAN: boolean = DtoEntityConstants.INIT_BOOLEAN;
 
         this.postal1 = INIT_STRING;
         this.postal2 = INIT_STRING;

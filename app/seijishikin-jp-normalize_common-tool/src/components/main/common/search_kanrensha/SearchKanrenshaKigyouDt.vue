@@ -40,9 +40,8 @@ const urlBack: string = RoutePathConstants.DOMAIN + RoutePathConstants.BASE_PATH
 const capsuleDto: Ref<SearchKanrenshaKigyouDtCapsuleDtoInterface> = ref(new SearchKanrenshaKigyouDtCapsuleDto());
 const resultDto: Ref<SearchKanrenshaKigyouDtResultDtoInterface> = ref(new SearchKanrenshaKigyouDtResultDto());
 
-// // 検索リスト
+// 検索リスト
 function onSearch() {
-    //     listCorp.value = mockGetCorpList();
 
     capsuleDto.value.allCount = allCount.value;
     capsuleDto.value.limit = limit.value;

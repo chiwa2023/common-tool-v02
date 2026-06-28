@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dtoEntityConstants";
+
 /**
  * ユーザ最小限DtoInterface
  */
@@ -59,8 +61,8 @@ class LeastUserDto implements LeastUserDtoInterface {
 
     constructor() {
 
-        const INIT_NUMBER: number = 0;
-        const INIT_STRING: string = "";
+        const INIT_NUMBER: number = DtoEntityConstants.INIT_NUMBER;
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
 
         this.userPersonId = INIT_NUMBER;
         this.userPersonCode = INIT_NUMBER;

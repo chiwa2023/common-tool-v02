@@ -11,11 +11,11 @@ import { InputShokugyouDto, type InputShokugyouDtoInterface } from './dto/input_
 import ViewInputShokugyou from './common/input_shokugyou/ViewInputShokugyou.vue';
 import ViewInputOrgName from './common/input_org_name/ViewInputOrgName.vue';
 import ViewInputPersonName from './common/input_person_name/ViewInputPersonName.vue';
-import InputDate from './common/date/InputDate.vue';
 import MockViewInputAddress from '../test/common/input_address/MockViewInputAddress.vue';
 import MockViewInputAddressShort from '../test/common/input_address_short/MockViewInputAddressShort.vue';
 import MockViewInputAccess from '../test/common/input_access/MockViewInputAccess.vue';
-import InputDatetimeAndNull from './common/date/InputDatetimeAndNull.vue';
+import BaseEditAddress from '../test/common/input_address/BaseEditAddress.vue';
+import BaseDateAndDatetime from '../test/common/date/BaseDateAndDatetime.vue';
 
 //仮
 // よく使う定数
@@ -83,42 +83,6 @@ const inputAccessDto: Ref<InputAccessDtoInterface> = ref(new InputAccessDto());
 const inputAddressDto: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
 const inputAddressDtoShort: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
 const inputShokugyouDto: Ref<InputShokugyouDtoInterface> = ref(new InputShokugyouDto());
-
-const datetime0: Ref<Date> = ref(new Date());
-const datetime1: Ref<Date> = ref(new Date());
-
-function recieveDateTime(date: Date, index: number) {
-    if (0 == index) {
-        datetime0.value = date;
-    }
-    if (1 == index) {
-        datetime1.value = date;
-    }
-}
-
-function onShowISO(index: number) {
-    let datetime: Date = new Date();
-    if (0 == index) {
-        datetime = datetime0.value;
-    }
-    if (1 == index) {
-        datetime = datetime1.value;
-    }
-
-    alert(datetime.toISOString());
-}
-
-function onShowLocal(index: number) {
-    let datetime: Date = new Date();
-    if (0 == index) {
-        datetime = datetime0.value;
-    }
-    if (1 == index) {
-        datetime = datetime1.value;
-    }
-
-    alert(datetime.toLocaleString('sv-SE'));
-}
 
 function onRefreshInfo() {
     inputOrgNameDto.value.orgNameKana = "ははは";
@@ -190,31 +154,11 @@ function onInitialize() {
             </div>
         </div>
 
+        <!-- 住所編集 -->
+        <BaseEditAddress></BaseEditAddress>
+
         <!-- 日付 -->
-        <h3>日付</h3>
-        <div class="one-line">
-            <div class="left-area">
-                日時
-            </div>
-            <div class="right-area">
-                <InputDatetimeAndNull :datetime="datetime0" :is-edit="true" :index="0"
-                    @send-date-time="recieveDateTime">
-                </InputDatetimeAndNull><button @click="onShowISO(0)" class="left-spacce">ISO</button> <button
-                    @click="onShowLocal(0)" class="left-spacce">ローカル</button>
-            </div>
-        </div>
-
-
-        <div class="one-line">
-            <div class="left-area">
-                日付
-            </div>
-            <div class="right-area">
-                <InputDate :date="datetime1" :is-edit="true" :index="1" @send-date="recieveDateTime">
-                </InputDate><button @click="onShowISO(1)" class="left-spacce">ISO</button> <button
-                    @click="onShowLocal(1)" class="left-spacce">ローカル</button>
-            </div>
-        </div>
+        <BaseDateAndDatetime></BaseDateAndDatetime>
 
         <div class="one-line">
             <RouterLink to="/net-access">back処理Net接続ありカタログ</RouterLink>

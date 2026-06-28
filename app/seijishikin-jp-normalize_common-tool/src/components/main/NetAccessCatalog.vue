@@ -17,6 +17,9 @@ import SearchKanrenshaKigyouDt from './common/search_kanrensha/SearchKanrenshaKi
 import SearchKanrenshaSeijidantai from './common/search_kanrensha/SearchKanrenshaSeijidantai.vue';
 import { KanrenshaKigyouDtMasterEntity, type KanrenshaKigyouDtMasterEntityInterface } from './entity/kanrenshaKigyouDtMasterEntity';
 import { KanrenshaSeijidantaiMasterEntity, type KanrenshaSeijidantaiMasterEntityInterface } from './entity/kanrenshaSeijidantaiMasterEntity';
+import BaseLgCode from '../test/common/input_lgcode/BaseLgCode.vue';
+import BaseBuildingAddress from '../test/common/input_address/BaseBuildingAddress.vue';
+import BaseCompareAddress from '../test/common/input_address/BaseCompareAddress.vue';
 
 //仮
 // よく使う定数
@@ -49,8 +52,6 @@ const inputAccessDto: Ref<InputAccessDtoInterface> = ref(new InputAccessDto());
 const inputAddressDto: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
 const inputAddressDtoShort: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
 const inputKanrenshaLeastDto: Ref<InputKanrenshaPersonLeastDtoInterface> = ref(new InputKanrenshaPersonLeastDto());
-inputKanrenshaLeastDto.value.personKanrenshaCode = "99-asgzz";
-inputKanrenshaLeastDto.value.personName = "あれあれ";
 const inputHojinNo: Ref<HoujinNoDtoInterface> = ref(new HoujinNoDto());
 function onCancel() {
     history.back();
@@ -118,7 +119,6 @@ function recieveSeijidantaiInterface(selectedEntity: KanrenshaSeijidantaiMasterE
     isSearchSeijidantai.value = false;
 }
 
-
 </script>
 <template>
     <div class="container">
@@ -148,6 +148,13 @@ function recieveSeijidantaiInterface(selectedEntity: KanrenshaSeijidantaiMasterE
 
         <!-- 関連者最低限 -->
         <ViewInputKanrenshaLeast :edit-dto="inputKanrenshaLeastDto" title="会計責任者"></ViewInputKanrenshaLeast>
+
+        <!-- 建物住所設定時専用 -->
+        <BaseBuildingAddress></BaseBuildingAddress>
+
+        <!-- 比較住所設定時専用 -->
+        <BaseCompareAddress></BaseCompareAddress>
+
 
         <h3>法人番号</h3>
         <div class="one-line">
@@ -245,6 +252,10 @@ function recieveSeijidantaiInterface(selectedEntity: KanrenshaSeijidantaiMasterE
             </div>
         </div>
 
+        <!-- 地方自治体コード -->
+        <h3>地方自治体コード</h3>
+        <BaseLgCode></BaseLgCode>
+
         <div class="footer">
             <button @click="onCancel" class="footer-button">キャンセル</button>
         </div>
@@ -276,8 +287,6 @@ function recieveSeijidantaiInterface(selectedEntity: KanrenshaSeijidantaiMasterE
             <SearchKanrenshaSeijidantai :is-raise-commponet="true" @send-cancel-seijidantai="recieveCancelSeijidantai"
                 @send-seijidantai-interface="recieveSeijidantaiInterface"></SearchKanrenshaSeijidantai>
         </div>
-
-
 
         <!-- メッセージ表示 -->
         <!-- ダイアログ用のコンテナ -->

@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dtoEntityConstants";
+
 /**
  * selectbox選択肢項目Interface(値number)
  */
@@ -23,8 +25,12 @@ class SelectOptionNumberDto implements SelectOptionNumberDtoInterface {
     text: string;
 
     constructor() {
-        this.value = 0;
-        this.text = "";
+
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
+        const INIT_NUMBER: number = DtoEntityConstants.INIT_NUMBER;
+
+        this.value = INIT_NUMBER;
+        this.text = INIT_STRING;
     }
 }
 

@@ -1,9 +1,11 @@
 ﻿<script setup lang="ts">
-import { computed, type ComputedRef, type Ref, ref, toRaw } from "vue";
+import { computed, type ComputedRef, } from "vue";
 import InputDate from "../date/InputDate.vue";
 import type { AddressRsdtTemplateDtoInterface } from "../../dto/Input_address/addressRsdtTemplateDto";
 import InputDateAndNull from "../date/InputDateAndNull.vue";
 
+// props,emit
+const props = defineProps<{ editDto: AddressRsdtTemplateDtoInterface }>();
 
 // よく使う定数
 // const BLANK: string = "";
@@ -11,29 +13,18 @@ import InputDateAndNull from "../date/InputDateAndNull.vue";
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
 
-// props,emit
-const props = defineProps<{ editDto: AddressRsdtTemplateDtoInterface }>();
-const emits = defineEmits(["sendCancelInputAddress", "sendInputAddressInterface"]);
-
 /** 入力用Dto */
-const inputAddressDto: Ref<AddressRsdtTemplateDtoInterface> = ref(structuredClone(toRaw(props.editDto)));
+const inputAddressDto: ComputedRef<AddressRsdtTemplateDtoInterface> = computed(() => props.editDto);
+
 const addressAll: ComputedRef<string> = computed(() =>
     inputAddressDto.value.addressPostal + inputAddressDto.value.addressBlock + "　" + inputAddressDto.value.addressBuilding);
 
-/**  
- * 入力内容を破棄する
- */
-function onCancel() {
-    emits("sendCancelInputAddress");
-}
 
-/**  
- * 入力内容を保存する
- */
-function onSave() {
-    inputAddressDto.value.addressAll = addressAll.value;
-    emits("sendInputAddressInterface", inputAddressDto.value);
-}
+// watch(props.editDto,() => {
+//     inputAddressDto.value = structuredClone( props.editDto);    
+// });
+
+
 function recieveDateAndNull(data: Date | null) {
     inputAddressDto.value.abolishDate = data;
 }
@@ -69,11 +60,7 @@ function recieveDate(data: Date) {
                 住所郵便番号
             </div>
             <div class="right-area">
-                <div class="form-group-vertical">
-                    <div>
-                        <textarea v-model="inputAddressDto.addressPostal" class="max-input"></textarea>
-                    </div>
-                </div>
+                <textarea v-model="inputAddressDto.addressPostal" class="max-input"></textarea>
             </div>
         </div>
 
@@ -82,9 +69,7 @@ function recieveDate(data: Date) {
                 住所番地
             </div>
             <div class="right-area">
-                <div>
-                    <textarea v-model="inputAddressDto.addressBlock" class="max-input"></textarea>
-                </div>
+                <textarea v-model="inputAddressDto.addressBlock" class="max-input"></textarea>
             </div>
         </div>
 
@@ -93,11 +78,7 @@ function recieveDate(data: Date) {
                 住所建物
             </div>
             <div class="right-area">
-                <div class="form-group-vertical">
-                    <div>
-                        <textarea v-model="inputAddressDto.addressBuilding" class="max-input"></textarea>
-                    </div>
-                </div>
+                <textarea v-model="inputAddressDto.addressBuilding" class="max-input"></textarea>
             </div>
         </div>
 
@@ -116,15 +97,15 @@ function recieveDate(data: Date) {
                             class="short-input left-space">
                     </div>
                     <div>
-                        <span></span>地番Id<input type="text" v-model="inputAddressDto.prcId"
-                            class="code-input left-space">
+                        <span>地番Id</span><input type="text" v-model="inputAddressDto.prcId"
+                            class="short-input left-space">
                     </div>
                     <div>
                         <span>街区Id</span><input type="text" v-model="inputAddressDto.blkId"
                             class="short-input left-space">
                     </div>
                     <div>
-                        <span></span>住居Id<input type="text" v-model="inputAddressDto.rsdtId"
+                        <span>住居Id</span><input type="text" v-model="inputAddressDto.rsdtId"
                             class="short-input left-space">
                     </div>
                     <div>
@@ -150,15 +131,10 @@ function recieveDate(data: Date) {
             廃止日
         </div>
         <div class="right-area">
-            <InputDateAndNull :date="inputAddressDto.abolishDate" :index="2" :is-edit="true" @send-date="recieveDateAndNull">
+            <InputDateAndNull :date="inputAddressDto.abolishDate" :index="2" :is-edit="true"
+                @send-date="recieveDateAndNull">
             </InputDateAndNull>
         </div>
-    </div>
-
-
-    <div class="footer">
-        <button @click="onCancel" class="footer-button">キャンセル</button>
-        <button @click="onSave" class="footer-button left-space">選択</button>
     </div>
 
 </template>

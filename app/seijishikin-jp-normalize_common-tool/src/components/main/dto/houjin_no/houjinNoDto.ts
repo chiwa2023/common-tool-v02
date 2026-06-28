@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dtoEntityConstants";
+
 interface HoujinNoDtoInterface {
 
     /** 法人番号 */
@@ -67,19 +69,19 @@ class HoujinNoDto implements HoujinNoDtoInterface {
 
     constructor() {
 
-        const INIT_STYRING: string = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
+        const INIT_DATE: Date = DtoEntityConstants.INIT_DATE_SYSTEM;
 
-        this.houjinNo = INIT_STYRING;
-        this.shoriKbn = INIT_STYRING;
-        this.updateDate = new Date(1948, 7, 29);
-        this.houjinSbts = INIT_STYRING;
-        this.houjinNameKana = INIT_STYRING;
-        this.houjinName = INIT_STYRING;
-        this.postalcode = INIT_STYRING;
-        this.addressPrefecture = INIT_STYRING;
-        this.addressCity = INIT_STYRING;
-        this.addressBlock = INIT_STYRING;
-
+        this.houjinNo = INIT_STRING;
+        this.shoriKbn = INIT_STRING;
+        this.updateDate = INIT_DATE; // リスト表示用：意味としては初期値だが、法人番号更新日初期値との乖離がありすぎ
+        this.houjinSbts = INIT_STRING;
+        this.houjinNameKana = INIT_STRING;
+        this.houjinName = INIT_STRING;
+        this.postalcode = INIT_STRING;
+        this.addressPrefecture = INIT_STRING;
+        this.addressCity = INIT_STRING;
+        this.addressBlock = INIT_STRING;
     }
 }
 

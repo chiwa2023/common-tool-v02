@@ -1,3 +1,4 @@
+import DtoEntityConstants from "../dtoEntityConstants";
 import { FrameworkPagingDto, type FrameworkPagingDtoInterface } from "../paging/frameworkPagingDto";
 
 interface SearchKanrenshaPersonCapsuleDtoInterface extends FrameworkPagingDtoInterface {
@@ -26,7 +27,7 @@ class SearchKanrenshaPersonCapsuleDto extends FrameworkPagingDto implements Sear
 
     constructor() {
         super();
-        const INIT_STRING: string = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
 
         this.name = INIT_STRING;
         this.address = INIT_STRING;

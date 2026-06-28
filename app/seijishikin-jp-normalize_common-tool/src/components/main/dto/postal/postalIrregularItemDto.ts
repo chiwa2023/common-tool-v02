@@ -1,3 +1,4 @@
+import DtoEntityConstants from "../dtoEntityConstants";
 import { InputAddressDto, type InputAddressDtoInterface } from "../Input_address/inputAddressDto";
 
 export default interface PostalIrregularItemInterface {
@@ -21,12 +22,12 @@ export default class PostalIrregularItemDto implements PostalIrregularItemInterf
     /** 住所名 */
     addressName: string;
 
-    inputAddress:InputAddressDtoInterface;
+    inputAddress: InputAddressDtoInterface;
 
     constructor() {
 
-        const INIT_NUMBER: number = 0;
-        const INIT_STRING: string = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
+        const INIT_NUMBER: number = DtoEntityConstants.INIT_NUMBER;
 
         this.addressPostalIrregularId = INIT_NUMBER;
         this.postal1 = INIT_STRING;

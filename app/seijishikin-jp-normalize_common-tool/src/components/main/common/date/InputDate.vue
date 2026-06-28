@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {  onBeforeMount, ref, watch,  type Ref } from 'vue';
+import { onBeforeMount, ref, watch, type Ref } from 'vue';
+import DtoEntityConstants from '../../dto/dtoEntityConstants';
 
 
 // props,emmits
@@ -19,26 +20,36 @@ const emits = defineEmits(["sendDate"]);
 //const message: Ref<string> = ref(BLANK);
 
 const dateString: Ref<string> = ref("");
+const LIMIT_DATE: Date = DtoEntityConstants.INIT_DATE_LIMIT;
 
 onBeforeMount(() => {
     dateString.value = props.date.toLocaleDateString('sv-SE');
 });
 
 watch(props, () => {
+    const limit = LIMIT_DATE;
+    if (!isNaN(props.date.getTime()) && props.date.getTime() <= limit.getTime()) {
+        return;
+    }
     dateString.value = props.date.toLocaleDateString('sv-SE');
 });
 
-
 function onDataChange() {
-    if (null === dateString.value) {
-        emits("sendDate", null, props.index);
+    if (null === dateString.value || "" === dateString.value) {
+        emits("sendDate", LIMIT_DATE, props.index);
     } else {
         const dateCell: string[] = dateString.value.split("-");
-        if (dateCell[0] !== undefined && dateCell[1] !== undefined && dateCell[2] !== undefined) {
+        if (dateCell[0] !== undefined && dateCell[1] !== undefined && dateCell[2] !== undefined
+            && !isNaN(parseInt(dateCell[0])) && !isNaN(parseInt(dateCell[1])) && !isNaN(parseInt(dateCell[2]))
+            && dateCell[0].length === 4) {
             const sendData: Date = new Date(parseInt(dateCell[0]), parseInt(dateCell[1]) - 1, parseInt(dateCell[2]));
-            emits("sendDate", sendData, props.index);
+            if (!isNaN(sendData.getTime())) {
+                emits("sendDate", sendData, props.index);
+            } else {
+                emits("sendDate", LIMIT_DATE, props.index);
+            }
         } else {
-            emits("sendDate", new Date(dateString.value), props.index);
+            emits("sendDate", LIMIT_DATE, props.index);
         }
     }
 }

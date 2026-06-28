@@ -1,3 +1,4 @@
+import DtoEntityConstants from "../dtoEntityConstants";
 import type { SelectOptionNumberDtoInterface } from "../select_options/selectOptionNumberDto";
 
 interface PostalCodePostalResultDtoInterface {
@@ -19,8 +20,9 @@ class PostalCodePostalResultDto implements PostalCodePostalResultDtoInterface {
     listOptions: SelectOptionNumberDtoInterface[];
 
     constructor() {
+        const INIT_BOOLEAN: boolean = DtoEntityConstants.INIT_BOOLEAN;
 
-        this.isGyouseikuData = false;
+        this.isGyouseikuData = INIT_BOOLEAN;
         this.listOptions = [];
 
     }

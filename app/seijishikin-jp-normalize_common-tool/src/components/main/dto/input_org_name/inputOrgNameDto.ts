@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dtoEntityConstants";
+
 /**
  * 団体名Interface
  */
@@ -22,7 +24,8 @@ class InputOrgNameDto implements InputOrgNameDtoInterface {
     orgName: string;
 
     constructor() {
-        const INIT_STRING: string = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
+
         this.orgNameKana = INIT_STRING;
         this.orgName = INIT_STRING;
     }

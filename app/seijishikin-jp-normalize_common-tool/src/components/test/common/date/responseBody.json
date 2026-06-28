@@ -1,0 +1,29 @@
+{
+    "allCount": 1,
+    "isFailure": false,
+    "limit": 20,
+    "listEntity": [
+        {
+            "abolishDate": null,
+            "addressAllCityId": 237,
+            "addressNameKana": "イワテケンミヤコシ",
+            "city": "宮古市",
+            "county": "",
+            "deleteTimestamp": "1948-07-28T23:59:59",
+            "deleteUserCode": 0,
+            "deleteUserId": 0,
+            "deleteUserName": "",
+            "effectDate": "1947-04-17",
+            "insertTimestamp": "2026-03-28T17:36:07",
+            "insertUserCode": 190,
+            "insertUserId": 196,
+            "insertUserName": "管理人　太郎",
+            "isLatest": true,
+            "lgCode": "032026",
+            "pref": "岩手県",
+            "ward": ""
+        }
+    ],
+    "message": "",
+    "pageNumber": 0
+}

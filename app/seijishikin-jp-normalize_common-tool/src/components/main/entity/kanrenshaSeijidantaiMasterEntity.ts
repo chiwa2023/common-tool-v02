@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dto/dtoEntityConstants";
+
 interface KanrenshaSeijidantaiMasterEntityInterface {
 
     /** テーブルId */
@@ -54,9 +56,10 @@ class KanrenshaSeijidantaiMasterEntity implements KanrenshaSeijidantaiMasterEnti
 
     constructor() {
 
-        const INIT_STRING: string = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
+        const INIT_NUMBER: number = DtoEntityConstants.INIT_NUMBER;
 
-        this.kanrenshaSeijidantaiMasterId = 0;
+        this.kanrenshaSeijidantaiMasterId = INIT_NUMBER;
         this.seijidantaiKanrenshaCode = INIT_STRING;
         this.poliOrgNo = INIT_STRING;
         this.kanrenshaName = INIT_STRING;

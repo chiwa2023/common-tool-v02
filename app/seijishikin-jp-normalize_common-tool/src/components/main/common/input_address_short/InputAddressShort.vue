@@ -12,7 +12,7 @@ import { PostalCodeCapsuleDto, type PostalCodeCapsuleDtoInterface } from "../../
 import { MessageConstants } from "../../dto/message/messageConstants";
 import MessageView from "../message/MessageView.vue";
 import { AccessTokenNotFoundError, TokenRefreshError } from "../../dto/login/errors";
-import type { AddressRsdtResultDtoInterface } from "../../dto/postal/AddressRsdtResultDto";
+import type { AddressRsdtResultDtoInterface } from "../../dto/postal/addressRsdtResultDto.ts";
 import type { AddressRsdtTemplateEntityInterface } from "../../entity/addressRsdtTemplateEntity";
 
 // よく使う定数

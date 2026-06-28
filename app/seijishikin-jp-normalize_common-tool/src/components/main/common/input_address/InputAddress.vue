@@ -12,7 +12,7 @@ import { AccessTokenNotFoundError, TokenRefreshError } from "../../dto/login/err
 import { MessageConstants } from "../../dto/message/messageConstants";
 import { PostalCodeCapsuleDto, type PostalCodeCapsuleDtoInterface } from "../../dto/postal/postalCodeCapsuleDto";
 import MessageView from "../message/MessageView.vue";
-import type { AddressRsdtResultDtoInterface } from "../../dto/postal/AddressRsdtResultDto";
+import type { AddressRsdtResultDtoInterface } from "../../dto/postal/addressRsdtResultDto.ts";
 import type { AddressRsdtTemplateEntityInterface } from "../../entity/addressRsdtTemplateEntity";
 
 
@@ -60,7 +60,7 @@ const listBackupBuildingSuggest: Ref<SelectOptionNumberDtoInterface[]> = ref([])
 /** 地方自治体住居検索 */
 const isGyouseiku: Ref<boolean> = ref(false);
 
-// /** 郵便番号取得 */
+/** 郵便番号取得 */
 function getAddressPostal() {
 
     //  郵便番号の形式となったらリストを取得する

@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dtoEntityConstants";
+
 interface AddressRsdtTemplateDtoInterface {
 
     /** テーブルId */
@@ -82,9 +84,11 @@ class AddressRsdtTemplateDto implements AddressRsdtTemplateDtoInterface {
 
     constructor() {
 
-        const INIT_STRING: string = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
+        const INIT_NUMBER: number = DtoEntityConstants.INIT_NUMBER;
+        const INIT_DATE: Date = DtoEntityConstants.INIT_DATE_SYSTEM;
 
-        this.addressRsdtId = 0;
+        this.addressRsdtId = INIT_NUMBER;
 
         this.addressAll = INIT_STRING;
         this.orginAddressAll = INIT_STRING;
@@ -102,8 +106,8 @@ class AddressRsdtTemplateDto implements AddressRsdtTemplateDtoInterface {
         this.rsdtId = INIT_STRING;
         this.rsdt2Id = INIT_STRING;
 
-        this.effectDate = new Date();
-        this.abolishDate = null;
+        this.effectDate = INIT_DATE; // 入力窓編集前提
+        this.abolishDate = null; // 廃止日未決定が基本
     }
 }
 

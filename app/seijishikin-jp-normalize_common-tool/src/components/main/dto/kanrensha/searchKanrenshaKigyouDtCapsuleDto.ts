@@ -1,3 +1,4 @@
+import DtoEntityConstants from "../dtoEntityConstants";
 import { FrameworkPagingDto, type FrameworkPagingDtoInterface } from "../paging/frameworkPagingDto";
 
 interface SearchKanrenshaKigyouDtCapsuleDtoInterface extends FrameworkPagingDtoInterface {
@@ -32,8 +33,7 @@ class SearchKanrenshaKigyouDtCapsuleDto extends FrameworkPagingDto implements Se
 
     constructor() {
         super();
-
-        const INIT_STRING: string = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
 
         this.houjinNo = INIT_STRING;
         this.name = INIT_STRING;

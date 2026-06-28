@@ -41,7 +41,6 @@ const capsuleDto: Ref<SearchKanrenshaPersonCapsuleDtoInterface> = ref(new Search
 const resultDto: Ref<SearchKanrenshaPersonResultDtoInterface> = ref(new SearchKanrenshaPersonResultDto());
 
 function onSearch() {
-    //listPerson.value = mockGetPersonList();
 
     capsuleDto.value.allCount = allCount.value;
     capsuleDto.value.limit = limit.value;

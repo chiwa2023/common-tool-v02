@@ -1,7 +1,7 @@
 {
   "name": "seijishikin-jp-normalize_common-tool",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "commonjs",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.mjs",

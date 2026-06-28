@@ -5,6 +5,8 @@ import { FrameworkCapsuleDto, type FrameworkCapsuleDtoInterface } from './main/d
 export { FrameworkCapsuleDto, type FrameworkCapsuleDtoInterface }
 import { FrameworkMessageAndResultDto, type FrameworkMessageAndResultDtoInterface } from './main/dto/frameworkMessageAndResultDto';
 export { FrameworkMessageAndResultDto, type FrameworkMessageAndResultDtoInterface }
+import DtoEntityConstants from './main/dto/dtoEntityConstants.ts';
+export { DtoEntityConstants }
 
 /** メッセージ表示 */
 import { MessageConstants } from './main/dto/message/messageConstants';
@@ -114,4 +116,9 @@ import convertDatetimeText from './main/common/date/convertDatetimeText';
 export { InputDate, InputDatetime, InputDateAndNull, InputDatetimeAndNull }
 export { convertDateText, convertDatetimeText }
 
-
+/** 地方自治体コード検索 */
+import InputLgcode from './main/common/input_lgcode/InputLgcode.vue';
+import InputPref from './main/common/input_lgcode/InputPref.vue';
+import { SearchAllCityLgcodeCapsuleDto, type SearchAllCityLgcodeCapsuleDtoInterface } from './main/dto/postal/searchAllCityLgcodeCapsuleDto.ts';
+export { InputLgcode, InputPref }
+export { SearchAllCityLgcodeCapsuleDto, type SearchAllCityLgcodeCapsuleDtoInterface }

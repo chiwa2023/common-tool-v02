@@ -1,6 +1,6 @@
 package net.seijishikin.jp.normalize.common_tool.utils;
 
-import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.step.StepExecution;
 import org.springframework.stereotype.Component;
 
 import net.seijishikin.jp.normalize.common_tool.dto.LeastUserDto;

@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dtoEntityConstants";
+
 interface InputKanrenshaPersonLeastDtoInterface {
 
     /** 関連者個人姓名 */
@@ -17,7 +19,7 @@ class InputKanrenshaPersonLeastDto implements InputKanrenshaPersonLeastDtoInterf
     personKanrenshaCode: string;
 
     constructor() {
-        const INIT_STRING: string = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
 
         this.personName = INIT_STRING;
         this.personKanrenshaCode = INIT_STRING;

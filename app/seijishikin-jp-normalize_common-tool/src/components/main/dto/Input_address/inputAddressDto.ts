@@ -1,3 +1,4 @@
+import DtoEntityConstants from "../dtoEntityConstants";
 
 interface InputAddressDtoInterface {
 
@@ -97,8 +98,8 @@ class InputAddressDto implements InputAddressDtoInterface {
 
 
     constructor() {
-        const INIT_STRING: string = "";
-        const INIT_BOOLEAN: boolean = false;
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
+        const INIT_BOOLEAN: boolean = DtoEntityConstants.INIT_BOOLEAN;
 
         this.addressAll = INIT_STRING;
         this.orginAddressAll = INIT_STRING;

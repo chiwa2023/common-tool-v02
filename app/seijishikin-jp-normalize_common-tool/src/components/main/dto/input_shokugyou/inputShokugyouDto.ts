@@ -1,3 +1,5 @@
+import DtoEntityConstants from "../dtoEntityConstants";
+
 /**
  * 職業入力Interface
  */
@@ -47,7 +49,7 @@ class InputShokugyouDto implements InputShokugyouDtoInterface {
     houjinName: string;
 
     constructor() {
-        const INIT_STRING: string = "";
+        const INIT_STRING: string = DtoEntityConstants.INIT_STRING;
 
         this.allShokugyou = INIT_STRING;
         this.gyoushu = INIT_STRING;
