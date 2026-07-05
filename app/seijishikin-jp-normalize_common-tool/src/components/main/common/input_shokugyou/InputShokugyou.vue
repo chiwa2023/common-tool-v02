@@ -5,7 +5,7 @@ import SearchHoujinNo from '../search_houjin_no/SearchHoujinNo.vue';
 import type { HoujinNoDtoInterface } from '../../dto/houjin_no/houjinNoDto';
 
 // props,emit
-const props = defineProps<{ editDto: InputShokugyouDtoInterface }>();
+const props = defineProps<{ editDto: InputShokugyouDtoInterface, houjinApiKey: string }>();
 const emits = defineEmits(["sendCancelInputShokugyou", "sendInputShokugyouInterface"]);
 
 const BLANK: string = "";
@@ -72,7 +72,7 @@ function onSearchCorpNo() {
  */
 function recieveCorpNoInterface(sendDto: HoujinNoDtoInterface) {
     inputShokugyouDto.value.houjinNo = sendDto.houjinNo;
-    inputShokugyouDto.value.houjinAddress = sendDto.addressPrefecture + sendDto.addressCity;
+    inputShokugyouDto.value.houjinAddress = sendDto.prefectureName + sendDto.cityName;
     inputShokugyouDto.value.houjinName = sendDto.houjinName;
 
     sendAllShokugyou();
@@ -156,9 +156,6 @@ function onCancel() {
         </div>
     </div>
 
-
-
-
     <div class="one-line">
         <div class="left-area">
             職業(2)×自由入力
@@ -166,10 +163,8 @@ function onCancel() {
 
         <div class="right-area">
             <input type="text" v-model="inputShokugyouDto.shokugyouUserWrite" class="max-input"
-                @input="sendAllShokugyou">
+                @input="sendAllShokugyou" maxlength="100">
         </div>
-
-
     </div>
 
 
@@ -182,11 +177,12 @@ function onCancel() {
                 <div class="form-group-vertical">
                     <div>
                         <input type="text" v-model="inputShokugyouDto.houjinNo" class="code-input" disabled="true"
-                            placeholder="123456789012345678901234567890">
+                            placeholder="1234567890123" maxlength="13">
                         <button class="left-space" @click="onSearchCorpNo">検索</button>
                     </div>
                     <div>
-                        <input type="text" v-model="inputShokugyouDto.houjinName" class="name-input" disabled="true">
+                        <input type="text" v-model="inputShokugyouDto.houjinName" class="name-input" disabled="true"
+                            maxlength="40">
                     </div>
                     <div>
                         <textarea type="text" v-model="inputShokugyouDto.houjinAddress" class="max-input"
@@ -207,7 +203,8 @@ function onCancel() {
     <div v-if="isHoujinSearch">
         <div class="overComponentLayer2">
             <SearchHoujinNo @send-cancel-houjin-no="recieveCancelCorpNo"
-                @send-houjin-no-interface="recieveCorpNoInterface"></SearchHoujinNo>
+                @send-houjin-no-interface="recieveCorpNoInterface" :houjin-api-key="props.houjinApiKey">
+            </SearchHoujinNo>
         </div>
     </div>
 

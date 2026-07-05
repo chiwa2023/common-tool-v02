@@ -79,7 +79,10 @@ import SearchHoujinNo from './components/main/common/search_houjin_no/SearchHouj
 import HoujinShoriKbnConstants from './components/main/dto/houjin_no/houjinShoriKbnConstants';
 import HoujinSbtsConstants from './components/main/dto/houjin_no/houjinSbtsConstants';
 import { HoujinNoDto, type HoujinNoDtoInterface } from './components/main/dto/houjin_no/houjinNoDto';
+import { SearchHoujinNoCapsuleDto, type SearchHoujinNoCapsuleDtoInterface } from './components/main/dto/houjin_no/searchHoujinNoCapsuleDto.ts';
+import { SearchHoujinNoResultDto, type SearchHoujinNoResultDtoInterface } from './components/main/dto/houjin_no/searchHoujinNoResultDto.ts';
 export { SearchHoujinNo, HoujinNoDto, type HoujinNoDtoInterface, HoujinShoriKbnConstants, HoujinSbtsConstants }
+export { SearchHoujinNoCapsuleDto, type SearchHoujinNoCapsuleDtoInterface,SearchHoujinNoResultDto, type SearchHoujinNoResultDtoInterface,  }
 
 /** ユーザ */
 import { type LeastUserDtoInterface, LeastUserDto } from './components/main/dto/user/leastUserDto';

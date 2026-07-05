@@ -69,6 +69,16 @@ import InputShokugyou from './main/common/input_shokugyou/InputShokugyou.vue';
 import InputCompareShokugyou from './main/common/input_shokugyou/InputCompareShokugyou.vue';
 export { ViewInputShokugyou, InputShokugyou, InputCompareShokugyou }
 
+/** 法人番号検索 */
+import SearchHoujinNo from './main/common/search_houjin_no/SearchHoujinNo.vue';
+import HoujinShoriKbnConstants from './main/dto/houjin_no/houjinShoriKbnConstants';
+import HoujinSbtsConstants from './main/dto/houjin_no/houjinSbtsConstants';
+import { HoujinNoDto, type HoujinNoDtoInterface } from './main/dto/houjin_no/houjinNoDto';
+import { SearchHoujinNoCapsuleDto, type SearchHoujinNoCapsuleDtoInterface } from './main/dto/houjin_no/searchHoujinNoCapsuleDto.ts';
+import { SearchHoujinNoResultDto, type SearchHoujinNoResultDtoInterface } from './main/dto/houjin_no/searchHoujinNoResultDto.ts';
+export { SearchHoujinNo, HoujinNoDto, type HoujinNoDtoInterface, HoujinShoriKbnConstants, HoujinSbtsConstants }
+export { SearchHoujinNoCapsuleDto, type SearchHoujinNoCapsuleDtoInterface,SearchHoujinNoResultDto, type SearchHoujinNoResultDtoInterface,  }
+
 /** 組織名称入力 */
 import ViewInputOrgName from './main/common/input_org_name/ViewInputOrgName.vue';
 import InputOrgName from './main/common/input_org_name/InputOrgName.vue';

@@ -42,10 +42,10 @@ function recieveInputOrgNameInterface(sendDto: InputOrgNameDtoInterface) {
         <div class="right-area">
             <div class="form-group-vertical">
                 <div>
-                    <input type="text" v-model="inputOrgNameDto.orgNameKana" class="name-input" disabled="true">
+                    <input type="text" v-model="inputOrgNameDto.orgNameKana" class="name-input" disabled="true" maxlength="100">
                     <button class="left-space" @click="onInputOrgnName">編集</button>
                 </div>
-                <input type="text" v-model="inputOrgNameDto.orgName" class="name-input" disabled="true">
+                <input type="text" v-model="inputOrgNameDto.orgName" class="name-input" disabled="true" maxlength="100">
             </div>
         </div>
     </div>

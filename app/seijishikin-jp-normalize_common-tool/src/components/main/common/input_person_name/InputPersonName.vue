@@ -44,11 +44,11 @@ function onCancel() {
                 </div>
                 <div>
                     姓<input type="text" v-model="inputPersonNameDto.lastNameKana" class="short-input" placeholder="せい"
-                        id="last-name-kana">
+                        id="last-name-kana" maxlength="40">
                     ミドルネーム<input type="text" v-model="inputPersonNameDto.middleNameKana" class="short-input"
-                        placeholder="みどるねーむ" id="middle-name-kana">
+                        placeholder="みどるねーむ" id="middle-name-kana" maxlength="20">
                     名<input type="text" v-model="inputPersonNameDto.firstNameKana" class="short-input" placeholder="めい"
-                        id="first-name-kana">
+                        id="first-name-kana" maxlength="40">
                 </div>
             </div>
         </div>
@@ -65,11 +65,11 @@ function onCancel() {
                 </div>
                 <div>
                     姓<input type="text" v-model="inputPersonNameDto.lastName" class="short-input" placeholder="姓"
-                        id="last-name">
+                        id="last-name" maxlength="40">
                     ミドルネーム<input type="text" v-model="inputPersonNameDto.middleName" class="short-input"
-                        placeholder="ミドルネーム" id="middle-name">
+                        placeholder="ミドルネーム" id="middle-name" maxlength="20">
                     名<input type="text" v-model="inputPersonNameDto.firstName" class="short-input" placeholder="名"
-                        id="first-name">
+                        id="first-name" maxlength="40">
                 </div>
             </div>
         </div>

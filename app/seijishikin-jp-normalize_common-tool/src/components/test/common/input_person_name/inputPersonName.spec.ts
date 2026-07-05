@@ -82,4 +82,21 @@ describe('inputPersonName', () => {
         expect(emittedPayload.allName).toBe(allName);
         expect(emittedPayload.allNameKana).toBe(allNameKana);
     });
+
+    it('各入力欄にmaxlength（桁数制限）が正しく設定されていること', () => {
+        const dto: InputPersonNameDtoInterface = new InputPersonNameDto();
+        const wrapper = mount(InputPersonName, {
+            props: {
+                editDto: dto
+            }
+        });
+
+        expect(wrapper.find('#last-name').attributes('maxlength')).toBe('40');
+        expect(wrapper.find('#first-name').attributes('maxlength')).toBe('40');
+        expect(wrapper.find('#middle-name').attributes('maxlength')).toBe('20');
+
+        expect(wrapper.find('#last-name-kana').attributes('maxlength')).toBe('40');
+        expect(wrapper.find('#first-name-kana').attributes('maxlength')).toBe('40');
+        expect(wrapper.find('#middle-name-kana').attributes('maxlength')).toBe('20');
+    });
 });

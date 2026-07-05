@@ -41,8 +41,8 @@ function recieveDate(data: Date) {
                 郵便番号
             </div>
             <div class="right-area">
-                <input v-model="inputAddressDto.postalcode1" type="text" class="short-input">&nbsp;-&nbsp;
-                <input v-model="inputAddressDto.postalcode2" type="text" class="short-input">
+                <input v-model="inputAddressDto.postalcode1" type="text" class="short-input" maxlength="3">&nbsp;-&nbsp;
+                <input v-model="inputAddressDto.postalcode2" type="text" class="short-input" maxlength="4">
             </div>
         </div>
 
@@ -90,27 +90,27 @@ function recieveDate(data: Date) {
                 <div class="form-group-vertical">
                     <div>
                         <span>地方公共団体コード</span><input type="text" v-model="inputAddressDto.lgCode"
-                            class="short-input left-space">
+                            class="short-input left-space" maxlength="6">
                     </div>
                     <div>
                         <span>町字Id</span><input type="text" v-model="inputAddressDto.machiazaId"
-                            class="short-input left-space">
+                            class="short-input left-space" maxlength="7">
                     </div>
                     <div>
                         <span>地番Id</span><input type="text" v-model="inputAddressDto.prcId"
-                            class="short-input left-space">
+                            class="short-input left-space" maxlength="15">
                     </div>
                     <div>
                         <span>街区Id</span><input type="text" v-model="inputAddressDto.blkId"
-                            class="short-input left-space">
+                            class="short-input left-space" maxlength="3">
                     </div>
                     <div>
                         <span>住居Id</span><input type="text" v-model="inputAddressDto.rsdtId"
-                            class="short-input left-space">
+                            class="short-input left-space" maxlength="3">
                     </div>
                     <div>
                         <span>住居2Id</span><input type="text" v-model="inputAddressDto.rsdt2Id"
-                            class="short-input left-space">
+                            class="short-input left-space" maxlength="5">
                     </div>
                 </div>
             </div>

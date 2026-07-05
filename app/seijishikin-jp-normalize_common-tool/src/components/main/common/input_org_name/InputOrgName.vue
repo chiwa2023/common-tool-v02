@@ -24,7 +24,7 @@ function onCancel() {
             団体名かな
         </div>
         <div class="right-area">
-            <input type="text" v-model="inputOrgNameDto.orgNameKana" class="name-input" id="org-name-kana">
+            <input type="text" v-model="inputOrgNameDto.orgNameKana" class="name-input" id="org-name-kana" maxlength="100">
         </div>
     </div>
     <div class="one-line">
@@ -32,7 +32,7 @@ function onCancel() {
             団体名
         </div>
         <div class="right-area">
-            <input type="text" v-model="inputOrgNameDto.orgName" class="name-input" id="org-name">
+            <input type="text" v-model="inputOrgNameDto.orgName" class="name-input" id="org-name" maxlength="100">
         </div>
     </div>
 

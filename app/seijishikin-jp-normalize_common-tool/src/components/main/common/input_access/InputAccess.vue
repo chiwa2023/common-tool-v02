@@ -133,9 +133,9 @@ function recieveSubmit() {
             電話番号
         </div>
         <div class="right-area">
-            <input type="text" v-model="inputAccessDto.phon1" class="short-input" placeholder="000">
-            -<input type="text" v-model="inputAccessDto.phon2" class="short-input left-space" placeholder="1111">
-            -<input type="text" v-model="inputAccessDto.phon3" class="short-input left-space" placeholder="2222">
+            <input type="text" v-model="inputAccessDto.phon1" class="short-input" placeholder="000" maxlength="5">
+            -<input type="text" v-model="inputAccessDto.phon2" class="short-input left-space" placeholder="1111" maxlength="5">
+            -<input type="text" v-model="inputAccessDto.phon3" class="short-input left-space" placeholder="2222" maxlength="5">
         </div>
     </div>
 
@@ -145,7 +145,7 @@ function recieveSubmit() {
         </div>
         <div class="right-area">
             <input type="email" v-model="inputAccessDto.email" class="name-input"
-                placeholder="sample@normalize.jp.seijishikin.net">
+                placeholder="sample@normalize.jp.seijishikin.net" maxlength="100">
         </div>
     </div>
 
@@ -165,7 +165,7 @@ function recieveSubmit() {
         </div>
         <div class="right-area">
             <input type="text" v-model="inputAccessDto.snsServiceName" class="name-input" placeholder="例:sampleブログ など"
-                :disabled="isDisabled"><select v-model="selectedSnsService" @change="onSelectSns">
+                :disabled="isDisabled" maxlength="100"><select v-model="selectedSnsService" @change="onSelectSns">
                 <option v-for="(dto, index) in listSnsService" :key="index">{{ dto.text }}</option>
             </select>
         </div>
@@ -186,7 +186,7 @@ function recieveSubmit() {
             アカウント名
         </div>
         <div class="right-area">
-            <input type="text" v-model="inputAccessDto.snsAccount" class="name-input" placeholder="例:@taro など">
+            <input type="text" v-model="inputAccessDto.snsAccount" class="name-input" placeholder="例:@taro など" maxlength="100">
         </div>
     </div>
 

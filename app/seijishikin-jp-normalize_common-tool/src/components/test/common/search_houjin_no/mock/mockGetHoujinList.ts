@@ -1,20 +1,17 @@
 import { HoujinNoDto, type HoujinNoDtoInterface } from "../../../../main/dto/houjin_no/houjinNoDto";
 
-export default function mockGetHoujinList(): HoujinNoDtoInterface[] {
+export default function mockGetHoujinList(times: number): HoujinNoDtoInterface[] {
     const houjinList: HoujinNoDtoInterface[] = [];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 2000; i++) {
         const houjin: HoujinNoDtoInterface = new HoujinNoDto();
-        houjin.houjinNo = "1234567890" + i;
-        houjin.shoriKbn = "11";
-        houjin.updateDate = new Date(2023, 10, 1);
-        houjin.houjinSbts = "401";
-        houjin.houjinNameKana = "ホウジンカブシキガイシャ" + i;
-        houjin.houjinName = "法人株式会社" + i;
-        houjin.postalcode = "123456" + i;
-        houjin.addressPrefecture = "東京都" + i;
-        houjin.addressCity = "千代田区" + i;
-        houjin.addressBlock = "架空町４－５－" + i;
+        const cnt: number = times * 2000 + i + 1;
+        houjin.houjinNo = "1234567890" + cnt;
+        houjin.process = "11";
+        houjin.kind = "401";
+        houjin.houjinName = "法人株式会社" + cnt;
+        houjin.prefectureName = "東京都" + cnt;
+        houjin.cityName = "千代田区架空町" + cnt;
         houjinList.push(houjin);
     }
 

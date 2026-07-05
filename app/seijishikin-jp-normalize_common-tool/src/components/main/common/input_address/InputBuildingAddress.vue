@@ -460,8 +460,8 @@ function recieveSubmit() {
             </div>
             <div class="right-area">
                 <input v-model="inputAddressDto.postalcode1" type="text" class="short-input"
-                    @input="getAddressPostal">&nbsp;-&nbsp;
-                <input v-model="inputAddressDto.postalcode2" type="text" class="short-input" @input="getAddressPostal">
+                    @input="getAddressPostal" maxlength="3">&nbsp;-&nbsp;
+                <input v-model="inputAddressDto.postalcode2" type="text" class="short-input" @input="getAddressPostal" maxlength="4">
             </div>
         </div>
 
@@ -556,17 +556,17 @@ function recieveSubmit() {
                 <div class="form-group-vertical">
                     <div>
                         <span>地方公共団体コード</span><input type="text" v-model="inputAddressDto.lgCode" class="short-input"
-                            disabled="true">
+                            disabled="true" maxlength="6">
                         <span class="left-space">町字Id</span><input type="text" v-model="inputAddressDto.machiazaId"
-                            class="short-input" disabled="true">
+                            class="short-input" disabled="true" maxlength="7">
                     </div>
                     <div>
-                        <span></span>地番Id<input type="text" v-model="inputAddressDto.prcId" class="code-input" disabled="true">
-                        <span class="left-space">街区Id</span><input type="text" v-model="inputAddressDto.blkId" class="short-input" disabled="true">
+                        <span></span>地番Id<input type="text" v-model="inputAddressDto.prcId" class="code-input" disabled="true" maxlength="15">
+                        <span class="left-space">街区Id</span><input type="text" v-model="inputAddressDto.blkId" class="short-input" disabled="true" maxlength="3">
                     </div>
                     <div>
-                        <span></span>住居Id<input type="text" v-model="inputAddressDto.rsdtId" class="short-input" disabled="true">
-                        <span class="left-space">住居2Id</span><input type="text" v-model="inputAddressDto.rsdt2Id" class="short-input" disabled="true">
+                        <span></span>住居Id<input type="text" v-model="inputAddressDto.rsdtId" class="short-input" disabled="true" maxlength="3">
+                        <span class="left-space">住居2Id</span><input type="text" v-model="inputAddressDto.rsdt2Id" class="short-input" disabled="true" maxlength="5">
                     </div>
                 </div>
             </div>

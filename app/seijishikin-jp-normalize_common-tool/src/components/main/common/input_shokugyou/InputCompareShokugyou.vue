@@ -5,7 +5,7 @@ import SearchHoujinNo from '../search_houjin_no/SearchHoujinNo.vue';
 import type { HoujinNoDtoInterface } from '../../dto/houjin_no/houjinNoDto';
 
 // props,emit
-const props = defineProps<{ editDto: InputShokugyouDtoInterface }>();
+const props = defineProps<{ editDto: InputShokugyouDtoInterface, houjinApiKey: string }>();
 const emits = defineEmits(["sendCancelInputShokugyou", "sendInputShokugyouInterface"]);
 
 const BLANK: string = "";
@@ -72,7 +72,7 @@ function onSearchCorpNo() {
  */
 function recieveCorpNoInterface(sendDto: HoujinNoDtoInterface) {
     inputShokugyouDto.value.houjinNo = sendDto.houjinNo;
-    inputShokugyouDto.value.houjinAddress = sendDto.addressPrefecture + sendDto.addressCity;
+    inputShokugyouDto.value.houjinAddress = sendDto.prefectureName + sendDto.cityName;
     inputShokugyouDto.value.houjinName = sendDto.houjinName;
 
     sendAllShokugyou();
@@ -142,7 +142,7 @@ function onCancel() {
                     <option value="公務">S.公務（他に分類されるものを除く）</option>
                     <option value="分類不能">T.分類不能の産業</option>
                 </select>
-                <input type="text" v-model="props.editDto.gyoushu" disabled="true" class="name-input">
+                <input type="text" v-model="props.editDto.gyoushu" disabled="true" class="name-input" maxlength="30">
             </div>
         </div>
     </div>
@@ -158,7 +158,7 @@ function onCancel() {
                     <option :value="yakushokuDirector">法人役員(一人企業の社長)</option>
                     <option :value="yakushokuNoJob">定職なし</option>
                 </select>
-                <input type="text" v-model="props.editDto.yakushoku" disabled="true" class="name-input">
+                <input type="text" v-model="props.editDto.yakushoku" disabled="true" class="name-input" maxlength="30">
             </div>
         </div>
     </div>
@@ -170,12 +170,12 @@ function onCancel() {
         <div class="right-area">
             <div class="form-group-vertical">
                 <input type="text" v-model="inputShokugyouDto.shokugyouUserWrite" class="max-input"
-                    @input="sendAllShokugyou">
-                <input type="text" v-model="props.editDto.shokugyouUserWrite" disabled="true" class="max-input">
+                    @input="sendAllShokugyou" maxlength="100">
+                <input type="text" v-model="props.editDto.shokugyouUserWrite" disabled="true" class="max-input"
+                    maxlength="100">
             </div>
         </div>
     </div>
-
 
     <div v-if="yakushokuDirector === inputShokugyouDto.yakushoku">
         <div class="one-line">
@@ -186,11 +186,12 @@ function onCancel() {
                 <div class="form-group-vertical">
                     <div>
                         <input type="text" v-model="inputShokugyouDto.houjinNo" class="code-input" disabled="true"
-                            placeholder="123456789012345678901234567890">
+                            placeholder="123456789012345678901234567890" maxlength="13">
                         <button class="left-space" @click="onSearchCorpNo">検索</button>
                     </div>
                     <div>
-                        <input type="text" v-model="inputShokugyouDto.houjinName" class="name-input" disabled="true">
+                        <input type="text" v-model="inputShokugyouDto.houjinName" class="name-input" disabled="true"
+                            maxlength="40">
                     </div>
                     <div>
                         <textarea type="text" v-model="inputShokugyouDto.houjinAddress" class="max-input"
@@ -215,7 +216,7 @@ function onCancel() {
     <div v-if="isHoujinSearch" class="overBackgroundLayer2"></div>
     <div v-if="isHoujinSearch">
         <div class="overComponentLayer2">
-            <SearchHoujinNo @send-cancel-houjin-no="recieveCancelCorpNo"
+            <SearchHoujinNo :houjin-api-key="props.houjinApiKey" @send-cancel-houjin-no="recieveCancelCorpNo"
                 @send-houjin-no-interface="recieveCorpNoInterface"></SearchHoujinNo>
         </div>
     </div>

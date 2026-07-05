@@ -7,8 +7,6 @@ import { InputOrgNameDto, type InputOrgNameDtoInterface } from './dto/input_org_
 import { InputPersonNameDto, type InputPersonNameDtoInterface } from './dto/input_person_name/inputPersonNameDto';
 import { InputAccessDto, type InputAccessDtoInterface } from './dto/input_access/inputAccessDto';
 import { InputAddressDto, type InputAddressDtoInterface } from './dto/Input_address/inputAddressDto';
-import { InputShokugyouDto, type InputShokugyouDtoInterface } from './dto/input_shokugyou/inputShokugyouDto';
-import ViewInputShokugyou from './common/input_shokugyou/ViewInputShokugyou.vue';
 import ViewInputOrgName from './common/input_org_name/ViewInputOrgName.vue';
 import ViewInputPersonName from './common/input_person_name/ViewInputPersonName.vue';
 import MockViewInputAddress from '../test/common/input_address/MockViewInputAddress.vue';
@@ -82,7 +80,6 @@ const inputPersonNameDto: Ref<InputPersonNameDtoInterface> = ref(new InputPerson
 const inputAccessDto: Ref<InputAccessDtoInterface> = ref(new InputAccessDto());
 const inputAddressDto: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
 const inputAddressDtoShort: Ref<InputAddressDtoInterface> = ref(new InputAddressDto());
-const inputShokugyouDto: Ref<InputShokugyouDtoInterface> = ref(new InputShokugyouDto());
 
 function onRefreshInfo() {
     inputOrgNameDto.value.orgNameKana = "ははは";
@@ -90,7 +87,6 @@ function onRefreshInfo() {
     inputAddressDto.value.addressAll = "all1";
     inputAddressDtoShort.value.addressAll = "all2";
     inputAccessDto.value.email = "12345@seijishikin.jp";
-    inputShokugyouDto.value.allShokugyou = "全職業";
 }
 
 function onInitialize() {
@@ -99,7 +95,6 @@ function onInitialize() {
     inputAddressDto.value = new InputAddressDto();
     inputAddressDtoShort.value = new InputAddressDto();
     inputAccessDto.value = new InputAccessDto();
-    inputShokugyouDto.value = new InputShokugyouDto();
 }
 </script>
 <template>
@@ -142,8 +137,6 @@ function onInitialize() {
         <!-- 連絡先 -->
         <MockViewInputAccess :edit-dto="inputAccessDto"></MockViewInputAccess>
 
-        <!-- 職業 -->
-        <ViewInputShokugyou :edit-dto="inputShokugyouDto"></ViewInputShokugyou>
 
         <div class="one-line">
             <div class="left-area">

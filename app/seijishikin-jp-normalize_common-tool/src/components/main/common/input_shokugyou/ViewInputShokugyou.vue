@@ -4,7 +4,7 @@ import type { InputShokugyouDtoInterface } from '../../dto/input_shokugyou/input
 import InputShokugyou from './InputShokugyou.vue';
 
 // props,emits
-const props = defineProps<{ editDto: InputShokugyouDtoInterface }>();
+const props = defineProps<{ editDto: InputShokugyouDtoInterface, houjinApiKey: string }>();
 
 // 編集Dto
 const inputShokugyouDto: ComputedRef<InputShokugyouDtoInterface> = computed(() => { return props.editDto });
@@ -55,7 +55,7 @@ function recieveInputShokugyouInterface(sendDto: InputShokugyouDtoInterface) {
     <!-- 職業詳細入力 -->
     <div v-if="isInput" class="overBackground"></div>
     <div class="overComponent" v-if="isInput">
-        <InputShokugyou v-if="isInput" :edit-dto="inputShokugyouDto"
+        <InputShokugyou v-if="isInput" :edit-dto="inputShokugyouDto" :houjin-api-key="props.houjinApiKey"
             @send-input-shokugyou-interface="recieveInputShokugyouInterface"
             @send-cancel-input-shokugyou="recieveCancelInputShokugyou"></InputShokugyou>
     </div>
