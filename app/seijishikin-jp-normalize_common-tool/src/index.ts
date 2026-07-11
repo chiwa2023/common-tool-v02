@@ -10,7 +10,8 @@ export { DtoEntityConstants }
 
 /** メッセージ表示 */
 import { MessageConstants } from './components/main/dto/message/messageConstants';
-export { MessageConstants }
+import { getErrorMessage, getErrorUniqueIdMessage } from './components/main/dto/errorFunction';
+export { MessageConstants, getErrorMessage, getErrorUniqueIdMessage }
 import MessageView from './components/main/common/message/MessageView.vue';
 import ToastMessage from './components/main/common/message/ToastMessage.vue';
 export { MessageView, ToastMessage }
@@ -82,7 +83,7 @@ import { HoujinNoDto, type HoujinNoDtoInterface } from './components/main/dto/ho
 import { SearchHoujinNoCapsuleDto, type SearchHoujinNoCapsuleDtoInterface } from './components/main/dto/houjin_no/searchHoujinNoCapsuleDto.ts';
 import { SearchHoujinNoResultDto, type SearchHoujinNoResultDtoInterface } from './components/main/dto/houjin_no/searchHoujinNoResultDto.ts';
 export { SearchHoujinNo, HoujinNoDto, type HoujinNoDtoInterface, HoujinShoriKbnConstants, HoujinSbtsConstants }
-export { SearchHoujinNoCapsuleDto, type SearchHoujinNoCapsuleDtoInterface,SearchHoujinNoResultDto, type SearchHoujinNoResultDtoInterface,  }
+export { SearchHoujinNoCapsuleDto, type SearchHoujinNoCapsuleDtoInterface, SearchHoujinNoResultDto, type SearchHoujinNoResultDtoInterface, }
 
 /** ユーザ */
 import { type LeastUserDtoInterface, LeastUserDto } from './components/main/dto/user/leastUserDto';

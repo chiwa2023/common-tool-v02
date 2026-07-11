@@ -20,11 +20,13 @@ const INIT_NUMBER: number = 0;
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
 const SEARCH_LIMIT: number = 20;
+const MESS_PAGE_NAME: string = "法人番号検索モーダル";
+const INIT_CALLER: string = "no branch";
 
 // メッセージボックス表示定数
 const infoLevel: Ref<number> = ref(MessageConstants.LEVEL_NONE);
 const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
-const title: Ref<string> = ref(BLANK);
+const caller: Ref<string> = ref(INIT_CALLER);
 const message: Ref<string> = ref(BLANK);
 
 // Paging
@@ -175,9 +177,8 @@ function getStartCount(): number {
 }
 
 
-function recieveSubmit(button: string) {
-    console.log(button);
-    // TODO ボタンタイプ別の挙動はこの中で変える
+function recieveSubmit() {
+    // メッセージ表示後の分岐はない
 
     // 非表示
     infoLevel.value = 0;
@@ -257,11 +258,10 @@ const pointPage: Ref<number> = ref(0);
         <button @click="onSave" class="footer-button left-space">選択</button>
     </div>
 
-
     <!-- メッセージ -->
     <div class="overMessage" v-if="messageType !== MessageConstants.VIEW_NONE">
-        <MessageView :info-level="infoLevel" :message-type="messageType" :title="title" :message="message"
-            @send-submit="recieveSubmit">
+        <MessageView :info-level="infoLevel" :message-type="messageType" :title="MESS_PAGE_NAME" :message="message"
+            :caller="caller" @send-submit="recieveSubmit">
         </MessageView>
     </div>
 

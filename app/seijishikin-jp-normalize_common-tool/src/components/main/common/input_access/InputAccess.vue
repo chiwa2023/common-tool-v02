@@ -7,6 +7,7 @@ import { MessageConstants } from '../../dto/message/messageConstants';
 import MessageView from '../message/MessageView.vue';
 import { AccessTokenNotFoundError, TokenRefreshError } from '../../dto/login/errors';
 import RoutePathConstants from '../../../../routePathConstants';
+import { getErrorMessage } from '../../dto/errorFunction.ts';
 
 // props,emmits
 const props = defineProps<{ editDto: InputAccessDtoInterface }>();
@@ -21,12 +22,16 @@ const BLANK: string = "";
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ACCEPTED: number = 202;
 // const SERVER_STATUS_ERROR: number = 400;
+const INQUIRE_FLG: boolean = false;
+const ERR_MESS_ONLY: boolean = true;
+const MESS_PAGE_NAME: string = "連絡先入力モーダル";
+const INIT_CALLER: string = "no branch";
 
 
 // メッセージボックス表示定数
 const infoLevel: Ref<number> = ref(MessageConstants.LEVEL_NONE);
 const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
-const title: Ref<string> = ref(BLANK);
+const caller: Ref<string> = ref(INIT_CALLER);
 const message: Ref<string> = ref(BLANK);
 
 // 編集Dto
@@ -38,7 +43,6 @@ const selectedSnsService: Ref<number> = ref(0);
 const isDisabled: Ref<boolean> = ref(false);
 
 onMounted(() => {
-    title.value = "SNS選択肢取得";
     // SNSリストを取得
     getAuthorizedPromiseArea().then(token => {
 
@@ -54,29 +58,30 @@ onMounted(() => {
             .then(async (response) => {
                 listSnsService.value = await response.json();
             })
-            .catch(() => {
+            .catch((error) => {
                 // 実処理側エラー
                 infoLevel.value = MessageConstants.LEVEL_ERROR;
                 messageType.value = MessageConstants.VIEW_OK;
-                message.value = "システム管理者にお問い合わせください";
+                caller.value = "SNS選択肢取得";
+                message.value = getErrorMessage(error, ERR_MESS_ONLY);
             });
     }).catch((e) => {
         // トークン関数側エラー
         infoLevel.value = MessageConstants.LEVEL_ERROR;
         messageType.value = MessageConstants.VIEW_OK;
         if (e instanceof AccessTokenNotFoundError) {
-            title.value = "現在トークンが存在しません";
+            // caller.value = "現在トークンが存在しません";
             message.value = e.message;
             return;
         }
         if (e instanceof TokenRefreshError) {
             // 取得に失敗している場合
-            title.value = "有効期限まじかのトークンを再取得できませんでした";
+            // caller.value = "有効期限まじかのトークンを再取得できませんでした";
             message.value = e.message;
             return;
         }
-        title.value = "システムエラーが発生しました";
-        message.value = "システム管理者にお問い合わせください";
+        // caller.value = MESS_PAGE_NAME;
+        message.value = getErrorMessage(e, INQUIRE_FLG);
     });
 
 });
@@ -134,8 +139,10 @@ function recieveSubmit() {
         </div>
         <div class="right-area">
             <input type="text" v-model="inputAccessDto.phon1" class="short-input" placeholder="000" maxlength="5">
-            -<input type="text" v-model="inputAccessDto.phon2" class="short-input left-space" placeholder="1111" maxlength="5">
-            -<input type="text" v-model="inputAccessDto.phon3" class="short-input left-space" placeholder="2222" maxlength="5">
+            -<input type="text" v-model="inputAccessDto.phon2" class="short-input left-space" placeholder="1111"
+                maxlength="5">
+            -<input type="text" v-model="inputAccessDto.phon3" class="short-input left-space" placeholder="2222"
+                maxlength="5">
         </div>
     </div>
 
@@ -186,7 +193,8 @@ function recieveSubmit() {
             アカウント名
         </div>
         <div class="right-area">
-            <input type="text" v-model="inputAccessDto.snsAccount" class="name-input" placeholder="例:@taro など" maxlength="100">
+            <input type="text" v-model="inputAccessDto.snsAccount" class="name-input" placeholder="例:@taro など"
+                maxlength="100">
         </div>
     </div>
 
@@ -195,10 +203,10 @@ function recieveSubmit() {
         <button @click="onSave" class="footer-button left-space">選択</button>
     </div>
 
-    <!-- メッセージ表示 -->
+    <!-- メッセージ -->
     <div class="overMessage" v-if="messageType !== MessageConstants.VIEW_NONE">
-        <MessageView :info-level="infoLevel" :message-type="messageType" :title="title" :message="message"
-            @send-submit="recieveSubmit">
+        <MessageView :info-level="infoLevel" :message-type="messageType" :title="MESS_PAGE_NAME" :message="message"
+            :caller="caller" @send-submit="recieveSubmit">
         </MessageView>
     </div>
 

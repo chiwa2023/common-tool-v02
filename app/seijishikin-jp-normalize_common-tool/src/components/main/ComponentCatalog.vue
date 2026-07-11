@@ -21,6 +21,7 @@ const BLANK: string = "";
 // const INIT_NUMBER: number = 0;
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
+const INIT_CALLER: string = "no branch";
 
 // Paging
 const pageNumber: Ref<number> = ref(0); // Mock data
@@ -29,7 +30,11 @@ const limit: Ref<number> = ref(10); // Mock data
 /** ページング受信 */
 function recievePagingNumber(selecteddNumber: number) {
     pageNumber.value = selecteddNumber;
-    alert("ページ情報受信");
+    infoLevel.value = MessageConstants.LEVEL_WARNING;
+    title.value = "再検索";
+    message.value = "ページ番号" + pageNumber.value + "で検索";
+    // 表示
+    messageType.value = MessageConstants.VIEW_YES_NO;
 }
 
 
@@ -38,12 +43,14 @@ const infoLevel: Ref<number> = ref(MessageConstants.LEVEL_NONE);
 const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
 const title: Ref<string> = ref(BLANK);
 const message: Ref<string> = ref(BLANK);
+const caller: Ref<string> = ref(INIT_CALLER);
 
 // メッセージ表示
 function onInfo() {
     infoLevel.value = MessageConstants.LEVEL_INFO;
     title.value = "情報タイトル";
     message.value = "メッセージ1";
+    caller.value = "onInfo";
     // 表示
     messageType.value = MessageConstants.VIEW_TOAST;
 }
@@ -52,6 +59,7 @@ function onWarning() {
     infoLevel.value = MessageConstants.LEVEL_WARNING;
     title.value = "警告タイトル";
     message.value = "メッセージ2";
+    caller.value = "onWarning";
     // 表示
     messageType.value = MessageConstants.VIEW_YES_NO;
 }
@@ -60,13 +68,15 @@ function onError() {
     infoLevel.value = MessageConstants.LEVEL_ERROR;
     title.value = "エラータイトル";
     message.value = "メッセージ3";
+    caller.value = "onError";
     // 表示
     messageType.value = MessageConstants.VIEW_OK;
 }
 
-function recieveSubmit(button: string) {
-    alert(button);
+function recieveSubmit(button: string, caller: string) {
     // TODO ボタンタイプ別の挙動はこの中で変える
+    console.log(button);
+    console.log(caller);
 
     // 非表示
     infoLevel.value = 0;
@@ -164,7 +174,7 @@ function onInitialize() {
         <!-- ダイアログ用のコンテナ -->
         <div class="overMessage" v-if="messageType !== MessageConstants.VIEW_NONE">
             <MessageView :info-level="infoLevel" :message-type="messageType" :title="title" :message="message"
-                @send-submit="recieveSubmit">
+                :caller="caller" @send-submit="recieveSubmit">
             </MessageView>
         </div>
 

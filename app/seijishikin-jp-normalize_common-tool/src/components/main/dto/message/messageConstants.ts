@@ -30,4 +30,10 @@ export class MessageConstants {
     /** 表示タイプなし */
     static readonly VIEW_NONE = 0;
 
+    /** OKボタン(押下) */
+    static readonly BUTTON_OK = "ok";
+    /** YESボタン(押下) */
+    static readonly BUTTON_YES = "yes";
+    /** NOボタン(押下) */
+    static readonly BUTTON_NO = "no";
 }

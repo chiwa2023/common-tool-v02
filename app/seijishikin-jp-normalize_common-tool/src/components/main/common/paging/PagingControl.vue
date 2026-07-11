@@ -16,7 +16,7 @@ onBeforeMount(() => {
         listPaging.value = createPagingData(props.allCount, props.limit, props.pageNumber);
     } catch (e) {
         // システム開発者向けエラー
-        alert(e);
+        console.log("PagingControl-onbeforeMount" + e);
     }
 });
 

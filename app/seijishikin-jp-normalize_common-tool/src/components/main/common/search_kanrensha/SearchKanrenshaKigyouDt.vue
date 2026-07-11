@@ -9,6 +9,7 @@ import type { KanrenshaKigyouDtMasterEntityInterface } from '../../entity/kanren
 import { MessageConstants } from '../../dto/message/messageConstants';
 import PagingControl from '../paging/PagingControl.vue';
 import MessageView from '../message/MessageView.vue';
+import { getErrorMessage, getErrorUniqueIdMessage } from '../../dto/errorFunction.ts';
 
 //props,emit
 const props = defineProps<{ isRaiseCommponet: boolean }>();
@@ -21,11 +22,15 @@ const INIT_NUMBER: number = 0;
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
 const SEARCH_LIMIT: number = 20;
+const INQUIRE_FLG: boolean = false;
+const ERR_MESS_ONLY: boolean = true;
+const MESS_PAGE_NAME: string = "関連者企業・団体検索モーダル";
+const INIT_CALLER: string = "no branch";
 
 // メッセージボックス表示定数
 const infoLevel: Ref<number> = ref(MessageConstants.LEVEL_NONE);
 const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
-const title: Ref<string> = ref(BLANK);
+const caller: Ref<string> = ref(INIT_CALLER);
 const message: Ref<string> = ref(BLANK);
 
 // Paging
@@ -62,7 +67,7 @@ function onSearch() {
                 if (0 == resultDto.value.listMasterKigyouDt.length) {
                     infoLevel.value = MessageConstants.LEVEL_INFO;
                     messageType.value = MessageConstants.VIEW_TOAST;
-                    title.value = "タスク情報検索";
+                    caller.value = "onSea";
                     message.value = "検索結果が0件でした";
                 }
                 allCount.value = resultDto.value.allCount;
@@ -70,11 +75,10 @@ function onSearch() {
                 pageNumber.value = resultDto.value.pageNumber;
             })
             .catch((error) => {
-                alert(error);
                 infoLevel.value = MessageConstants.LEVEL_ERROR;
                 messageType.value = MessageConstants.VIEW_OK;
-                title.value = "タスク情報検索";
-                message.value = "システムエラーが発生しました。システム管理者にお問い合わせください";
+                //title.value = MESS_PAGE_NAME;
+                message.value = getErrorMessage(error, ERR_MESS_ONLY);
             });
     }).catch((e) => {
         infoLevel.value = MessageConstants.LEVEL_ERROR;
@@ -82,18 +86,18 @@ function onSearch() {
 
         if (e instanceof AccessTokenNotFoundError) {
             // トークン保持ができていない場合
-            title.value = "現在トークンが存在しません";
+            //title.value = "現在トークンが存在しません";
             message.value = e.message;
             return;
         }
         if (e instanceof TokenRefreshError) {
             // 取得に失敗している場合
-            title.value = "有効期限まじかのトークンを再取得できませんでした";
+            //title.value = "有効期限まじかのトークンを再取得できませんでした";
             message.value = e.message;
             return;
         }
-        title.value = "システムエラーが発生しました";
-        message.value = "システム管理者にお問い合わせください";
+        //title.value = MESS_PAGE_NAME;
+        message.value = getErrorMessage(e, INQUIRE_FLG);
         return;
     });
 
@@ -105,6 +109,11 @@ function onSelectRow(selectedNo: number) {
     const selectedEntity: KanrenshaKigyouDtMasterEntityInterface | undefined = resultDto.value.listMasterKigyouDt.filter((e) => e.kanrenshaKigyouDtMasterId === selectedNo)[0];
     if (undefined !== selectedEntity) {
         emits("sendKigyouDtInterface", selectedEntity);
+    } else {
+        infoLevel.value = MessageConstants.LEVEL_ERROR;
+        messageType.value = MessageConstants.VIEW_OK;
+        //title.value = MESS_PAGE_NAME;
+        message.value = getErrorUniqueIdMessage(selectedNo);
     }
 }
 
@@ -114,12 +123,11 @@ function onCancel() {
 
 function recievePagingNumber(selecteddNumber: number) {
     pageNumber.value = selecteddNumber;
-    alert("ページ情報受信");
+    onSearch();
 }
 
-function recieveSubmit(button: string) {
-    console.log(button);
-    // TODO ボタンタイプ別の挙動はこの中で変える
+function recieveSubmit() {
+    // メッセージ表示後の分岐はない
 
     // 非表示
     infoLevel.value = 0;
@@ -212,8 +220,8 @@ function recieveSubmit(button: string) {
 
     <!-- メッセージ -->
     <div class="overMessage" v-if="messageType !== MessageConstants.VIEW_NONE">
-        <MessageView :info-level="infoLevel" :message-type="messageType" :title="title" :message="message"
-            @send-submit="recieveSubmit">
+        <MessageView :info-level="infoLevel" :message-type="messageType" :title="MESS_PAGE_NAME" :message="message"
+            :caller="caller" @send-submit="recieveSubmit">
         </MessageView>
     </div>
 

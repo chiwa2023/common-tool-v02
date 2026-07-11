@@ -9,6 +9,7 @@ const props = defineProps<{ editDto: InputShokugyouDtoInterface, houjinApiKey: s
 const emits = defineEmits(["sendCancelInputShokugyou", "sendInputShokugyouInterface"]);
 
 const BLANK: string = "";
+
 const inputShokugyouDto: Ref<InputShokugyouDtoInterface> = ref(structuredClone(toRaw(props.editDto)));
 
 /** 生成職業文字列を送信する */

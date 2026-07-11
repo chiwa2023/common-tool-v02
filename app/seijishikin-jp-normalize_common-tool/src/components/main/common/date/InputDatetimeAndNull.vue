@@ -59,7 +59,6 @@ function onDataChange() {
 
         nextTick(() => { isLocalChange = false; });
     } else {
-        alert(2);
         const dateCell: string[] = dateString.value.split("-");
         const timeCell: string[] = timeString.value.split(":");
         if (dateCell[0] !== undefined && dateCell[1] !== undefined && dateCell[2] !== undefined

@@ -13,11 +13,11 @@ import MessageView from '../message/MessageView.vue';
 import InputLgcode from '../input_lgcode/InputLgcode.vue';
 import type { SelectOptionStringDtoInterface } from '../../dto/select_options/selectOptionStringDto.ts';
 import HoujinShoriKbnConstants from '../../dto/houjin_no/houjinShoriKbnConstants.ts';
+import { getErrorMessage, getErrorUniqueIdMessage } from '../../dto/errorFunction.ts';
 
 // props,emit
 const props = defineProps<{ houjinApiKey: string }>();
 const emits = defineEmits(["sendCancelHoujinNo", "sendHoujinNoInterface"]);
-
 
 // よく使う定数
 const BLANK: string = "";
@@ -26,11 +26,15 @@ const INIT_BOOLEAN: boolean = false;
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
 const SEARCH_LIMIT: number = 20;
+const INQUIRE_FLG: boolean = false;
+const ERR_MESS_ONLY: boolean = true;
+const MESS_PAGE_NAME: string = "法人番号検索モーダル";
+const INIT_CALLER: string = "no branch";
 
 // メッセージボックス表示定数
 const infoLevel: Ref<number> = ref(MessageConstants.LEVEL_NONE);
 const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
-const title: Ref<string> = ref(BLANK);
+const caller: Ref<string> = ref(INIT_CALLER);
 const message: Ref<string> = ref(BLANK);
 
 // Paging
@@ -45,7 +49,7 @@ const limitHoujin: number = 2000;
 const urlBack: string = RoutePathConstants.DOMAIN + RoutePathConstants.BASE_PATH;
 
 const houjinListView: Ref<HoujinNoDtoInterface[]> = ref([])
-const selectedRow: Ref<String> = ref("");
+const selectedRow: Ref<string> = ref("");
 
 const capsuleDto: Ref<SearchHoujinNoCapsuleDtoInterface> = ref(new SearchHoujinNoCapsuleDto());
 capsuleDto.value.appId = props.houjinApiKey;
@@ -74,7 +78,7 @@ function onSearch() {
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
         }
-        title.value = "法人番号検索";
+        // caller.value = "法人番号検索";
         message.value = "検索条件法人名称を指定してください";
         infoLevel.value = MessageConstants.LEVEL_WARNING;
         messageType.value = MessageConstants.VIEW_OK;
@@ -105,7 +109,7 @@ function onSearch() {
                 if (resultDto.value.isFailure) {
                     infoLevel.value = MessageConstants.LEVEL_ERROR;
                     messageType.value = MessageConstants.VIEW_OK;
-                    title.value = "タスク情報検索";
+                    // caller.value = MESS_PAGE_NAME;
                     message.value = resultDto.value.message;
                     return;
                 }
@@ -113,7 +117,7 @@ function onSearch() {
                 if (0 == allCount.value) {
                     infoLevel.value = MessageConstants.LEVEL_INFO;
                     messageType.value = MessageConstants.VIEW_TOAST;
-                    title.value = "タスク情報検索";
+                    // caller.value = MESS_PAGE_NAME;
                     message.value = "検索結果が0件でした";
                     return;
                 } else {
@@ -126,11 +130,10 @@ function onSearch() {
                 }
             })
             .catch((error) => {
-                alert(error);
                 infoLevel.value = MessageConstants.LEVEL_ERROR;
                 messageType.value = MessageConstants.VIEW_OK;
-                title.value = "タスク情報検索";
-                message.value = "システムエラーが発生しました。システム管理者にお問い合わせください";
+                // caller.value = MESS_PAGE_NAME;
+                message.value = getErrorMessage(error, ERR_MESS_ONLY);
             });
     }).catch((e) => {
         infoLevel.value = MessageConstants.LEVEL_ERROR;
@@ -138,18 +141,18 @@ function onSearch() {
 
         if (e instanceof AccessTokenNotFoundError) {
             // トークン保持ができていない場合
-            title.value = "現在トークンが存在しません";
+            // caller.value = "現在トークンが存在しません";
             message.value = e.message;
             return;
         }
         if (e instanceof TokenRefreshError) {
             // 取得に失敗している場合
-            title.value = "有効期限まじかのトークンを再取得できませんでした";
+            // caller.value = "有効期限まじかのトークンを再取得できませんでした";
             message.value = e.message;
             return;
         }
-        title.value = "システムエラーが発生しました";
-        message.value = "システム管理者にお問い合わせください";
+        // caller.value = MESS_PAGE_NAME;
+        message.value = getErrorMessage(e, INQUIRE_FLG);
         return;
     });
 }
@@ -169,6 +172,11 @@ function onSave() {
     const selectedDto: HoujinNoDtoInterface | undefined = houjinListView.value.filter((e) => e.houjinNo === selectedRow.value)[0];
     if (undefined !== selectedDto) {
         emits("sendHoujinNoInterface", selectedDto);
+    } else {
+        infoLevel.value = MessageConstants.LEVEL_ERROR;
+        messageType.value = MessageConstants.VIEW_OK;
+        // caller.value = MESS_PAGE_NAME;
+        message.value = getErrorUniqueIdMessage(selectedRow.value);
     }
 }
 
@@ -179,11 +187,10 @@ function recievePagingNumber(selecteddNumber: number) {
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
         }
-        title.value = "法人番号検索";
+        // caller.value = "法人番号検索";
         message.value = "ページ番号は" + Math.ceil(allCount.value / SEARCH_LIMIT) + "までで設定しください";
         infoLevel.value = MessageConstants.LEVEL_WARNING;
         messageType.value = MessageConstants.VIEW_OK;
-
         return;
     }
 
@@ -223,9 +230,8 @@ function getSliceCount(start: number, size: number): number {
     }
 }
 
-function recieveSubmit(button: string) {
-    console.log(button);
-    // TODO ボタンタイプ別の挙動はこの中で変える
+function recieveSubmit() {
+    // メッセージ表示後の分岐はない
 
     // 非表示
     infoLevel.value = 0;
@@ -335,8 +341,8 @@ function onNameChange() {
 
     <!-- メッセージ -->
     <div class="overMessage" v-if="messageType !== MessageConstants.VIEW_NONE">
-        <MessageView :info-level="infoLevel" :message-type="messageType" :title="title" :message="message"
-            @send-submit="recieveSubmit">
+        <MessageView :info-level="infoLevel" :message-type="messageType" :title="MESS_PAGE_NAME" :message="message"
+            :caller="caller" @send-submit="recieveSubmit">
         </MessageView>
     </div>
 

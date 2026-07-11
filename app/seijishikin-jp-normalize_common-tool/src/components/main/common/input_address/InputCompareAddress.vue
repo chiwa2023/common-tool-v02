@@ -13,6 +13,7 @@ import { PostalCodeCapsuleDto, type PostalCodeCapsuleDtoInterface } from "../../
 import { AccessTokenNotFoundError, TokenRefreshError } from "../../dto/login/errors";
 import type { AddressRsdtResultDtoInterface } from "../../dto/postal/addressRsdtResultDto";
 import type { AddressRsdtTemplateEntityInterface } from "../../entity/addressRsdtTemplateEntity";
+import { getErrorMessage } from "../../dto/errorFunction";
 
 // props,emit
 const props = defineProps<{ editDto: InputAddressDtoInterface }>();
@@ -23,13 +24,16 @@ const BLANK: string = "";
 // const INIT_NUMBER: number = 0;
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
+const INQUIRE_FLG: boolean = false;
+const ERR_MESS_ONLY: boolean = true;
+const MESS_PAGE_NAME: string = "住所比較入力モーダル";
 
 // メッセージボックス表示定数
 const infoLevel: Ref<number> = ref(MessageConstants.LEVEL_NONE);
 const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
 const title: Ref<string> = ref(BLANK);
 const message: Ref<string> = ref(BLANK);
-    
+
 // back側アクセス
 const urlBack: string = RoutePathConstants.DOMAIN + RoutePathConstants.BASE_PATH;
 
@@ -90,11 +94,11 @@ function getAddressPostal() {
                         }
                     }
                 })
-                .catch(() => {
+                .catch((error) => {
                     infoLevel.value = MessageConstants.LEVEL_ERROR;
                     messageType.value = MessageConstants.VIEW_OK;
                     title.value = "システムエラーが発生しました";
-                    message.value = "システム管理者にお問い合わせください";
+                    message.value = getErrorMessage(error, ERR_MESS_ONLY);
                 });
         }).catch((e) => {
             // トークン関数側エラー
@@ -111,8 +115,8 @@ function getAddressPostal() {
                 message.value = e.message;
                 return;
             }
-            title.value = "システムエラーが発生しました";
-            message.value = "システム管理者にお問い合わせください";
+            title.value = MESS_PAGE_NAME;
+            message.value = getErrorMessage(e, INQUIRE_FLG);
         });
     } else {
         inputAddressDto.value.addressPostal = "";
@@ -206,12 +210,12 @@ function searchBlock() {
                     }
                 }
             })
-            .catch(() => {
+            .catch((error) => {
                 // 実処理側エラー
                 infoLevel.value = MessageConstants.LEVEL_ERROR;
                 messageType.value = MessageConstants.VIEW_OK;
                 title.value = "システムエラーが発生しました";
-                message.value = "システム管理者にお問い合わせください";
+                message.value = getErrorMessage(error, ERR_MESS_ONLY);
             });
     }).catch((e) => {
         // トークン関数側エラー
@@ -228,8 +232,8 @@ function searchBlock() {
             message.value = e.message;
             return;
         }
-        title.value = "システムエラーが発生しました";
-        message.value = "システム管理者にお問い合わせください";
+        title.value = MESS_PAGE_NAME;
+        message.value = getErrorMessage(e, INQUIRE_FLG);
     });
 }
 
@@ -273,12 +277,12 @@ function searchBuilding() {
                 // 建物なしまたは、建物候補があっても未選択の可能性があるので常に住所のコードを取得
                 getRsdtCodeByBlock();
             })
-            .catch(() => {
+            .catch((error) => {
                 // 実処理側エラー
                 infoLevel.value = MessageConstants.LEVEL_ERROR;
                 messageType.value = MessageConstants.VIEW_OK;
                 title.value = "システムエラーが発生しました";
-                message.value = "システム管理者にお問い合わせください";
+                message.value = getErrorMessage(error, ERR_MESS_ONLY);
             });
     }).catch((e) => {
         // トークン関数側エラー
@@ -295,8 +299,8 @@ function searchBuilding() {
             message.value = e.message;
             return;
         }
-        title.value = "システムエラーが発生しました";
-        message.value = "システム管理者にお問い合わせください";
+        title.value = MESS_PAGE_NAME;
+        message.value = getErrorMessage(e, INQUIRE_FLG);
     });
 }
 
@@ -372,11 +376,11 @@ function getRsdtCodeByBlock() {
                     inputAddressDto.value.rsdt2Id = rsdtEntity.rsdt2Id;
                 }
             })
-            .catch(() => {
+            .catch((error) => {
                 infoLevel.value = MessageConstants.LEVEL_ERROR;
                 messageType.value = MessageConstants.VIEW_OK;
                 title.value = "システムエラーが発生しました";
-                message.value = "システム管理者にお問い合わせください";
+                message.value = getErrorMessage(error, ERR_MESS_ONLY);
             });
     }).catch((e) => {
         // トークン関数側エラー
@@ -393,8 +397,8 @@ function getRsdtCodeByBlock() {
             message.value = e.message;
             return;
         }
-        title.value = "システムエラーが発生しました";
-        message.value = "システム管理者にお問い合わせください";
+        title.value = MESS_PAGE_NAME;
+        message.value = getErrorMessage(e, INQUIRE_FLG);
     });
 
 }
@@ -437,11 +441,11 @@ function getRsdtCodeById() {
                     inputAddressDto.value.rsdt2Id = rsdtEntity.rsdt2Id;
                 }
             })
-            .catch(() => {
+            .catch((error) => {
                 infoLevel.value = MessageConstants.LEVEL_ERROR;
                 messageType.value = MessageConstants.VIEW_OK;
                 title.value = "システムエラーが発生しました";
-                message.value = "システム管理者にお問い合わせください";
+                message.value = getErrorMessage(error, ERR_MESS_ONLY);
             });
     }).catch((e) => {
         // トークン関数側エラー
@@ -458,8 +462,8 @@ function getRsdtCodeById() {
             message.value = e.message;
             return;
         }
-        title.value = "システムエラーが発生しました";
-        message.value = "システム管理者にお問い合わせください";
+        title.value = MESS_PAGE_NAME;
+        message.value = getErrorMessage(e, INQUIRE_FLG);
     });
 }
 

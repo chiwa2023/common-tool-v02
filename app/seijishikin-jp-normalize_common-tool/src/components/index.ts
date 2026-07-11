@@ -10,7 +10,8 @@ export { DtoEntityConstants }
 
 /** メッセージ表示 */
 import { MessageConstants } from './main/dto/message/messageConstants';
-export { MessageConstants }
+import { getErrorMessage, getErrorUniqueIdMessage } from './main/dto/errorFunction';
+export { MessageConstants, getErrorMessage, getErrorUniqueIdMessage }
 
 import MessageView from './main/common/message/MessageView.vue';
 import ToastMessage from './main/common/message/ToastMessage.vue';

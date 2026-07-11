@@ -8,6 +8,7 @@ import RoutePathConstants from '../../../../routePathConstants';
 import MessageView from '../message/MessageView.vue';
 import { AccessTokenNotFoundError, TokenRefreshError } from '../../dto/login/errors.ts';
 import { SearchAllCityLgcodeCapsuleDto, type SearchAllCityLgcodeCapsuleDtoInterface } from '../../dto/postal/searchAllCityLgcodeCapsuleDto.ts';
+import { getErrorMessage } from '../../dto/errorFunction.ts';
 
 const props = defineProps<{ isDigit5: boolean, lgCode: string }>();
 const emits = defineEmits(["sendLgCode"]);
@@ -18,10 +19,15 @@ const BLANK: string = "";
 // const INIT_NUMBER: number = 0;
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
+const INQUIRE_FLG: boolean = false;
+const ERR_MESS_ONLY: boolean = true;
+const MESS_PAGE_NAME: string = "地方自治体コード入力モーダル";
+const INIT_CALLER: string = "no branch";
+
 // メッセージボックス表示定数
 const infoLevel: Ref<number> = ref(MessageConstants.LEVEL_NONE);
 const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
-const title: Ref<string> = ref(BLANK);
+const caller: Ref<string> = ref(INIT_CALLER);
 const message: Ref<string> = ref(BLANK);
 
 // back側アクセス
@@ -64,29 +70,29 @@ function onPrefSearch() {
             .then(async (response) => {
                 prefOptions.value = await response.json();
             })
-            .catch(() => {
+            .catch((error) => {
                 infoLevel.value = MessageConstants.LEVEL_ERROR;
                 messageType.value = MessageConstants.VIEW_OK;
-                title.value = "システムエラーが発生しました";
-                message.value = "システム管理者にお問い合わせください";
+                // caller.value = "システムエラーが発生しました";
+                message.value = getErrorMessage(error, ERR_MESS_ONLY);
             });
     }).catch((e) => {
         // トークン関数側エラー
         infoLevel.value = MessageConstants.LEVEL_ERROR;
         messageType.value = MessageConstants.VIEW_OK;
         if (e instanceof AccessTokenNotFoundError) {
-            title.value = "現在トークンが存在しません";
+            // caller.value = "現在トークンが存在しません";
             message.value = e.message;
             return;
         }
         if (e instanceof TokenRefreshError) {
             // 取得に失敗している場合
-            title.value = "有効期限まじかのトークンを再取得できませんでした";
+            // caller.value = "有効期限まじかのトークンを再取得できませんでした";
             message.value = e.message;
             return;
         }
-        title.value = "システムエラーが発生しました";
-        message.value = "システム管理者にお問い合わせください";
+        // caller.value = MESS_PAGE_NAME;
+        message.value = getErrorMessage(e, INQUIRE_FLG);
     });
 
 }
@@ -112,29 +118,29 @@ function searchCity() {
             .then(async (response) => {
                 cityOptions.value = await response.json();
             })
-            .catch(() => {
+            .catch((error) => {
                 infoLevel.value = MessageConstants.LEVEL_ERROR;
                 messageType.value = MessageConstants.VIEW_OK;
-                title.value = "システムエラーが発生しました";
-                message.value = "システム管理者にお問い合わせください";
+                // caller.value = "システムエラーが発生しました";
+                message.value = getErrorMessage(error, ERR_MESS_ONLY);
             });
     }).catch((e) => {
         // トークン関数側エラー
         infoLevel.value = MessageConstants.LEVEL_ERROR;
         messageType.value = MessageConstants.VIEW_OK;
         if (e instanceof AccessTokenNotFoundError) {
-            title.value = "現在トークンが存在しません";
+            // caller.value = "現在トークンが存在しません";
             message.value = e.message;
             return;
         }
         if (e instanceof TokenRefreshError) {
             // 取得に失敗している場合
-            title.value = "有効期限まじかのトークンを再取得できませんでした";
+            //caller.value = "有効期限まじかのトークンを再取得できませんでした";
             message.value = e.message;
             return;
         }
-        title.value = "システムエラーが発生しました";
-        message.value = "システム管理者にお問い合わせください";
+        // caller.value = MESS_PAGE_NAME;
+        message.value = getErrorMessage(e, INQUIRE_FLG);
     });
 
 }
@@ -224,9 +230,8 @@ function doEmit(value: string, text: string) {
     emits("sendLgCode", optionDto);
 }
 
-function recieveSubmit(button: string) {
-    console.log(button);
-    // TODO ボタンタイプ別の挙動はこの中で変える
+function recieveSubmit() {
+    // メッセージ表示後の分岐はない
 
     // 非表示
     infoLevel.value = 0;
@@ -244,10 +249,10 @@ function recieveSubmit(button: string) {
         <option v-for="dto in cityOptions" :value="dto.value">{{ dto.text }}</option>
     </select>
 
-    <!-- メッセージ表示 -->
+    <!-- メッセージ -->
     <div class="overMessage" v-if="messageType !== MessageConstants.VIEW_NONE">
-        <MessageView :info-level="infoLevel" :message-type="messageType" :title="title" :message="message"
-            @send-submit="recieveSubmit">
+        <MessageView :info-level="infoLevel" :message-type="messageType" :title="MESS_PAGE_NAME" :message="message"
+            :caller="caller" @send-submit="recieveSubmit">
         </MessageView>
     </div>
 

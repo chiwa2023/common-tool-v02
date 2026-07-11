@@ -31,6 +31,7 @@
 
     // 最初のAPIアクセスの前に当サイトから発行した長期トークンをユーザ情報にセットする
     // アクセスのたびに、ではなく最初の1回の前だけ
+    // ※定型例外処理を、実装では簡略・定数化したが、現状のこの説明の方が意図を理解しやすいので記述はそのまま
 
     // 各自の保存済有効長期トークン呼び出し処置
     const longToken:Ref<string> = getStoredLongToken();
@@ -39,7 +40,6 @@
     const userInfo = useUserInfoStoreCommon();
     userInfo.jwtDto.refreshToken = longToken.value;
     userInfo.jwtDto.accessToken = longToken.value;
-
 
     // APIアクセス(例：地方自治体コード市町村選択項目)
     getAuthorizedPromiseArea().then(token => {

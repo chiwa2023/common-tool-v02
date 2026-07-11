@@ -28,20 +28,21 @@ const BLANK: string = "";
 // const INIT_NUMBER: number = 0;
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
-
+const MESS_PAGE_NAME: string = "コンポーネントカタログ(ネットワーク接続あり)";
+const INIT_CALLER: string = "no branch";
 
 // メッセージボックス表示定数
 const infoLevel: Ref<number> = ref(MessageConstants.LEVEL_NONE);
 const messageType: Ref<number> = ref(MessageConstants.VIEW_NONE);
-const title: Ref<string> = ref(BLANK);
+const caller: Ref<string> = ref(INIT_CALLER);
 const message: Ref<string> = ref(BLANK);
 
 // token
 const longToken: Ref<string> = ref(BLANK);
 
 function recieveSubmit(button: string) {
-    alert(button);
     // TODO ボタンタイプ別の挙動はこの中で変える
+    console.log(button);
 
     // 非表示
     infoLevel.value = 0;
@@ -125,6 +126,14 @@ function recieveSeijidantaiInterface(selectedEntity: KanrenshaSeijidantaiMasterE
     <div class="container">
 
         <h1>コンポーネントカタログ(back側処理ネットアクセスあり)</h1><br>
+
+        <div class="one-line">
+            <ol>
+                <li>法人番号検索を利用した独自サービスを提供しています</li>
+                <li>アドレス・ベース・レジストリを利用した独自サービスを提供しています</li>
+            </ol>
+        </div>
+
 
         <h3 class="accent-h3">接続設定</h3>
         <div class="one-line">
@@ -294,11 +303,10 @@ function recieveSeijidantaiInterface(selectedEntity: KanrenshaSeijidantaiMasterE
                 @send-seijidantai-interface="recieveSeijidantaiInterface"></SearchKanrenshaSeijidantai>
         </div>
 
-        <!-- メッセージ表示 -->
-        <!-- ダイアログ用のコンテナ -->
+        <!-- メッセージ -->
         <div class="overMessage" v-if="messageType !== MessageConstants.VIEW_NONE">
-            <MessageView :info-level="infoLevel" :message-type="messageType" :title="title" :message="message"
-                @send-submit="recieveSubmit">
+            <MessageView :info-level="infoLevel" :message-type="messageType" :title="MESS_PAGE_NAME" :message="message"
+                :caller="caller" @send-submit="recieveSubmit">
             </MessageView>
         </div>
 

@@ -10,21 +10,21 @@ const BLANK: string = "";
 // const SERVER_STATUS_ERROR: number = 400;
 
 // props,emit
-const props = defineProps<{ infoLevel: number, messageType: number, title: string, message: string }>();
+const props = defineProps<{ infoLevel: number, messageType: number, title: string, message: string, caller: string }>();
 const emits = defineEmits(["sendSubmit"]);
 
 const levelClass: Ref<string> = ref(getLevelClass());
 
 function onButtonNo() {
-    emits("sendSubmit", "no");
+    emits("sendSubmit", MessageConstants.BUTTON_NO, props.caller);
 }
 
 function onButtonYes() {
-    emits("sendSubmit", "yes");
+    emits("sendSubmit", MessageConstants.BUTTON_YES, props.caller);
 }
 
 function onSubmit() {
-    emits("sendSubmit", "ok");
+    emits("sendSubmit", MessageConstants.BUTTON_OK, props.caller);
 }
 
 /**
@@ -46,7 +46,7 @@ function getLevelClass(): string {
 
 function recieveSubmit() {
     // Toastの終了通知を中継する
-    emits("sendSubmit", props.title);
+    emits("sendSubmit", props.title, props.caller);
 }
 
 </script>
