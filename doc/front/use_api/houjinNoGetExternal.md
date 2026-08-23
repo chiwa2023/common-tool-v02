@@ -1,5 +1,8 @@
 # 使用API設計書: houjin-no/get-external (国税庁法人番号システム Web-API 連携)
 
+> [!WARNING]
+> このコンポーネントでは国税庁法人番号システム Web-APIで使用するAPIキーが必須となります。API利用をする場合は各自取得をお願いいたします。
+
 ## 1. 概要
 
 - 国税庁法人番号システム Web-API（外部API）へバックエンド経由でリクエストを中継送信し、指定された検索条件（商号・法人名称、および地方自治体コード）に基づいて合致する法人の詳細情報（13桁の法人番号、商号、本店所在地など）を取得します。
@@ -7,7 +10,7 @@
 
 ## 2. API仕様
 
-- **エンドポイントURL**: `[BASE_PATH]/houjin-no/get-external`
+- **エンドポイントURL**: `https://kanrensha.normalize-jp-seijishikin.net/api/houjin-no/get-external`
 - **HTTPメソッド**: `POST`
 - **認証有無**: 要（X-AUTH-TOKENヘッダーによるJWTトークン認証）
 

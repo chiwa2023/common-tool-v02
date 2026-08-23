@@ -264,6 +264,8 @@ function searchBuilding() {
         const conditionDto: PostalCodeCapsuleDtoInterface = new PostalCodeCapsuleDto();
         conditionDto.selectedBlock = selectedAddressBlock.value;
         conditionDto.lgCode = inputAddressDto.value.lgCode;
+        conditionDto.postal1 = inputAddressDto.value.postalcode1;
+        conditionDto.postal2= inputAddressDto.value.postalcode2;
         conditionDto.isGyouseikuData = isGyouseiku.value;
 
         const url = urlBack + "/postal-search/building";
@@ -659,6 +661,11 @@ function recieveSubmit() {
     <div class="footer">
         <button @click="onCancel" class="footer-button">キャンセル</button>
         <button @click="onSave" class="footer-button left-space">選択</button>
+    </div>
+
+    <div class="one-line-caution">
+        ※この機能は、デジタル庁から提供されているアドレス・ベース・レジストリをもとに作成していますが、サービスの内容はデジタル庁によって保証されたものではありません<br>
+        出典：アドレス・ベース・レジストリ(デジタル庁)&nbsp; <a href="https://www.digital.go.jp/policies/base_registry_address">https://www.digital.go.jp/policies/base_registry_address</a>
     </div>
 
     <!-- メッセージ -->

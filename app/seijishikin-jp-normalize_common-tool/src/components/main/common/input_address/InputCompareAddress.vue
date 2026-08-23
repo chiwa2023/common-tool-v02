@@ -260,6 +260,8 @@ function searchBuilding() {
         const conditionDto: PostalCodeCapsuleDtoInterface = new PostalCodeCapsuleDto();
         conditionDto.selectedBlock = selectedAddressBlock.value;
         conditionDto.lgCode = inputAddressDto.value.lgCode;
+        conditionDto.postal1 = inputAddressDto.value.postalcode1;
+        conditionDto.postal2= inputAddressDto.value.postalcode2;
         conditionDto.isGyouseikuData = isGyouseiku.value;
 
         const url = urlBack + "/postal-search/building";

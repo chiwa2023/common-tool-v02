@@ -27,7 +27,7 @@
 
 郵便番号（前3桁・後4桁）から、対応する大字・町字（郵便番号レベルの住所）の選択肢を取得します。
 
-- **URL**: `[BASE_PATH]/postal-search/postal`
+- **URL**: `https://kanrensha.normalize-jp-seijishikin.net/api/postal-search/postal`
 - **リクエストボディ**: `PostalCodeCapsuleDtoInterface`
 
 ```json
@@ -50,7 +50,7 @@
 
 選択された郵便番号IDから、該当する番地（街区・地番）の選択肢を取得します。
 
-- **URL**: `[BASE_PATH]/postal-search/block`
+- **URL**: `https://kanrensha.normalize-jp-seijishikin.net/api/postal-search/block`
 - **リクエストボディ**: `PostalCodeCapsuleDtoInterface`
   - `selectedPostal`: `number` (郵便番号住所検索で取得した `value`)
 
@@ -74,7 +74,7 @@
 
 選択された番地コードおよびLGコードから、該当する建物名・テナントの選択肢リストを取得します。
 
-- **URL**: `[BASE_PATH]/postal-search/building`
+- **URL**: `https://kanrensha.normalize-jp-seijishikin.net/api/postal-search/building`
 - **リクエストボディ**: `PostalCodeCapsuleDtoInterface`
   - `lgCode`: `string` (地方公共団体コード)
   - `selectedBlock`: `string` (番地検索で取得した `value`)
@@ -99,7 +99,7 @@
 
 街区表示（番地）に基づき、住居表示レジストリ（アドレス・ベース・レジストリ）からより詳細な住居表示テキストを取得します。
 
-- **URL**: `[BASE_PATH]/postal-search/rsdt-detail-block`
+- **URL**: `https://kanrensha.normalize-jp-seijishikin.net/api/postal-search/rsdt-detail-block`
 - **リクエストボディ**: `PostalCodeCapsuleDtoInterface`
   - `lgCode`: `string`
   - `selectedBlock`: `string`
@@ -119,7 +119,7 @@
 
 指定された住居テーブルIDから、アドレス・ベース・レジストリの完全な構造化住所オブジェクトを取得します。
 
-- **URL**: `[BASE_PATH]/postal-search/rsdt-detail-id`
+- **URL**: `https://kanrensha.normalize-jp-seijishikin.net/api/postal-search/rsdt-detail-id`
 - **リクエストボディ**: `PostalCodeCapsuleDtoInterface`
   - `selectedRsdtId`: `number` (住居テーブルId)
 

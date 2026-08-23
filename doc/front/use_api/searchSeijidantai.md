@@ -9,7 +9,7 @@
 
 ## 2. API仕様
 
-- **エンドポイントURL**: `[BASE_PATH]/user-kanrensha/search-seijidantai`
+- **エンドポイントURL**: `https://kanrensha.normalize-jp-seijishikin.net/api/user-kanrensha/search-seijidantai`
 - **HTTPメソッド**: `POST`
 - **認証有無**: 要（X-AUTH-TOKENヘッダーによるJWTトークン認証）
 

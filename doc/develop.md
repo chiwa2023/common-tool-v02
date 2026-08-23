@@ -142,7 +142,7 @@ viteを起動 `npm run dev`
 
 ### 2. back
 
-mvnからspring起動 `mvnw spring-boot:run`
+基本的にboot起動はしないで、jarへのコンパイルのみ `mvn clean  build`
 
 ## 5.テスト
 
@@ -154,3 +154,7 @@ VsCodeを使用している場合はJUnit感覚でテスト駆動できる[Vites
 ### b. back
 
 EclipseからJUnit起動
+
+## 6.仕様詳細
+
+[front側設計書](./front/index.md) を参照

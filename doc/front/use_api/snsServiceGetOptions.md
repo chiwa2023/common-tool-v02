@@ -8,7 +8,7 @@
 
 ## 2. API仕様
 
-- **エンドポイントURL**: `[BASE_PATH]/sns-service/get-options`
+- **エンドポイントURL**: `https://kanrensha.normalize-jp-seijishikin.net/api/sns-service/get-options`
 - **HTTPメソッド**: `POST`
 - **認証有無**: 要（X-AUTH-TOKENヘッダーによるJWTトークン認証）
 

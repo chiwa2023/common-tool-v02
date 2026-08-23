@@ -61,9 +61,9 @@
 
 - [法人番号検索API(/houjin-no/get-external)](./use_api/houjinNoGetExternal.md)
 
-- [関連者企業団体検索API(sns-service/get-options)](./use_api/searchKigyouDt.md)
-- [関連者個人検索API(sns-service/get-options)](./use_api/searchPerson.md)
-- [関連者政治団体検索API(sns-service/get-options)](./use_api/searchSeijidantai.md)
+- [関連者企業団体検索API(/user-kanrensha/search-seijidantai)](./use_api/searchKigyouDt.md)
+- [関連者個人検索API(/user-kanrensha/search-seijidantai)](./use_api/searchPerson.md)
+- [関連者政治団体検索API(/user-kanrensha/search-seijidantai)](./use_api/searchSeijidantai.md)
 
 ## 2.back
 

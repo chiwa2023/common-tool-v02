@@ -22,7 +22,7 @@
 
 全国47都道府県のコード（上位2桁）と名称のリストを一括取得します。
 
-- **URL**: `[BASE_PATH]/lgcode-pref/search`
+- **URL**: `https://kanrensha.normalize-jp-seijishikin.net/api/lgcode-pref/search`
 - **リクエストボディ**: `FrameworkCapsuleDtoInterface` (パラメータなしの空 of オブジェクト)
 
 ```json
@@ -52,7 +52,7 @@
 
 指定された都道府県コードに属する市区町村のリストを取得します。
 
-- **URL**: `[BASE_PATH]/lgcode-city/search`
+- **URL**: `https://kanrensha.normalize-jp-seijishikin.net/api/lgcode-city/search`
 - **リクエストボディ**: `SearchAllCityLgcodeCapsuleDtoInterface`
 
 #### プロパティ仕様

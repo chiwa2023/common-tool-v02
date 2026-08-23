@@ -339,6 +339,12 @@ function onNameChange() {
         <button @click="onSave" class="footer-button left-space">選択</button>
     </div>
 
+    <div class="one-line-caution">
+        ※この機能は、国税庁の法人番号システムのWeb-API機能を利用して取得した情報をもとに作成していますが、サービスの内容は国税庁によって保証されたものではありません<br>
+        出典：法人番号検索API(国税庁) <a
+            href="https://www.houjin-bangou.nta.go.jp/webapi/index.html">https://www.houjin-bangou.nta.go.jp/webapi/index.html</a>
+    </div>
+
     <!-- メッセージ -->
     <div class="overMessage" v-if="messageType !== MessageConstants.VIEW_NONE">
         <MessageView :info-level="infoLevel" :message-type="messageType" :title="MESS_PAGE_NAME" :message="message"
