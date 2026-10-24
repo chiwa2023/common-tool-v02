@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onBeforeMount, ref, watch, type Ref } from 'vue';
+import { nextTick, ref, watch, type Ref } from 'vue';
 import DtoEntityConstants from '../../dto/dtoEntityConstants';
 
 // props,emmits
@@ -8,7 +8,7 @@ const emits = defineEmits(["sendDateTime"]);
 
 //仮
 // よく使う定数
-const BLANK: string = "";
+// const BLANK: string = "";
 // const INIT_NUMBER: number = 0;
 // const SERVER_STATUS_OK: number = 200;
 // const SERVER_STATUS_ERROR: number = 400;
@@ -24,10 +24,10 @@ const timeString: Ref<string | null> = ref("");
 let isLocalChange = false;
 const DATE_LIMIT = DtoEntityConstants.INIT_DATETIME_LIMIT;
 
-onBeforeMount(() => {
-    dateString.value = null === props.datetime ? BLANK : props.datetime.toLocaleDateString('sv-SE');
-    timeString.value = null === props.datetime ? BLANK : props.datetime.toLocaleTimeString('sv-SE');
-});
+// onMounted(() => {
+//     dateString.value = null === props.datetime ? BLANK : props.datetime.toLocaleDateString('sv-SE');
+//     timeString.value = null === props.datetime ? BLANK : props.datetime.toLocaleTimeString('sv-SE');
+// });
 
 watch(props, () => {
     if (isLocalChange) {
@@ -42,8 +42,9 @@ watch(props, () => {
         if (props.datetime <= DATE_LIMIT) {
             return;
         }
-        dateString.value = props.datetime.toLocaleDateString('sv-SE');
-        timeString.value = props.datetime.toLocaleTimeString('sv-SE');
+        const tempDate = new Date(props.datetime);
+        dateString.value = tempDate.toLocaleDateString('sv-SE');
+        timeString.value = tempDate.toLocaleTimeString('sv-SE');
     }
 });
 

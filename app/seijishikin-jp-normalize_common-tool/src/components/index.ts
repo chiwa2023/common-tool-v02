@@ -133,3 +133,35 @@ import InputPref from './main/common/input_lgcode/InputPref.vue';
 import { SearchAllCityLgcodeCapsuleDto, type SearchAllCityLgcodeCapsuleDtoInterface } from './main/dto/postal/searchAllCityLgcodeCapsuleDto.ts';
 export { InputLgcode, InputPref }
 export { SearchAllCityLgcodeCapsuleDto, type SearchAllCityLgcodeCapsuleDtoInterface }
+
+/** 認証・トークン管理 */
+import getAuthorizedPromiseArea, { createAuthorizedHeaders, fetchWithAuth } from './main/dto/login/getAuthorizedPromiseArea';
+import { JwtTokenDto, type JwtTokenDtoInterface } from './main/dto/login/jwtTokenDto';
+import { LoginUserResultDto, type LoginUserResultDtoInterface } from './main/dto/login/loginUserResultDto';
+import {
+    AccessTokenNotFoundError,
+    TokenRefreshError,
+    PasskeyAuthenticationError,
+    PasskeyNotSupportedError,
+    PasskeyCancellationError,
+    PreAuthTokenExpiredError
+} from './main/dto/login/errors';
+export {
+    getAuthorizedPromiseArea,
+    createAuthorizedHeaders,
+    fetchWithAuth,
+    JwtTokenDto,
+    type JwtTokenDtoInterface,
+    LoginUserResultDto,
+    type LoginUserResultDtoInterface,
+    AccessTokenNotFoundError,
+    TokenRefreshError,
+    PasskeyAuthenticationError,
+    PasskeyNotSupportedError,
+    PasskeyCancellationError,
+    PreAuthTokenExpiredError
+}
+
+/** パスキー/WebAuthn DTO */
+export * from './main/dto/passkey';
+

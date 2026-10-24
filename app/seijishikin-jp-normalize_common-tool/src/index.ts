@@ -128,3 +128,35 @@ import InputPref from './components/main/common/input_lgcode/InputPref.vue';
 import { SearchAllCityLgcodeCapsuleDto, type SearchAllCityLgcodeCapsuleDtoInterface } from './components/main/dto/postal/searchAllCityLgcodeCapsuleDto.ts';
 export { InputLgcode, InputPref }
 export { SearchAllCityLgcodeCapsuleDto, type SearchAllCityLgcodeCapsuleDtoInterface }
+
+/** 認証・トークン管理 */
+import getAuthorizedPromiseArea, { createAuthorizedHeaders, fetchWithAuth } from './components/main/dto/login/getAuthorizedPromiseArea';
+import { JwtTokenDto, type JwtTokenDtoInterface } from './components/main/dto/login/jwtTokenDto';
+import { LoginUserResultDto, type LoginUserResultDtoInterface } from './components/main/dto/login/loginUserResultDto';
+import {
+    AccessTokenNotFoundError,
+    TokenRefreshError,
+    PasskeyAuthenticationError,
+    PasskeyNotSupportedError,
+    PasskeyCancellationError,
+    PreAuthTokenExpiredError
+} from './components/main/dto/login/errors';
+export {
+    getAuthorizedPromiseArea,
+    createAuthorizedHeaders,
+    fetchWithAuth,
+    JwtTokenDto,
+    type JwtTokenDtoInterface,
+    LoginUserResultDto,
+    type LoginUserResultDtoInterface,
+    AccessTokenNotFoundError,
+    TokenRefreshError,
+    PasskeyAuthenticationError,
+    PasskeyNotSupportedError,
+    PasskeyCancellationError,
+    PreAuthTokenExpiredError
+}
+
+/** パスキー/WebAuthn DTO */
+export * from './components/main/dto/passkey';
+

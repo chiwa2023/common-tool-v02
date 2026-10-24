@@ -27,7 +27,7 @@ watch(props, () => {
         if (props.date <= DATE_LIMIT) {
             return;
         }
-        dateString.value = props.date.toLocaleDateString('sv-SE');
+        dateString.value = new Date(props.date).toLocaleDateString('sv-SE');
     }
 });
 

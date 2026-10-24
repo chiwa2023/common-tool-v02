@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, ref, watch, type Ref } from 'vue';
+import { ref, watch, type Ref } from 'vue';
 import DtoEntityConstants from '../../dto/dtoEntityConstants';
 
 // props,emmits
@@ -23,18 +23,19 @@ const LIMIT_DATE: Date = DtoEntityConstants.INIT_DATETIME_LIMIT;
 const dateString: Ref<string> = ref("");
 const timeString: Ref<string> = ref("");
 
-onBeforeMount(() => {
-    dateString.value = props.datetime.toLocaleDateString('sv-SE');
-    timeString.value = props.datetime.toLocaleTimeString('sv-SE');
-});
+// onMounted(() => {
+//     dateString.value = props.datetime.toLocaleDateString('sv-SE');
+//     timeString.value = props.datetime.toLocaleTimeString('sv-SE');
+// });
 
 watch(props, () => {
     const limit = LIMIT_DATE;
     if (!isNaN(props.datetime.getTime()) && props.datetime.getTime() <= limit.getTime()) {
         return;
     }
-    dateString.value = props.datetime.toLocaleDateString('sv-SE');
-    timeString.value = props.datetime.toLocaleTimeString('sv-SE');
+    const tempDate = new Date(props.datetime);
+    dateString.value = tempDate.toLocaleDateString('sv-SE');
+    timeString.value = tempDate.toLocaleTimeString('sv-SE');
 });
 
 function onDataChange() {
@@ -63,7 +64,6 @@ function onDataChange() {
 </script>
 <template>
     <input type="date" v-model="dateString" @blur="onDataChange" :disabled="!isEdit">
-    <input type="time" v-model="timeString" @blur="onDataChange" :disabled="!isEdit" class="left-space-narrow"
-        step="1">
+    <input type="time" v-model="timeString" @blur="onDataChange" :disabled="!isEdit" class="left-space-narrow" step="1">
 </template>
 <style scoped></style>

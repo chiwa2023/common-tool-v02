@@ -62,7 +62,7 @@ function onCancel() {
 watch(longToken, () => {
     // 保存していたアクセストークンと有効期限を取得
     const userInfo = useUserInfoStoreCommon();
-    userInfo.jwtDto.refreshToken = longToken.value;
+    //userInfo.jwtDto.refreshToken = longToken.value;
     userInfo.jwtDto.accessToken = longToken.value;
 });
 

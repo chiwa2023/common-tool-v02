@@ -31,7 +31,7 @@ watch(props, () => {
     if (!isNaN(props.date.getTime()) && props.date.getTime() <= limit.getTime()) {
         return;
     }
-    dateString.value = props.date.toLocaleDateString('sv-SE');
+    dateString.value = new Date(props.date).toLocaleDateString('sv-SE');
 });
 
 function onDataChange() {
