@@ -72,20 +72,30 @@ export default async function getAuthorizedPromiseArea(): Promise<string> {
     const userInfo = useUserInfoStoreCommon();
     const jwtDto: JwtTokenDtoInterface = userInfo.jwtDto;
     const accessToken = jwtDto.accessToken;
+    const refreshToken = jwtDto.refreshToken;
 
-    // 万が一空文字未入力の場合はAPIアクセスさせない
     if (!accessToken) {
-        throw new AccessTokenNotFoundError();
-    }
-
-    // 有効期限から仮値2分余裕があるならアクセス可能としてアクセストークンを使用する
-    const dateExpires: Date = new Date(jwtDto.expiresAt);
-    if (!isNaN(dateExpires.getTime())) {
-        dateExpires.setMinutes(dateExpires.getMinutes() - 2);
-        if (new Date() < dateExpires) {
-            return accessToken;
+        if (!refreshToken) {
+            // 万が一双方が空文字未入力の場合はAPIアクセスさせない
+            throw new AccessTokenNotFoundError();
+        } else {
+            // 長期トークンで初回アクセスの場合は強制トークンリフレッシュ
+            userInfo.jwtDto.expiresAt = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000); // 仮で1年後
+            jwtDto.accessToken = refreshToken;
+        }
+    } else {
+        // 有効期限から仮値2分余裕があるならアクセス可能として引き続きアクセストークンを使用する
+        const dateExpires: Date = new Date(jwtDto.expiresAt);
+        if (!isNaN(dateExpires.getTime())) {
+            dateExpires.setMinutes(dateExpires.getMinutes() - 2);
+            if (new Date() < dateExpires) {
+                return accessToken;
+            }
         }
     }
+
+
+
 
     // すでに他の並行リクエストがリフレッシュ処理を実行中であれば、その完了を待つ
     // （リフレッシュトークン・ローテーションによる再利用検知エラーを防止）
@@ -108,11 +118,10 @@ export default async function getAuthorizedPromiseArea(): Promise<string> {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             };
-
             const response = await fetch(url, { method, headers, body });
             if (SERVER_STATUS_OK === response.status) {
                 const refreshedJwt = await response.json();
-                
+
                 // 新しいトークン情報をDTOに反映（リフレッシュトークン・ローテーション）
                 const newJwtDto = new JwtTokenDto();
                 newJwtDto.accessToken = refreshedJwt.accessToken || "";

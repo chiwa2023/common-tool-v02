@@ -62,8 +62,9 @@ function onCancel() {
 watch(longToken, () => {
     // 保存していたアクセストークンと有効期限を取得
     const userInfo = useUserInfoStoreCommon();
-    //userInfo.jwtDto.refreshToken = longToken.value;
-    userInfo.jwtDto.accessToken = longToken.value;
+    // アクセストークを空にして長期トークンだけをセットすると強制トークンリフレッシュが走る
+    userInfo.jwtDto.refreshToken = longToken.value;
+    userInfo.jwtDto.accessToken = "";
 });
 
 // const isSearchHoujinNo: Ref<boolean> = ref(false);

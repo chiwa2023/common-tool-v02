@@ -42,6 +42,7 @@
 ## 4. 利用例
 
 ### パターンA: `fetchWithAuth` を使用した推奨の簡潔なアクセス
+
 ```typescript
 import { fetchWithAuth, TokenRefreshError, AccessTokenNotFoundError } from 'seijishikin-jp-normalize_common-tool';
 
@@ -65,6 +66,7 @@ async function loadPrefectureData() {
 ```
 
 ### パターンB: `getAuthorizedPromiseArea()` と `createAuthorizedHeaders()` を使用したアクセス
+
 ```typescript
 import {
     getAuthorizedPromiseArea,
@@ -77,7 +79,7 @@ import {
 // 外部ドメイン/別サイトからの初回アクセス時: 発行された長期トークンをセット
 const userInfo = useUserInfoStoreCommon();
 userInfo.jwtDto.refreshToken = mySavedLongToken;
-userInfo.jwtDto.accessToken = mySavedLongToken;
+userInfo.jwtDto.accessToken = ""; // 空文字にすると長期トークンからアクセストークンを取得する
 
 // APIアクセス
 getAuthorizedPromiseArea()
@@ -113,6 +115,7 @@ getAuthorizedPromiseArea()
 ## 5. クロスドメイン・サブドメイン運用ガイドライン
 
 ### 5.1 同一親ドメインの別サブドメインからの通信 (`*.example.com` -> `api.example.com`)
+
 1. **RP ID境界**:
    - WebAuthnの Relying Party ID は親ドメイン（例: `example.com`）に設定されているため、サブドメインを跨いでパスキー認証の同一性が維持されます。
 2. **CORS設定**:
@@ -121,11 +124,12 @@ getAuthorizedPromiseArea()
    - `X-AUTH-TOKEN: Bearer <token>` を送信します。バックエンド側のCORS設定で `ExposedHeaders` に `X-AUTH-TOKEN` が含まれているため、レスポンスヘッダーの読み取りも許可されます。
 
 ### 5.2 完全別ドメイン（APIパートナー外部サイト）からの通信
+
 1. **WebAuthn仕様上の制約**:
    - ドメインが完全に異なる場合、ブラウザのセキュリティ仕様により別ドメイン上のパスキーを直接読み出すことはできません。
 2. **長期トークン＋APIリレー運用**:
    - 事前に本サービス管理画面で発行された「APIパートナー長期トークン」を外部サイト側で安全に保持します。
-   - 初回APIアクセス前に `userInfo.jwtDto.refreshToken` / `accessToken` に長期トークンをセットすることで、`getAuthorizedPromiseArea()` が自動的に一時アクセストークン（JWT）を発行・更新します。
+   - 初回APIアクセス前に `userInfo.jwtDto.refreshToken`  に長期トークンをセットし`accessToken`に空をセットすることで、`getAuthorizedPromiseArea()` が(次回個別業務APIアクセス時に)自動的に一時アクセストークン（JWT）を発行・更新します。
    - バックエンド側では、該当パートナーのIPアドレス制限（CIDR対応）およびレートリミット（Bucket4j）により不正アクセスが二重に防止されます。
 
 ![画面イメージ](./getAuthorizedPromiseArea.png "getAuthorizedPromiseArea役割図")

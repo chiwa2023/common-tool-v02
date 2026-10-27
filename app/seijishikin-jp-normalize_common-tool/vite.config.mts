@@ -8,7 +8,7 @@ export default defineConfig({
   //plugins: [vue()],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(import.meta.dirname, 'src/index.ts'),
       name: 'index',
       fileName: 'index',
       formats: ['es', 'umd']
@@ -22,5 +22,5 @@ export default defineConfig({
       }
     }
   },
-  plugins: [vue(), dts({tsconfigPath: resolve(__dirname, "tsconfig.app.json")})],
+  plugins: [vue(), dts({tsconfigPath: resolve(import.meta.dirname, "tsconfig.app.json")})],
 })
