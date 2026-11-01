@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, type Ref } from 'vue';
+import 'pinia-plugin-persistedstate';
 import { JwtTokenDto, type JwtTokenDtoInterface } from '../dto/login/jwtTokenDto';
 import { LeastUserDto, type LeastUserDtoInterface } from '../dto/user/leastUserDto';
 

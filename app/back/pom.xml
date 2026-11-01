@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>net.seijishikin.jp.normalize.common_tool</groupId>
 	<artifactId>common_tool</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.5.0-SNAPSHOT</version>
 	<name>back</name>
 	<description>common-tool project for Spring Boot</description>
 	<url />
@@ -32,7 +32,6 @@
 		<java.version>25</java.version>
 	</properties>
 	<dependencies>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-batch</artifactId>
@@ -52,6 +51,11 @@
 			<groupId>org.springframework.batch</groupId>
 			<artifactId>spring-batch-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
 		<!--

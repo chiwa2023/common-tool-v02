@@ -41,8 +41,8 @@ function recievePersonInterface(selectedEntity: KanrenshaPersonMasterEntityInter
     </div>
 
     <!-- 姓名詳細入力 -->
-    <div v-if="isInput" class="overBackground"></div>
-    <div class="overComponent" v-if="isInput">
+    <div v-if="isInput" class="overBackgroundLayer4"></div>
+    <div class="overComponentLayer4" v-if="isInput">
         <SearchKanrenshaPerson v-if="isInput" :is-raise-commponet="true" @send-cancel-person="recieveCancelPerson"
             @send-person-interface="recievePersonInterface"></SearchKanrenshaPerson>
     </div>

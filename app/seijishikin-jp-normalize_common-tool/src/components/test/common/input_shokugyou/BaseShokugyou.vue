@@ -4,7 +4,7 @@ import { InputShokugyouDto, type InputShokugyouDtoInterface } from '../../../mai
 import ViewInputShokugyou from '../../../main/common/input_shokugyou/ViewInputShokugyou.vue';
 
 const inputShokugyouDto: Ref<InputShokugyouDtoInterface> = ref(new InputShokugyouDto());
-const appId: string = import.meta.env.VITE_HOUJIN_NO_API;
+const appId: string = "12345";
 
 </script>
 <template>

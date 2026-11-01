@@ -1,7 +1,7 @@
 package net.seijishikin.jp.normalize.common_tool.utils.paging;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -115,9 +115,9 @@ class SwitchYearCreatePagingConditionDatetimeUtilTest {
 
         assertEquals(3, map.size());
 
-        assertTrue(map.get(2024) instanceof MockSwichYearPagingDatetimeDto);
-        assertTrue(map.get(2025) instanceof MockSwichYearPagingDatetimeDto);
-        assertTrue(map.get(2026) instanceof MockSwichYearPagingDatetimeDto);
+        assertInstanceOf(MockSwichYearPagingDatetimeDto.class, map.get(2024));
+        assertInstanceOf(MockSwichYearPagingDatetimeDto.class, map.get(2025));
+        assertInstanceOf(MockSwichYearPagingDatetimeDto.class, map.get(2026));
 
         MockSwichYearPagingDatetimeDto resultDto;
         if (map.get(2024) instanceof MockSwichYearPagingDatetimeDto) {

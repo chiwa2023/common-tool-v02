@@ -2,6 +2,7 @@ package net.seijishikin.jp.normalize.common_tool.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -39,7 +40,7 @@ class DecideXmlFileCharsetUtilTest {
         // このプロジェクトでは文字コード不明ファイルを一覧化し再アップロードを促す。
         Path path03 = Paths.get(GetCurrentResourcePath.getBackTestResourcePath(), "file/balancesheet/judge_euc-jp.xml");
 
-        assertEquals(null, decideXmlFileCharsetUtil.practice(path03, keyword));
+        assertNull(decideXmlFileCharsetUtil.practice(path03, keyword));
     }
 
     @Test
@@ -64,7 +65,7 @@ class DecideXmlFileCharsetUtilTest {
         // 該当文字セットが見当たらないときはnullとする。不用意に読み取りを試みるととすると落ちるのが正解
         // このプロジェクトでは文字コード不明ファイルを一覧化し再アップロードを促す。
         Path path03 = Paths.get(GetCurrentResourcePath.getBackTestResourcePath(), "file/usage/judge_euc-jp.xml");
-        assertEquals(null, decideXmlFileCharsetUtil.practice(path03, keyword));
+        assertNull(decideXmlFileCharsetUtil.practice(path03, keyword));
 
     }
 

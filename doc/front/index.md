@@ -70,4 +70,3 @@
 ### 2.1 外部連携・M2Mクライアント設計書
 
 - [バックエンド間（Server-to-Server / M2M）API連携 設計書](../back/partnerApiM2mClient.md)
-

@@ -51,8 +51,8 @@ function recieveInputOrgNameInterface(sendDto: InputOrgNameDtoInterface) {
     </div>
 
     <!-- 姓名詳細入力 -->
-    <div v-if="isInput" class="overBackground"></div>
-    <div class="overComponent" v-if="isInput">
+    <div v-if="isInput" class="overBackgroundLayer3"></div>
+    <div class="overComponentLayer3" v-if="isInput">
         <InputOrgName v-if="isInput" :edit-dto="inputOrgNameDto"
             @send-input-org-name-interface="recieveInputOrgNameInterface"
             @send-cancel-input-org-name="recieveCancelInputOrgName"></InputOrgName>

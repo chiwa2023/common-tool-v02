@@ -13,10 +13,12 @@
 ## 2. 処理内容と戻り値
 
 ### `getAuthorizedPromiseArea(): Promise<string>`
+
 - **戻り値**: `Promise<string>`
 - 認証トークンの取得に成功した場合、解決（resolve）されたPromiseから有効なJWTアクセストークン文字列が返却されます。
 
 ### 提供される関連ユーティリティ
+
 - **`createAuthorizedHeaders(token: string, additionalHeaders?: HeadersInit): Record<string, string>`**:
   - `X-AUTH-TOKEN: Bearer <token>` や `Content-Type: application/json` などのクロスドメイン通信に必要な認証ヘッダーを自動生成・マージします。
 - **`fetchWithAuth(input: RequestInfo | URL, init?: RequestInit): Promise<Response>`**:
@@ -29,7 +31,7 @@
 トークン取得時にエラーが発生した場合、以下の例外（Error）クラスがスローされます。
 
 | 例外クラス | 発生契機 | エラーメッセージ例 | 対処方法 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | **`AccessTokenNotFoundError`** | ストレージにアクセストークンが存在しない | 「アクセストークンが見つかりません。」 | ログイン画面へ遷移するか、長期トークンを設定する |
 | **`TokenRefreshError`** | トークンの有効期限切れ、リフレッシュAPI失敗、401/403失効 | 「認証セッションが失効しました。再度ログインしてください。」「トークンのリフレッシュに失敗しました。(HTTP 500)」 | 再ログインを促すか、エラー通知を表示する |
 | **`PasskeyAuthenticationError`** | パスキー2FA認証時の署名検証失敗 | 「パスキー認証に失敗しました。」 | パスキー操作の再試行または別端末での認証 |

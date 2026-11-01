@@ -1,4 +1,4 @@
-package mitei.mitei.political.balancesheet.manage.kanrensha.dto.task;
+package net.seijishikin.jp.normalize.common_tool.dto.task;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,7 +9,7 @@ import net.seijishikin.jp.normalize.common_tool.dto.paging.PeriodLocalDateCapsul
 /**
  * テスト用検索条件Dto
  */
-public class SearchTaskHistoryCapsuleDto // NOPMD DataClass
+public class SearchTaskPlanByDateCapsuleDto // NOPMD DataClass
         implements Serializable, PeriodLocalDateCapsuleDtoInterface, DtoEntityInitialValueInterface {
 
     /** Serialize id */

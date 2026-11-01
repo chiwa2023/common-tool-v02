@@ -280,39 +280,61 @@ button:hover {
 
 /* Overlay Components */
 .overBackground,
-.overBackgroundLayer2 {
+.overBackgroundLayer2, 
+.overBackgroundLayer3, 
+.overBackgroundLayer4 
+{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 109;
 }
 
+.overBackground {
+  z-index: 109;
+}
 .overBackgroundLayer2 {
   z-index: 119;
 }
+.overBackgroundLayer3 {
+  z-index: 129;
+}
+.overBackgroundLayer4 {
+  z-index: 139;
+}
 
 .overComponent,
-.overComponentLayer2 {
+.overComponentLayer2,
+.overComponentLayer3,
+.overComponentLayer4
+ {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 85%;
-  height: 80%;
-  max-width: 1024px;
+  height: 85%;
+  max-width: 1296px;
   padding: 2rem;
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   overflow: auto;
-  z-index: 110;
 }
 
+.overComponent {
+  z-index: 110;
+}
 .overComponentLayer2 {
   z-index: 120;
+}
+.overComponentLayer3 {
+  z-index: 130;
+}
+.overComponentLayer4 {
+  z-index: 140;
 }
 
 .overMessage {

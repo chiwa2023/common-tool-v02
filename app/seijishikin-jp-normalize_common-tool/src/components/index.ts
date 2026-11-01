@@ -39,14 +39,10 @@ import { AddressRsdtTemplateDto, type AddressRsdtTemplateDtoInterface } from './
 export { AddressRsdtTemplateDto, type AddressRsdtTemplateDtoInterface }
 import InputAddress from './main/common/input_address/InputAddress.vue';
 import ViewInputAddress from './main/common/input_address/ViewInputAddress.vue';
-import MockInputAddress from './test/common/input_address/MockInputAddress.vue';
-import MockViewInputAddress from './test/common/input_address/MockViewInputAddress.vue';
-export { InputAddress, ViewInputAddress, MockInputAddress, MockViewInputAddress }
+export { InputAddress, ViewInputAddress }
 import InputAddressShort from './main/common/input_address_short/InputAddressShort.vue';
 import ViewInputAddressShort from './main/common/input_address_short/ViewInputAddressShort.vue';
-import MockInputAddressShort from './test/common/input_address_short/MockInputAddressShort.vue';
-import MockViewInputAddressShort from './test/common/input_address_short/MockViewInputAddressShort.vue';
-export { InputAddressShort, ViewInputAddressShort, MockInputAddressShort, MockViewInputAddressShort }
+export { InputAddressShort, ViewInputAddressShort }
 import EditAddress from './main/common/input_address/EditAddress.vue';
 import InputBuildingAddress from './main/common/input_address/InputBuildingAddress.vue';
 import InputCompareAddress from './main/common/input_address/InputCompareAddress.vue';
@@ -58,9 +54,6 @@ export { InputAccessDto, type InputAccessDtoInterface }
 import ViewInputAccess from './main/common/input_access/ViewInputAccess.vue';
 import InputAccess from './main/common/input_access/InputAccess.vue';
 export { ViewInputAccess, InputAccess }
-import MockViewInputAccess from './test/common/input_access/MockViewInputAccess.vue';
-import MockInputAccess from './test/common/input_access/MockInputAccess.vue';
-export { MockViewInputAccess, MockInputAccess }
 
 /** 職業入力 */
 import { InputShokugyouDto, type InputShokugyouDtoInterface } from './main/dto/input_shokugyou/inputShokugyouDto';
@@ -95,6 +88,12 @@ import { type LeastUserDtoInterface, LeastUserDto } from './main/dto/user/leastU
 export { type LeastUserDtoInterface, LeastUserDto }
 import useUserInfoStoreCommon from './main/stores/storeUserInfo';
 export { useUserInfoStoreCommon }
+export * from './main/util/getLoginUser';
+export * from './main/util/logout';
+import { type GetUserDtoResultDtoInterface, GetUserDtoResultDto } from './main/dto/user/getUserDtoResultDto';
+export { type GetUserDtoResultDtoInterface, GetUserDtoResultDto }
+import  UserRoleConstants  from './main/dto/user/userRoleConstants';
+export { UserRoleConstants }
 
 /** 関連者最小限 */
 import ViewInputKanrenshaLeast from './main/common/input_person_name/ViewInputKanrenshaLeast.vue';
@@ -105,17 +104,56 @@ export { type InputKanrenshaPersonLeastDtoInterface, InputKanrenshaPersonLeastDt
 import { type KanrenshaPersonMasterEntityInterface, KanrenshaPersonMasterEntity } from './main/entity/kanrenshaPersonMasterEntity';
 export { type KanrenshaPersonMasterEntityInterface, KanrenshaPersonMasterEntity }
 
+/** 個人登録 */
+import KanrenshaPersonEdit from './main/common/regist_kanrensha/KanrenshaPersonEdit.vue';
+export { KanrenshaPersonEdit }
+import { type KanrenshaPersonDtoInterface, KanrenshaPersonDto } from './main/dto/kanrensha/kanrenshaPersonDto';
+export { type KanrenshaPersonDtoInterface, KanrenshaPersonDto }
+import { type GetKanrenshaPersonCapsuleDtoInterface, GetKanrenshaPersonCapsuleDto } from './main/dto/kanrensha/getKanrenshaPersonCapsuleDto';
+import { type GetKanrenshaPersonResultDtoInterface, GetKanrenshaPersonResultDto } from './main/dto/kanrensha/getKanrenshaPersonResultDto';
+export { type GetKanrenshaPersonCapsuleDtoInterface, GetKanrenshaPersonCapsuleDto, type GetKanrenshaPersonResultDtoInterface, GetKanrenshaPersonResultDto }
+import { type SaveKanrenshaPersonCapsuleDtoInterface, SaveKanrenshaPersonCapsuleDto } from './main/dto/kanrensha/saveKanrenshaPersonCapsuleDto';
+export { type SaveKanrenshaPersonCapsuleDtoInterface, SaveKanrenshaPersonCapsuleDto}
+
 /** 企業団体検索 */
 import SearchKanrenshaKigyouDt from './main/common/search_kanrensha/SearchKanrenshaKigyouDt.vue';
 export { SearchKanrenshaKigyouDt }
 import { type KanrenshaKigyouDtMasterEntityInterface, KanrenshaKigyouDtMasterEntity } from './main/entity/kanrenshaKigyouDtMasterEntity';
 export { type KanrenshaKigyouDtMasterEntityInterface, KanrenshaKigyouDtMasterEntity }
 
+/** 企業団体登録 */
+import KanrenshaKigyouDtEdit from './main/common/regist_kanrensha/KanrenshaKigyouDtEdit.vue';
+export { KanrenshaKigyouDtEdit }
+import { type KanrenshaKigyouDtDtoInterface, KanrenshaKigyouDtDto } from './main/dto/kanrensha/kanrenshaKigyouDtDto';
+export { type KanrenshaKigyouDtDtoInterface, KanrenshaKigyouDtDto }
+import { type GetKanrenshaKigyouDtCapsuleDtoInterface, GetKanrenshaKigyouDtCapsuleDto } from './main/dto/kanrensha/getKanrenshaKigyouDtCapsuleDto';
+import { type GetKanrenshaKigyouDtResultDtoInterface, GetKanrenshaKigyouDtResultDto } from './main/dto/kanrensha/getKanrenshaKigyouDtResultDto';
+export { type GetKanrenshaKigyouDtCapsuleDtoInterface, GetKanrenshaKigyouDtCapsuleDto, type GetKanrenshaKigyouDtResultDtoInterface, GetKanrenshaKigyouDtResultDto }
+import { type SaveKanrenshaKigyouDtCapsuleDtoInterface, SaveKanrenshaKigyouDtCapsuleDto } from './main/dto/kanrensha/saveKanrenshaKigyouDtCapsuleDto';
+export { type SaveKanrenshaKigyouDtCapsuleDtoInterface, SaveKanrenshaKigyouDtCapsuleDto}
+
 /** 政治団体検索 */
 import SearchKanrenshaSeijidantai from './main/common/search_kanrensha/SearchKanrenshaSeijidantai.vue';
 export { SearchKanrenshaSeijidantai }
 import { type KanrenshaSeijidantaiMasterEntityInterface, KanrenshaSeijidantaiMasterEntity } from './main/entity/kanrenshaSeijidantaiMasterEntity';
 export { type KanrenshaSeijidantaiMasterEntityInterface, KanrenshaSeijidantaiMasterEntity }
+import SeijidantaiDantaiKbnConstants from './main/dto/kanrensha/seijidantaiDantaiKbnConstants';
+export { SeijidantaiDantaiKbnConstants }
+
+/** 政治団体登録 */
+import KanrenshaSeijidanatiEdit from './main/common/regist_kanrensha/KanrenshaSeijidanatiEdit.vue';
+export { KanrenshaSeijidanatiEdit }
+import { type KanrenshaSeijidantaiDtoInterface, KanrenshaSeijidantaiDto } from './main/dto/kanrensha/kanrenshaSeijidantaiDto';
+export { type KanrenshaSeijidantaiDtoInterface, KanrenshaSeijidantaiDto }
+import { type GetKanrenshaSeijidantaiCapsuleDtoInterface, GetKanrenshaSeijidantaiCapsuleDto } from './main/dto/kanrensha/getKanrenshaSeijidantaiCapsuleDto';
+import { type GetKanrenshaSeijidantaiResultDtoInterface, GetKanrenshaSeijidantaiResultDto } from './main/dto/kanrensha/getKanrenshaSeijidantaiResultDto';
+export { type GetKanrenshaSeijidantaiCapsuleDtoInterface, GetKanrenshaSeijidantaiCapsuleDto, type GetKanrenshaSeijidantaiResultDtoInterface, GetKanrenshaSeijidantaiResultDto }
+import { type SaveKanrenshaSeijidantaiCapsuleDtoInterface, SaveKanrenshaSeijidantaiCapsuleDto } from './main/dto/kanrensha/saveKanrenshaSeijidantaiCapsuleDto';
+export { type SaveKanrenshaSeijidantaiCapsuleDtoInterface, SaveKanrenshaSeijidantaiCapsuleDto}
+
+/** 関連者編集 */
+import KanrenshaManage from './main/common/regist_kanrensha/KanrenshaManage.vue';
+export { KanrenshaManage }
 
 /** 日付 */
 import InputDate from './main/common/date/InputDate.vue';
@@ -164,4 +202,6 @@ export {
 
 /** パスキー/WebAuthn DTO */
 export * from './main/dto/passkey';
+export * from './main/util/passkeyService';
+export * from './main/util/useApi';
 

@@ -11,8 +11,8 @@ import java.util.Set;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import mitei.mitei.political.balancesheet.manage.kanrensha.dto.task.SearchTaskPlanCapsuleDto;
 import net.seijishikin.jp.normalize.common_tool.dto.paging.SwitchYearPagingIntegerDatetimeDtoInterface;
+import net.seijishikin.jp.normalize.common_tool.dto.task.SearchTaskPlanByDatetimeCapsuleDto;
 
 /**
  * CreateSearchConditionMapByYearLogic単体テスト
@@ -24,7 +24,7 @@ class CreateSearchConditionMapByYearLogicTest {
     @Tag("TableTruncate")
     void test() throws Exception {// NOPMD NCSS
 
-        SearchTaskPlanCapsuleDto capsuleDto = new SearchTaskPlanCapsuleDto();
+        SearchTaskPlanByDatetimeCapsuleDto capsuleDto = new SearchTaskPlanByDatetimeCapsuleDto();
         capsuleDto.setSearchTaskWord("検索語");
         capsuleDto.setStartDate(LocalDateTime.of(2022, 12, 5, 12, 34, 56));
         capsuleDto.setEndDate(LocalDateTime.of(2026, 4, 9, 22, 45, 1));
@@ -46,8 +46,8 @@ class CreateSearchConditionMapByYearLogicTest {
         assertTrue(listKey.contains(2026));
 
         SwitchYearPagingIntegerDatetimeDtoInterface interface0 = map.get(2022);
-        if (interface0 instanceof SearchTaskPlanCapsuleDto) {
-            SearchTaskPlanCapsuleDto dto0 = (SearchTaskPlanCapsuleDto) interface0;
+        if (interface0 instanceof SearchTaskPlanByDatetimeCapsuleDto) {
+            SearchTaskPlanByDatetimeCapsuleDto dto0 = (SearchTaskPlanByDatetimeCapsuleDto) interface0;
 
             // その他のフィールドは複写
             assertEquals(capsuleDto.getAllCount(), dto0.getAllCount());
@@ -77,8 +77,8 @@ class CreateSearchConditionMapByYearLogicTest {
         }
 
         SwitchYearPagingIntegerDatetimeDtoInterface interface1 = map.get(2026);
-        if (interface1 instanceof SearchTaskPlanCapsuleDto) {
-            SearchTaskPlanCapsuleDto dto1 = (SearchTaskPlanCapsuleDto) interface1;
+        if (interface1 instanceof SearchTaskPlanByDatetimeCapsuleDto) {
+            SearchTaskPlanByDatetimeCapsuleDto dto1 = (SearchTaskPlanByDatetimeCapsuleDto) interface1;
 
             // その他のフィールドは複写
             assertEquals(capsuleDto.getAllCount(), dto1.getAllCount());
@@ -109,8 +109,8 @@ class CreateSearchConditionMapByYearLogicTest {
         }
 
         SwitchYearPagingIntegerDatetimeDtoInterface interface2 = map.get(2023);
-        if (interface2 instanceof SearchTaskPlanCapsuleDto) {
-            SearchTaskPlanCapsuleDto dto2 = (SearchTaskPlanCapsuleDto) interface2;
+        if (interface2 instanceof SearchTaskPlanByDatetimeCapsuleDto) {
+            SearchTaskPlanByDatetimeCapsuleDto dto2 = (SearchTaskPlanByDatetimeCapsuleDto) interface2;
 
             // その他のフィールドは複写
             assertEquals(capsuleDto.getAllCount(), dto2.getAllCount());
@@ -144,7 +144,7 @@ class CreateSearchConditionMapByYearLogicTest {
     @Test
     void testSameYear() throws Exception {
 
-        SearchTaskPlanCapsuleDto capsuleDto = new SearchTaskPlanCapsuleDto();
+        SearchTaskPlanByDatetimeCapsuleDto capsuleDto = new SearchTaskPlanByDatetimeCapsuleDto();
         capsuleDto.setSearchTaskWord("検索語");
         capsuleDto.setStartDate(LocalDateTime.of(2023, 5, 6, 7, 8, 9));
         capsuleDto.setEndDate(LocalDateTime.of(2023, 7, 8, 9, 0, 2));
@@ -160,8 +160,8 @@ class CreateSearchConditionMapByYearLogicTest {
         assertTrue(map.keySet().contains(2023));
 
         SwitchYearPagingIntegerDatetimeDtoInterface interface0 = map.get(2023);
-        if (interface0 instanceof SearchTaskPlanCapsuleDto) {
-            SearchTaskPlanCapsuleDto dto0 = (SearchTaskPlanCapsuleDto) interface0;
+        if (interface0 instanceof SearchTaskPlanByDatetimeCapsuleDto) {
+            SearchTaskPlanByDatetimeCapsuleDto dto0 = (SearchTaskPlanByDatetimeCapsuleDto) interface0;
 
             // 年をまたがない場合は完全に同一の条件が返る
             assertEquals(capsuleDto.getAllCount(), dto0.getAllCount());

@@ -167,9 +167,9 @@ function onCancel() {
 /**  
  * 入力内容を保存する
  */
-function onSave() {
+function onSave(selectedNo:string) {
     // Idでフィルタしているので1件だけ取得できる
-    const selectedDto: HoujinNoDtoInterface | undefined = houjinListView.value.filter((e) => e.houjinNo === selectedRow.value)[0];
+    const selectedDto: HoujinNoDtoInterface | undefined = houjinListView.value.filter((e) => e.houjinNo === selectedNo)[0];
     if (undefined !== selectedDto) {
         emits("sendHoujinNoInterface", selectedDto);
     } else {
@@ -306,21 +306,21 @@ function onNameChange() {
         <table>
             <tbody>
                 <tr>
-                    <th>&nbsp;&nbsp;</th>
                     <th>法人番号</th>
                     <th>法人種別</th>
                     <th>商号</th>
                     <th>住所</th>
                     <th>処理区分</th>
+                    <th>&nbsp;&nbsp;</th>
                 </tr>
                 <tr v-for="dto in houjinListView" :key="dto.houjinNo">
-                    <td><input type="radio" v-model="selectedRow" :value="dto.houjinNo" id="politicalOrganizationId">
-                    </td>
                     <td>{{ dto.houjinNo }}</td>
                     <td>{{ HoujinSbtsConstants.getLabel(dto.kind) }}</td>
                     <td>{{ dto.houjinName }}</td>
                     <td>{{ dto.prefectureName }}{{ dto.cityName }}</td>
                     <td>{{ HoujinShoriKbnConstants.getLabel(dto.process) }}</td>
+                    <td><button @click="onSave(dto.houjinNo)">選択</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -336,7 +336,6 @@ function onNameChange() {
 
     <div class="footer">
         <button @click="onCancel" class="footer-button">キャンセル</button>
-        <button @click="onSave" class="footer-button left-space">選択</button>
     </div>
 
     <div class="one-line-caution">
