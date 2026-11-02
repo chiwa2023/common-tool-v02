@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.seijishikin.jp.normalize.common_tool.dto.paging.PagingIntegerDtoInterface;
-import net.seijishikin.jp.normalize.common_tool.entity.KanrenshaKigyouDtMasterEntity;
 
 /**
  * 関連者企業団体検索結果Dto
@@ -74,14 +73,14 @@ public class SearchKanrenshaKigyouDtResultDto // NOPMD DataClass
     }
 
     /** 関連者企業団体マスタリスト */
-    private List<KanrenshaKigyouDtMasterEntity> listMasterKigyouDt = new ArrayList<>();
+    private List<KanrenshaKigyouDtMasterDto> listMasterKigyouDt = new ArrayList<>();
 
     /**
      * 関連者企業団体マスタリストを取得
      *
      * @return 関連者企業団体マスタリスト
      */
-    public List<KanrenshaKigyouDtMasterEntity> getListMasterKigyouDt() {
+    public List<KanrenshaKigyouDtMasterDto> getListMasterKigyouDt() {
         return listMasterKigyouDt;
     }
 
@@ -90,7 +89,7 @@ public class SearchKanrenshaKigyouDtResultDto // NOPMD DataClass
      *
      * @param listMasterKigyouDt 関連者企業団体マスタリスト
      */
-    public void setListMasterKigyouDt(final List<KanrenshaKigyouDtMasterEntity> listMasterKigyouDt) {
+    public void setListMasterKigyouDt(final List<KanrenshaKigyouDtMasterDto> listMasterKigyouDt) {
         this.listMasterKigyouDt = listMasterKigyouDt;
     }
 

@@ -3,7 +3,6 @@ package net.seijishikin.jp.normalize.common_tool.dto.kanrensha;
 import java.io.Serializable;
 
 import net.seijishikin.jp.normalize.common_tool.dto.FrameworkCapsuleDto;
-import net.seijishikin.jp.normalize.common_tool.entity.KanrenshaSeijidantaiMasterEntity;
 
 /**
  * 関連者政治団体格納Dto
@@ -14,14 +13,14 @@ public class GetKanrenshaSeijidantaiCapsuleDto extends FrameworkCapsuleDto imple
     private static final long serialVersionUID = 1L;
 
     /** 関連者政治団体マスタEntity */
-    private KanrenshaSeijidantaiMasterEntity masterSeijidantaiEntity = new KanrenshaSeijidantaiMasterEntity();
+    private KanrenshaSeijidantaiMasterDto masterSeijidantaiEntity = new KanrenshaSeijidantaiMasterDto();
 
     /**
      * 関連者政治団体マスタEntityを取得する
      * 
      * @return 関連者政治団体マスタEntity
      */
-    public KanrenshaSeijidantaiMasterEntity getMasterSeijidantaiEntity() {
+    public KanrenshaSeijidantaiMasterDto getMasterSeijidantaiEntity() {
         return masterSeijidantaiEntity;
     }
 
@@ -30,7 +29,7 @@ public class GetKanrenshaSeijidantaiCapsuleDto extends FrameworkCapsuleDto imple
      * 
      * @param masterSeijidantaiEntity 関連者政治団体マスタEntity
      */
-    public void setMasterSeijidantaiEntity(final KanrenshaSeijidantaiMasterEntity masterSeijidantaiEntity) {
+    public void setMasterSeijidantaiEntity(final KanrenshaSeijidantaiMasterDto masterSeijidantaiEntity) {
         this.masterSeijidantaiEntity = masterSeijidantaiEntity;
     }
 

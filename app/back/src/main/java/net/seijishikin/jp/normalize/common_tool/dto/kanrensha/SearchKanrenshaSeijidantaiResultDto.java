@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.seijishikin.jp.normalize.common_tool.dto.paging.PagingIntegerDtoInterface;
-import net.seijishikin.jp.normalize.common_tool.entity.KanrenshaSeijidantaiMasterEntity;
 
 /**
  * 関連者政治団体検索結果Dto
@@ -74,14 +73,14 @@ public class SearchKanrenshaSeijidantaiResultDto// NOPMD DataClass
     }
 
     /** 関連者政治団体マスタリスト */
-    private List<KanrenshaSeijidantaiMasterEntity> listMasterSeijidantai = new ArrayList<>();
+    private List<KanrenshaSeijidantaiMasterDto> listMasterSeijidantai = new ArrayList<>();
 
     /**
      * 関連者政治団体マスタリストを取得する
      *
      * @return 関連者政治団体マスタリスト
      */
-    public List<KanrenshaSeijidantaiMasterEntity> getListMasterSeijidantai() {
+    public List<KanrenshaSeijidantaiMasterDto> getListMasterSeijidantai() {
         return listMasterSeijidantai;
     }
 
@@ -90,7 +89,7 @@ public class SearchKanrenshaSeijidantaiResultDto// NOPMD DataClass
      *
      * @param listMasterSeijidantai 関連者政治団体マスタリスト
      */
-    public void setListMasterSeijidantai(final List<KanrenshaSeijidantaiMasterEntity> listMasterSeijidantai) {
+    public void setListMasterSeijidantai(final List<KanrenshaSeijidantaiMasterDto> listMasterSeijidantai) {
         this.listMasterSeijidantai = listMasterSeijidantai;
     }
 

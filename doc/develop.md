@@ -142,7 +142,7 @@ viteを起動 `npm run dev`
 
 ### 2. back
 
-基本的にboot起動はしないで、jarへのコンパイルのみ `mvn clean  build`
+基本的にboot起動はしないで、jarへのコンパイルのみ `mvn clean  install -DskipTests`
 
 ## 5.テスト
 

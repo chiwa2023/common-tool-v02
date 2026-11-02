@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.seijishikin.jp.normalize.common_tool.dto.paging.PagingIntegerDtoInterface;
-import net.seijishikin.jp.normalize.common_tool.entity.KanrenshaPersonMasterEntity;
 
 /**
  * 関連者個人検索結果Dto
@@ -74,14 +73,14 @@ public class SearchKanrenshaPersonResultDto // NOPMD DataClass
     }
 
     /** 関連者個人マスタリスト */
-    private List<KanrenshaPersonMasterEntity> listMasterPerson = new ArrayList<>();
+    private List<KanrenshaPersonMasterDto> listMasterPerson = new ArrayList<>();
 
     /**
      * 関連者個人マスタリストを取得する
      *
      * @return 関連者個人マスタリスト
      */
-    public List<KanrenshaPersonMasterEntity> getListMasterPerson() {
+    public List<KanrenshaPersonMasterDto> getListMasterPerson() {
         return listMasterPerson;
     }
 
@@ -90,7 +89,7 @@ public class SearchKanrenshaPersonResultDto // NOPMD DataClass
      *
      * @param listMasterPerson 関連者個人マスタリスト
      */
-    public void setListMasterPerson(final List<KanrenshaPersonMasterEntity> listMasterPerson) {
+    public void setListMasterPerson(final List<KanrenshaPersonMasterDto> listMasterPerson) {
         this.listMasterPerson = listMasterPerson;
     }
 
